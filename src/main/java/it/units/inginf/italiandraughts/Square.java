@@ -5,6 +5,7 @@ public class Square {
     private final char[] coordinates = new char[2]; //coordinates of the cell ( from A1 to H8)
     private SquareColor squareColor; // square color (black or white)
     // italian-draughts pieces are only allowed on black squares
+    private SquareContent squareContent;
 
     public Square(int x, int y) throws Exception {
         switch (x) {
@@ -44,6 +45,8 @@ public class Square {
                 this.squareColor = SquareColor.WHITE; //example: x=0, y=0 => square A1 => white
             }
         }
+
+        this.squareContent = SquareContent.EMPTY;
     }
 
     public char getCoordinateX() { // columns: A, B, ..., H
@@ -56,5 +59,16 @@ public class Square {
 
     public SquareColor getSquareColor() {
         return this.squareColor;
+    }
+
+    public SquareContent getSquareContent() {
+        return squareContent;
+    }
+
+    public void setSquareContent(SquareContent newSquareContent) throws Exception {
+        if (newSquareContent == null){
+            throw new Exception("Square content cannot be null");
+        }
+        this.squareContent = newSquareContent;
     }
 }

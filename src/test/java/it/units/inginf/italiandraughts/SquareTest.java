@@ -57,4 +57,18 @@ public class SquareTest {
         assertEquals(coordinateY, '6');
     }
 
+    @Test
+    void checkSquareContent(){
+        int x=2, y=5;
+        Square square;
+        try {
+            square = new Square(x, y);
+            square.setSquareContent(SquareContent.BLACK_MAN);
+        } catch (Exception e) {
+            fail();
+            throw new RuntimeException(e);
+        }
+        assertEquals(SquareContent.BLACK_MAN, square.getSquareContent());
+    }
+
 }
