@@ -3,6 +3,8 @@ package it.units.inginf.italiandraughts;
 public class Square {
 
     private final char[] coordinates = new char[2]; //coordinates of the cell ( from A1 to H8)
+    private SquareColor squareColor; // square color (black or white)
+    // italian-draughts pieces are only allowed on black squares
 
     public Square(int x, int y) throws Exception {
         switch (x) {
@@ -27,6 +29,21 @@ public class Square {
             case 7 -> coordinates[1] = '8';
             default -> throw new Exception("Coordinates accepted value are integers from 0 to 7 included");
         }
+
+        // Assign color to square (purely based on square coordinates)
+        if(x % 2 == 0){ // if x (column) even => B, D, F, H
+            if(y % 2 == 0){ // if y (row) even => 2, 4, 6, 8
+                this.squareColor = SquareColor.WHITE; //example: x=1, y=1 => square B2 => white
+            } else { // if y (row) odd => 1, 3, 5, 7
+                this.squareColor = SquareColor.BLACK; //example: x=1, y=0 => square B1 => black
+            }
+        } else { // if x (column) odd => A, C, E, G
+            if(y % 2 == 0){ // if y (row) even
+                this.squareColor = SquareColor.BLACK; //example: x=0, y=1 => square A2 => black
+            } else { // if y (row) odd
+                this.squareColor = SquareColor.WHITE; //example: x=0, y=0 => square A1 => white
+            }
+        }
     }
 
     public char getCoordinateX() { // columns: A, B, ..., H
@@ -37,4 +54,7 @@ public class Square {
         return this.coordinates[1];
     }
 
+    public SquareColor getSquareColor() {
+        return this.squareColor;
+    }
 }
