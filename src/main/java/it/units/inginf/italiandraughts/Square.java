@@ -3,7 +3,7 @@ package it.units.inginf.italiandraughts;
 public class Square {
 
     private final char[] coordinates = new char[2]; //coordinates of the cell ( from A1 to H8)
-    private SquareColor squareColor; // square color (black or white)
+    private final SquareColor squareColor; // square color (black or white)
     // italian-draughts pieces are only allowed on black squares
     private SquareContent squareContent;
 
