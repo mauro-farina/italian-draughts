@@ -71,4 +71,17 @@ public class SquareTest {
         assertEquals(SquareContent.BLACK_MAN, square.getSquareContent());
     }
 
+    @Test
+    void checkSquareIsFree(){
+        int x=2, y=5;
+        Square square;
+        try {
+            square = new Square(x, y);
+            square.setSquareContent(SquareContent.BLACK_MAN);
+        } catch (Exception e) {
+            fail();
+            throw new RuntimeException(e);
+        }
+        assertFalse(square.isFree());
+    }
 }

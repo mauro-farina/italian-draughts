@@ -71,4 +71,8 @@ public class Square {
         }
         this.squareContent = newSquareContent;
     }
+
+    public boolean isFree() {
+        return squareContent.equals(SquareContent.EMPTY);
+    }
 }
