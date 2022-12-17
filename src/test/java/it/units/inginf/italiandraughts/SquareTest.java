@@ -84,18 +84,31 @@ public class SquareTest {
         }
         assertFalse(square.isFree());
     }
-    
+
     @Test
-    void checkLastRow() {
+    void checkWhenNotLastRow() {
         int x=2, y=5;
         Square square;
         try{
             square = new Square(x, y);
-            square.updateSquare(SquareContent.BLACK_MAN);
         } catch(Exception e) {
             fail();
             throw new RuntimeException(e);
         }
-        assertEquals(square.getLastRow(), LastRow.BLACK);
+        assertFalse(square.isLastRowFor(PieceColor.BLACK));
     }
+
+    @Test
+    void checkWhenIsLastRow() {
+        int x=2, y=7;
+        Square square;
+        try{
+            square = new Square(x, y);
+        } catch(Exception e) {
+            fail();
+            throw new RuntimeException(e);
+        }
+        assertTrue(square.isLastRowFor(PieceColor.WHITE));
+    }
+
 }

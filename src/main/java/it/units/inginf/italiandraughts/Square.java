@@ -6,9 +6,9 @@ public class Square {
     private final SquareColor squareColor; // square color (black or white)
     // italian-draughts pieces are only allowed on black squares
     private SquareContent squareContent;
-    private LastRow lastRow;
-    /* This attribute is used to identify the row in which a Man will become a King. The value changes 
-    according to the color of the piece. If there is no piece on a square then the attribute will be null */
+    private final PieceColor lastRowFor;
+    // (y == 0, or coordinates[1] == 1) is the last row for Black Pieces
+    // (y == 7, or coordinates[1] == 8) is the last row for White Pieces
 
     public Square(int x, int y) throws Exception {
         switch (x) {
@@ -49,6 +49,14 @@ public class Square {
             }
         }
 
+        // LastRow
+        if(y == 0) { // first row => a black man becomes a black king
+            this.lastRowFor = PieceColor.BLACK;
+        } else if (y == 7) { // last row => a white man becomes a white king
+            this.lastRowFor = PieceColor.WHITE;
+        } else { // if y is not a last row, no piece will become a king
+            this.lastRowFor = null;
+        }
         this.squareContent = SquareContent.EMPTY;
     }
 
@@ -68,8 +76,8 @@ public class Square {
         return squareContent;
     }
     
-    public LastRow getLastRow() {
-        return this.lastRow;
+    public boolean isLastRowFor(PieceColor pieceColor) {
+        return pieceColor.equals(this.lastRowFor);
     }
 
     public void setSquareContent(SquareContent newSquareContent) throws Exception {
@@ -77,15 +85,7 @@ public class Square {
             throw new Exception("Square content cannot be null");
         } else {
             this.squareContent = newSquareContent;
-            if((squareContent == SquareContent.WHITE_MAN) || (squareContent == SquareContent.WHITE_KING)) {
-                lastRow = LastRow.WHITE;
-            } else if((squareContent == SquareContent.BLACK_MAN) || (squareContent == SquareContent.BLACK_KING)) {
-                lastRow = LastRow.BLACK;
-            } else {
-                lastRow = null;
-            }
         }
-        this.squareContent = newSquareContent;
     }
 
     public boolean isFree() {
