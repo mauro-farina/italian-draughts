@@ -6,6 +6,9 @@ public class Square {
     private final SquareColor squareColor; // square color (black or white)
     // italian-draughts pieces are only allowed on black squares
     private SquareContent squareContent;
+    private LastRow lastRow;
+    /* This attribute is used to identify the row in which a Man will become a King. The value changes 
+    according to the color of the piece. If there is no piece on a square then the attribute will be null */
 
     public Square(int x, int y) throws Exception {
         switch (x) {
@@ -64,10 +67,23 @@ public class Square {
     public SquareContent getSquareContent() {
         return squareContent;
     }
+    
+    public LastRow getLastRow() {
+        return this.lastRow;
+    }
 
     public void setSquareContent(SquareContent newSquareContent) throws Exception {
         if (newSquareContent == null){
             throw new Exception("Square content cannot be null");
+        } else {
+            this.squareContent = newSquareContent;
+            if((squareContent == SquareContent.WHITE_MAN) || (squareContent == SquareContent.WHITE_KING)) {
+                lastRow = LastRow.WHITE;
+            } else if((squareContent == SquareContent.BLACK_MAN) || (squareContent == SquareContent.BLACK_KING)) {
+                lastRow = LastRow.BLACK;
+            } else {
+                lastRow = null;
+            }
         }
         this.squareContent = newSquareContent;
     }
