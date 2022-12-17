@@ -84,4 +84,18 @@ public class SquareTest {
         }
         assertFalse(square.isFree());
     }
+    
+    @Test
+    void checkLastRow() {
+        int x=2, y=5;
+        Square square;
+        try{
+            square = new Square(x, y);
+            square.updateSquare(SquareContent.BLACK_MAN);
+        } catch(Exception e) {
+            fail();
+            throw new RuntimeException(e);
+        }
+        assertEquals(square.getLastRow(), LastRow.BLACK);
+    }
 }
