@@ -18,5 +18,32 @@ public class Man implements Piece{
             this.square = square;
         }
     }
+    
+    @Override
+    public PieceColor getColor() {
+        return this.color;
+    }
+
+    @Override
+    public Square getSquare() {
+        return this.square;
+    }
+
+    public void setSquare(Square newSquare) throws Exception {
+        if(newSquare.getSquareColor().equals(SquareColor.WHITE)) {
+            throw new Exception("Pieces cannot be on white squares");
+        } else {
+            this.square = newSquare;
+        }
+    }
+    @Override
+    public boolean isMan() {
+        return true;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 
 }
