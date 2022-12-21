@@ -29,6 +29,7 @@ public class Man implements Piece{
         return this.square;
     }
 
+    @Override
     public void setSquare(Square newSquare) throws Exception {
         if(newSquare.getSquareColor().equals(SquareColor.WHITE)) {
             throw new Exception("Pieces cannot be on white squares");
