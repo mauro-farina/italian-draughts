@@ -6,4 +6,5 @@ public interface Piece {
     Square getSquare();
     boolean isMan();
     boolean isKing();
+    void setSquare(Square square) throws Exception;
 }
