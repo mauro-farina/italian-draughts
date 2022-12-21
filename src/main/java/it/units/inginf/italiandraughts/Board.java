@@ -1,5 +1,7 @@
 package it.units.inginf.italiandraughts;
 
+import java.util.ArrayList;
+
 public class Board {
 
     private final Square[][] boardSquares;
