@@ -60,12 +60,12 @@ public class Square {
         this.squareContent = SquareContent.EMPTY;
     }
 
-    public char getCoordinateX() { // columns: A, B, ..., H
-        return this.coordinates[0];
+    public String getCoordinateX() { // columns: A, B, ..., H
+        return Character.toString(this.coordinates[0]);
     }
 
-    public char getCoordinateY() { // rows: 1, 2, ... 8
-        return this.coordinates[1];
+    public String getCoordinateY() { // rows: 1, 2, ... 8
+        return Character.toString(this.coordinates[1]);
     }
 
     public SquareColor getSquareColor() {
