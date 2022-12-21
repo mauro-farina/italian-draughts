@@ -36,8 +36,8 @@ public class SquareTest {
             throw new RuntimeException(e);
         }
         // Assert
-        char coordinateX = square.getCoordinateX();
-        assertEquals(coordinateX, 'A');
+        String coordinateX = square.getCoordinateX();
+        assertEquals(coordinateX, "A");
     }
 
     @Test
@@ -53,8 +53,8 @@ public class SquareTest {
             throw new RuntimeException(e);
         }
         // Assert
-        char coordinateY = square.getCoordinateY();
-        assertEquals(coordinateY, '6');
+        String coordinateY = square.getCoordinateY();
+        assertEquals(coordinateY, "6");
     }
 
     @Test
