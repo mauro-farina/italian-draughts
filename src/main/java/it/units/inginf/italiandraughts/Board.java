@@ -322,5 +322,21 @@ as integer value of getCoordinateY() - 1 - 1.
         }
         return squareList;
     }
+    
+    public void decrementNumberWhitePieces() throws Exception {
+        if(numberWhitePiece > 0) {
+            numberWhitePiece--;
+        } else {
+            throw new Exception("It is not possible to have less than 0 pieces");
+        }
+    }
+
+    public void decrementNumberBlackPieces() throws Exception {
+        if(numberBlackPiece > 0) {
+            numberBlackPiece--;
+        } else {
+            throw new Exception("It is not possible to have less than 0 pieces");
+        }
+    }
 
 }
