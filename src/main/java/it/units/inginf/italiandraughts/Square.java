@@ -6,7 +6,7 @@ public class Square {
     private final SquareColor squareColor; // square color (black or white)
     // italian-draughts pieces are only allowed on black squares
     private SquareContent squareContent;
-    private final PieceColor lastRowFor;
+    //private final PieceColor lastRowFor;
     // (y == 0, or coordinates[1] == 1) is the last row for Black Pieces
     // (y == 7, or coordinates[1] == 8) is the last row for White Pieces
 
@@ -50,13 +50,13 @@ public class Square {
         }
 
         // LastRow
-        if(y == 0) { // first row => a black man becomes a black king
+        /*if(y == 0) { // first row => a black man becomes a black king
             this.lastRowFor = PieceColor.BLACK;
         } else if (y == 7) { // last row => a white man becomes a white king
             this.lastRowFor = PieceColor.WHITE;
         } else { // if y is not a last row, no piece will become a king
             this.lastRowFor = null;
-        }
+        }*/
         this.squareContent = SquareContent.EMPTY;
     }
 
@@ -76,9 +76,10 @@ public class Square {
         return squareContent;
     }
     
+    /*
     public boolean isLastRowFor(PieceColor pieceColor) {
         return pieceColor.equals(this.lastRowFor);
-    }
+    }*/
 
     public void setSquareContent(SquareContent newSquareContent) throws Exception {
         if (newSquareContent == null){
