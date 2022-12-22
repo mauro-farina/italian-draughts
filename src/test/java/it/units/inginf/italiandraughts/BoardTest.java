@@ -10,12 +10,13 @@ public class BoardTest {
         int numberOfWhitePieces;
         try {
             Board board = new Board();
+            board.decrementNumberWhitePieces();
             numberOfWhitePieces = board.getNumberWhitePieces();
         } catch (Exception e) {
             fail();
             throw new RuntimeException(e);
         }
-        assertEquals(numberOfWhitePieces, 12);
+        assertEquals(numberOfWhitePieces, 11);
     }
 
     @Test
@@ -23,12 +24,13 @@ public class BoardTest {
         int numberOfBlackPieces;
         try {
             Board board = new Board();
+            board.decrementNumberBlackPieces();
             numberOfBlackPieces = board.getNumberBlackPieces();
         } catch (Exception e) {
             fail();
             throw new RuntimeException(e);
         }
-        assertEquals(numberOfBlackPieces, 12);
+        assertEquals(numberOfBlackPieces, 11);
     }
     
     @Test
