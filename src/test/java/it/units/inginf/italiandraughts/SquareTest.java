@@ -85,6 +85,7 @@ public class SquareTest {
         assertFalse(square.isFree());
     }
 
+    /*
     @Test
     void checkWhenNotLastRow() {
         int x=2, y=5;
@@ -110,5 +111,6 @@ public class SquareTest {
         }
         assertTrue(square.isLastRowFor(PieceColor.WHITE));
     }
+    */
 
 }
