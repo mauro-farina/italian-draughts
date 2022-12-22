@@ -51,12 +51,20 @@ public class Board {
     public Square[][] getBoardSquares() {
         return boardSquares;
     }
+    
+     public int getNumberWhitePieces() {
+        return this.numberWhitePiece;
+    }
+
+    public int getNumberBlackPieces() {
+        return this.numberBlackPiece;
+    }
 
     public int getNumberOfPieces(PieceColor color) {
         if(color == PieceColor.WHITE) {
-            return numberWhitePiece;
+            return getNumberWhitePieces();
         } else {
-            return numberBlackPiece;
+            return getNumberBlackPieces();
         }
     }
 
