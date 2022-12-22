@@ -65,10 +65,10 @@ public class BoardTest {
     }
 
     @Test
-    void checkReachableSquares(){
+    void checkReachableSquaresWithMan(){
         try {
             Board board = new Board();
-            Piece piece = new Man(PieceColor.WHITE, board.getSquare(1,2)); // piece in B2
+            Piece piece = new Man(PieceColor.WHITE, board.getSquare(1,2)); // piece in B3*
             List<Square> reachableSquares = board.getReachableSquares(piece);
             if(!reachableSquares.contains(board.getSquare(0,3))) // if A4 is NOT in the list
                 fail("A reachable square is not considered so");
