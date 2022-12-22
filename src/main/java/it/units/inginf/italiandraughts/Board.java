@@ -1,6 +1,7 @@
 package it.units.inginf.italiandraughts;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Board {
 
@@ -96,6 +97,36 @@ public class Board {
         } else {
             return boardSquares[0];
         }
+    }
+
+    public Square getSquare(int x, int y){
+        if(x<0 || x>=8 || y<0 || y>=8){
+            throw new RuntimeException();
+        }
+        return this.boardSquares[x][y];
+    }
+
+    public List<Square> getReachableSquares(Piece piece) { //reachable or adjacent
+        Square pieceSquare = piece.getSquare();
+        int pieceSquareX = pieceSquare.getMatrixCoordinateX();
+        int pieceSquareY = pieceSquare.getMatrixCoordinateY();
+        List<Square> squaresList = new ArrayList<>();
+        for(short i=-1; i<=1; i+=2){ // loop through the 4 corner-adjacent squares
+            for(short j=-1; j<=1; j+=2){
+                if(pieceSquareY+i < 0 || pieceSquareY+i >= 8) // rows -1 and 8 do not exist => continue
+                    continue;
+                if(pieceSquareX+j < 0 || pieceSquareX+j >= 8) // columns (A-1) and (H+1) do not exist => continue
+                    continue;
+                if(piece instanceof Man) {
+                    if( (piece.getColor().equals(PieceColor.WHITE)) && (i > 0) )
+                        continue;
+                    if( (piece.getColor().equals(PieceColor.BLACK)) && (i < 0) )
+                        continue;
+                }
+                squaresList.add(this.boardSquares[pieceSquareY+i][pieceSquareX+j]);
+            }
+        }
+        return squaresList;
     }
 
     public ArrayList<Square> getAdjacentSquares(Man man) throws Exception {

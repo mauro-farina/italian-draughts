@@ -2,6 +2,8 @@ package it.units.inginf.italiandraughts;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 public class BoardTest {
 
@@ -61,5 +63,29 @@ public class BoardTest {
         }
         assertEquals(lastRow, expectedLastRow);
     }
-    
+
+    @Test
+    void checkReachableSquares(){
+        try {
+            Board board = new Board();
+            Piece piece = new Man(PieceColor.WHITE, board.getSquare(1,2)); // piece in B2
+            List<Square> reachableSquares = board.getReachableSquares(piece);
+            if(!reachableSquares.contains(board.getSquare(0,3))) // if A4 is NOT in the list
+                fail("A reachable square is not considered so");
+            if(!reachableSquares.contains(board.getSquare(2,3))) // if C4 is NOT in the list
+                fail("A reachable square is not considered so");
+            if(reachableSquares.contains(board.getSquare(0,1)))  // if A2 IS in the list
+                fail("A non-reachable square is considered reachable");
+            if(reachableSquares.contains(board.getSquare(2,1)))  // if C2 IS in the list
+                fail("A non-reachable square is considered reachable");
+            if(reachableSquares.contains(board.getSquare(1,3))) // if B4 IS in the list
+                fail("A non-reachable square is considered reachable");
+            if(reachableSquares.contains(board.getSquare(2,2))) // if C3 IS in the list
+                fail("A non-reachable square is considered reachable");
+            assertEquals(2, reachableSquares.size());
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+    }
+
 }

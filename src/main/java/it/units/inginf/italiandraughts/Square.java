@@ -9,6 +9,8 @@ public class Square {
     //private final PieceColor lastRowFor;
     // (y == 0, or coordinates[1] == 1) is the last row for Black Pieces
     // (y == 7, or coordinates[1] == 8) is the last row for White Pieces
+    private final int matrixCoordinateX;
+    private final int matrixCoordinateY;
 
     public Square(int x, int y) throws Exception {
         switch (x) {
@@ -34,6 +36,9 @@ public class Square {
             default -> throw new Exception("Coordinates accepted value are integers from 0 to 7 included");
         }
 
+        this.matrixCoordinateX = x;
+        this.matrixCoordinateY = y;
+
         // Assign color to square (purely based on square coordinates)
         if(x % 2 == 0){ // if x (column) even => B, D, F, H
             if(y % 2 == 0){ // if y (row) even => 2, 4, 6, 8
@@ -58,6 +63,13 @@ public class Square {
             this.lastRowFor = null;
         }*/
         this.squareContent = SquareContent.EMPTY;
+    }
+
+    public int getMatrixCoordinateX(){
+        return this.matrixCoordinateX;
+    }
+    public int getMatrixCoordinateY(){
+        return this.matrixCoordinateY;
     }
 
     public String getCoordinateX() { // columns: A, B, ..., H
