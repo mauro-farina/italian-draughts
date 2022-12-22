@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class Board {
 
     private final Square[][] boardSquares;
-    
     private int numberWhitePiece;
 
     private int numberBlackPiece;
@@ -31,7 +30,7 @@ public class Board {
                     j--;
                     continue;
                 }
-                this.boardSquares[i][j].updateSquare(SquareContent.WHITE_MAN);
+                this.boardSquares[i][j].setSquareContent(SquareContent.WHITE_MAN);
                 numberWhitePiece++;
             }
         }
@@ -42,13 +41,13 @@ public class Board {
                     j--;
                     continue;
                 }
-                this.boardSquares[i][j].updateSquare(SquareContent.BLACK_MAN);
+                this.boardSquares[i][j].setSquareContent(SquareContent.BLACK_MAN);
                 numberBlackPiece++;
             }
             System.out.println();
         }
     }
-    
+
     public Square[][] getBoardSquares() {
         return boardSquares;
     }
@@ -69,8 +68,8 @@ public class Board {
         }
     }
 
-    public ArrayList<Square> getAdjacentSquare(Man man) throws Exception {
-        ArrayList<Square> squareList = new ArrayList<Square>();
+    public ArrayList<Square> getAdjacentSquares(Man man) throws Exception {
+        ArrayList<Square> squareList = new ArrayList<>();
         if(man.color == PieceColor.WHITE) {
             if(man.getSquare().getCoordinateY().equals("8")) {
                 throw new Exception("this man no longer exists");
@@ -79,7 +78,11 @@ public class Board {
                     case "A":
                         squareList.add(boardSquares[1][Integer.parseInt(man.getSquare().getCoordinateY())]);
               /*
-A Man on column A only borders column B, identified by the index 1. The row index of an adjacent cell would be the index of the square where the man is located + 1. But the integer value returned by getCoordinateY() is already greater than 1 since the row index of board starts from 1 and not from 0. So the rowindex used is the integer value of getCoordinateY() + 1 - 1 = integer value of getCoordinateY().
+A Man on column A only borders column B, identified by the index 1.
+The row index of an adjacent cell would be the index of the square where the man is located + 1.
+But the integer value returned by getCoordinateY() is already greater than 1 since the row index of board starts
+from 1 and not from 0. So the row index used is the integer value of getCoordinateY() + 1 - 1 = integer value
+of getCoordinateY().
                */
                         break;
                     case "B":
@@ -124,7 +127,9 @@ Column B borders on columns A and C identified respectively by the indexes 0 and
                     case "A":
                         squareList.add(boardSquares[1][Integer.parseInt(man.getSquare().getCoordinateY()) - 2]);
               /*
-In this case the row index is given by the index of the square where the considered Man is located - 1. Since the integer value of getCoordinateY() is 1 higher than the square index then an adjacent square will have as integer value of getCoordinateY() - 1 - 1.
+In this case the row index is given by the index of the square where the considered Man is located - 1.
+Since the integer value of getCoordinateY() is 1 higher than the square index then an adjacent square will have
+as integer value of getCoordinateY() - 1 - 1.
               */
                         break;
                     case "B":
@@ -163,8 +168,8 @@ In this case the row index is given by the index of the square where the conside
         return squareList;
     }
     
-    public ArrayList<Square> getAdjacentSquare(King king) throws Exception {
-        ArrayList<Square> squareList = new ArrayList<Square>();
+    public ArrayList<Square> getAdjacentSquares(King king) throws Exception {
+        ArrayList<Square> squareList = new ArrayList<>();
         if(king.getSquare().getCoordinateY().equals("1")) {
             switch(king.getSquare().getCoordinateX()) {
                 case "A":
