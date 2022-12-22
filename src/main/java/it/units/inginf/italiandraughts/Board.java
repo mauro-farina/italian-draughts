@@ -59,6 +59,28 @@ public class Board {
     public int getNumberBlackPieces() {
         return this.numberBlackPiece;
     }
+    
+    public String getDisplayBoardForWhitePlayer() {
+        String displayBoard = "";
+        for(int i=7; i>=0; i--){
+            for(int j=0; j<8; j++){
+                displayBoard = displayBoard+ boardSquares[i][j].getSquareContent().toString();
+            }
+            displayBoard = displayBoard + "\n";
+        }
+        return displayBoard;
+    }
+
+    public String getDisplayBoardForBlackPlayer() {
+        String displayBoard= "";
+        for(int i=0; i<8; i++){
+            for(int j=7; j>=0; j--){
+                displayBoard = displayBoard+ boardSquares[i][j].getSquareContent().toString();
+            }
+            displayBoard = displayBoard + "\n";
+        }
+        return displayBoard;
+    }
 
     public int getNumberOfPieces(PieceColor color) {
         if(color == PieceColor.WHITE) {
