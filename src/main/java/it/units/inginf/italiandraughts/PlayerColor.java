@@ -1,5 +1,5 @@
 package it.units.inginf.italiandraughts;
 
-public enum Turn { 
+public enum PlayerColor { 
     WHITE, BLACK
 }
