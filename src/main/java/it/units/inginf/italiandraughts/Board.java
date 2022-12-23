@@ -61,14 +61,6 @@ public class Board {
         return this.blackPieces;
     }
 
-    public int getNumberWhitePieces() {
-        return this.whitePieces.size();
-    }
-
-    public int getNumberBlackPieces() {
-        return this.blackPieces.size();
-    }
-
     public int getNumberOfPieces(PieceColor color) {
         if(color == PieceColor.WHITE) {
             return getWhitePieces().size();
