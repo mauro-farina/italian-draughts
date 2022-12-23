@@ -13,7 +13,7 @@ public class BoardTest {
         try {
             Board board = new Board();
             board.removePiece(PieceColor.WHITE, 2);
-            numberOfWhitePieces = board.getNumberWhitePieces();
+            numberOfWhitePieces = board.getWhitePieces().size();
         } catch (Exception e) {
             fail();
             throw new RuntimeException(e);
@@ -27,7 +27,7 @@ public class BoardTest {
         try {
             Board board = new Board();
             board.removePiece(PieceColor.BLACK, 3);
-            numberOfBlackPieces = board.getNumberBlackPieces();
+            numberOfBlackPieces = board.getBlackPieces().size();
         } catch (Exception e) {
             fail();
             throw new RuntimeException(e);
