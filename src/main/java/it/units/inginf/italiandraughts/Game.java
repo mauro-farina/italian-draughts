@@ -5,22 +5,22 @@ public class Game {
 
     private Board board;
 
-    Turn turn; //turn = WHITE if it's turn of the white player, otherwise turn = BLACK
+    PlayerColor isTheTurnOfPlayer; //= WHITE if it's turn of the white player, otherwise = BLACK
 
     private int turnCounter;
 
     public Game() throws Exception {
         board = new Board();
         turnCounter = 1;
-        turn = Turn.WHITE;
+        isTheTurnOfPlayer = PlayerColor.WHITE;
     }
 
     public Board getBoard() {
         return this.board;
     }
 
-    public Turn getTurn() {
-        return this.turn;
+    public PlayerColor getIsTheTurnOfPlayer() {
+        return this.isTheTurnOfPlayer;
     }
 
     public int getTurnCounter() {
@@ -32,12 +32,12 @@ public class Game {
     }
 
     public void changeTurn() throws Exception {
-        if(this.turn == null) {
+        if(this.isTheTurnOfPlayer == null) {
             throw new Exception("Turn cannot be null");
-        } else if(this.turn == Turn.WHITE) {
-            this.turn = Turn.BLACK;
+        } else if(this.isTheTurnOfPlayer == PlayerColor.WHITE) {
+            this.isTheTurnOfPlayer = PlayerColor.BLACK;
         } else {
-            this.turn = Turn.WHITE;
+            this.isTheTurnOfPlayer = PlayerColor.WHITE;
         }
         incrementTurnCounter();
     }
