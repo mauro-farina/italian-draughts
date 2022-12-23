@@ -1,6 +1,6 @@
 package it.units.inginf.italiandraughts;
 
-public class BoardDrawer implements CLIReader {
+public class BoardDrawer implements CLIWriter {
 
     private final Board board;
 
