@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class GameTest {
 
     @Test
-    void checkPlayerColor() {
+    void checkTurn() {
         Game game;
         try {
             game = new Game();
@@ -37,8 +37,8 @@ public class GameTest {
         Game game;
         try {
             game = new Game();
-            for(int i = 0; i < 12; i++) {
-                game.getBoard().decrementNumberWhitePieces();
+            for(int i = 11; i >= 0; i--) {
+                game.getBoard().removePiece(PieceColor.WHITE, i);
             }
         } catch (Exception e) {
             fail();
@@ -52,7 +52,6 @@ public class GameTest {
         Game game;
         try {
             game = new Game();
-            game.getBoard().decrementNumberWhitePieces();
         } catch (Exception e) {
             fail();
             throw new RuntimeException(e);
