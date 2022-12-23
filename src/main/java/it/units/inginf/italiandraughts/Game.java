@@ -5,7 +5,7 @@ public class Game {
 
     private Board board;
 
-    PlayerColor isTheTurnOfPlayer; //= WHITE if it's turn of the white player, otherwise = BLACK
+    private PlayerColor isTheTurnOfPlayer; //= WHITE if it's turn of the white player, otherwise = BLACK
 
     private int turnCounter;
 
