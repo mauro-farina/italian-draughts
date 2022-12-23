@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class GameTest {
 
     @Test
-    void checkTurn() {
+    void checkPlayerColor() {
         Game game;
         try {
             game = new Game();
@@ -16,7 +16,7 @@ public class GameTest {
             fail();
             throw new RuntimeException(e);
         }
-        assertEquals(game.getTurn(), Turn.BLACK);
+        assertEquals(game.getIsTheTurnOfPlayer(), PlayerColor.BLACK);
     }
 
     @Test
