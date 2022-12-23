@@ -43,7 +43,7 @@ public class Game {
     }
 
     public boolean checkVictoryCondition() {
-        if((board.getNumberWhitePieces() == 0) || (board.getNumberBlackPieces() == 0)) {
+        if((board.getWhitePieces().size() == 0) || (board.getBlackPieces().size() == 0)) {
             return true;
         } else {
             return false;
