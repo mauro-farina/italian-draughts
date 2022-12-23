@@ -144,14 +144,16 @@ public class Board {
                 throw new Exception("This piece does not exist");
             } else {
                 whitePieces.add(new King(color, whitePieces.get(index).getSquare()));
-                whitePieces.remove(index);
+                whitePieces.get(index).getSquare().setSquareContent(SquareContent.WHITE_KING);
+                removePiece(color, index);
             }
         } else { //color = PieceColor.BLACK
             if(blackPieces.get(index) == null) {
                 throw new Exception("This piece does not exist");
             } else {
                 blackPieces.add(new King(color, blackPieces.get(index).getSquare()));
-                blackPieces.remove(index);
+                blackPieces.get(index).getSquare().setSquareContent(SquareContent.BLACK_KING);
+                removePiece(color, index);
             }
         }
     }
