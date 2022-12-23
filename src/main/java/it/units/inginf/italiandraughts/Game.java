@@ -3,24 +3,24 @@ package it.units.inginf.italiandraughts;
 
 public class Game {
 
-    private Board board;
+    private final Board board;
 
-    private PlayerColor isTheTurnOfPlayer; //= WHITE if it's turn of the white player, otherwise = BLACK
+    private PlayerColor turn; //= WHITE if it's turn of the white player, otherwise = BLACK
 
     private int turnCounter;
 
     public Game() throws Exception {
         board = new Board();
         turnCounter = 1;
-        isTheTurnOfPlayer = PlayerColor.WHITE;
+        turn = PlayerColor.WHITE;
     }
 
     public Board getBoard() {
         return this.board;
     }
 
-    public PlayerColor getIsTheTurnOfPlayer() {
-        return this.isTheTurnOfPlayer;
+    public PlayerColor getTurn() {
+        return this.turn;
     }
 
     public int getTurnCounter() {
@@ -32,12 +32,12 @@ public class Game {
     }
 
     public void changeTurn() throws Exception {
-        if(this.isTheTurnOfPlayer == null) {
+        if(this.turn == null) {
             throw new Exception("Turn cannot be null");
-        } else if(this.isTheTurnOfPlayer == PlayerColor.WHITE) {
-            this.isTheTurnOfPlayer = PlayerColor.BLACK;
+        } else if(this.turn == PlayerColor.WHITE) {
+            this.turn = PlayerColor.BLACK;
         } else {
-            this.isTheTurnOfPlayer = PlayerColor.WHITE;
+            this.turn = PlayerColor.WHITE;
         }
         incrementTurnCounter();
     }
