@@ -5,7 +5,7 @@ public class Game {
 
     private Board board;
 
-    private PlayerColor isTheTurnOfPlayer; //= WHITE if it's turn of the white player, otherwise = BLACK
+    private PlayerColor isTheTurnOfPlayer; //color = WHITE if it's turn of the white player, otherwise color = BLACK
 
     private int turnCounter;
 
@@ -43,7 +43,7 @@ public class Game {
     }
 
     public boolean checkVictoryCondition() {
-        if((board.getNumberWhitePieces() == 0) || (board.getNumberBlackPieces() == 0)) {
+        if((board.getWhitePieces().size() == 0) || (board.getBlackPieces().size() == 0)) {
             return true;
         } else {
             return false;
