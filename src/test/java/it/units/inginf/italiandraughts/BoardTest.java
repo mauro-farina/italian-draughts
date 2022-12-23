@@ -87,5 +87,20 @@ public class BoardTest {
             fail(e.getMessage());
         }
     }
+    @Test
+    void checkReachableSquaresWithKing(){
+        try {
+            Board board = new Board();
+            Piece piece = new King(PieceColor.BLACK, board.getSquare(7,6)); // piece in H7
+            List<Square> reachableSquares = board.getReachableSquares(piece);
+            if(!reachableSquares.contains(board.getSquare(6,7))) // if G8 is NOT in the list
+                fail("A reachable square is not considered so");
+            if(!reachableSquares.contains(board.getSquare(6,5))) // if G6 is NOT in the list
+                fail("A reachable square is not considered so");
+            assertEquals(2, reachableSquares.size());
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+    }
 
 }
