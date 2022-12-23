@@ -2,9 +2,9 @@ package it.units.inginf.italiandraughts;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.List;
 public class BoardTest {
 
     @Test
@@ -12,7 +12,7 @@ public class BoardTest {
         int numberOfWhitePieces;
         try {
             Board board = new Board();
-            board.decrementNumberWhitePieces();
+            board.removePiece(PieceColor.WHITE, 2);
             numberOfWhitePieces = board.getNumberWhitePieces();
         } catch (Exception e) {
             fail();
@@ -26,7 +26,7 @@ public class BoardTest {
         int numberOfBlackPieces;
         try {
             Board board = new Board();
-            board.decrementNumberBlackPieces();
+            board.removePiece(PieceColor.BLACK, 3);
             numberOfBlackPieces = board.getNumberBlackPieces();
         } catch (Exception e) {
             fail();
@@ -34,7 +34,7 @@ public class BoardTest {
         }
         assertEquals(numberOfBlackPieces, 11);
     }
-    
+
     @Test
     void checkGetNumberOfPieces() {
         int numberOfPieces;
@@ -62,6 +62,20 @@ public class BoardTest {
             throw new RuntimeException(e);
         }
         assertEquals(lastRow, expectedLastRow);
+    }
+
+    @Test
+    void checkManBecomesKing() {
+        List<Piece> whitePieces;
+        try {
+            Board board = new Board();
+            board.manBecomesKing(PieceColor.WHITE, 2);
+            whitePieces = board.getWhitePieces();
+        } catch (Exception e) {
+            fail();
+            throw new RuntimeException(e);
+        }
+        assertTrue(whitePieces.get(whitePieces.size() - 1).isKing());
     }
 
     @Test
