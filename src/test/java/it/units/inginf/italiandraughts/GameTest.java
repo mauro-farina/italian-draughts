@@ -16,7 +16,7 @@ public class GameTest {
             fail();
             throw new RuntimeException(e);
         }
-        assertEquals(game.getIsTheTurnOfPlayer(), PlayerColor.BLACK);
+        assertEquals(game.getTurn(), PlayerColor.BLACK);
     }
 
     @Test
