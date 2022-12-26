@@ -7,23 +7,35 @@ import static org.junit.jupiter.api.Assertions.*;
 public class GameTest {
 
     @Test
-    void checkTurn() {
+    void checkPlayer1() {
         Game game;
         try {
-            game = new Game();
+            game = new Game(new Player("Luca", PlayerColor.WHITE), new Player("Mauro", PlayerColor.BLACK));
+        } catch (Exception e) {
+            fail();
+            throw new RuntimeException(e);
+        }
+        assertEquals(game.getCurrentTurn(), game.getPlayer1());
+    }
+
+    @Test
+    void checkPlayer2() {
+        Game game;
+        try {
+            game = new Game(new Player("Luca", PlayerColor.WHITE), new Player("Mauro", PlayerColor.BLACK));
             game.changeTurn();
         } catch (Exception e) {
             fail();
             throw new RuntimeException(e);
         }
-        assertEquals(game.getTurn(), PlayerColor.BLACK);
+        assertEquals(game.getCurrentTurn(), game.getPlayer2());
     }
 
     @Test
     void checkTurnCounter() {
         Game game;
         try {
-            game = new Game();
+            game = new Game(new Player("Luca", PlayerColor.WHITE), new Player("Mauro", PlayerColor.BLACK));
             game.incrementTurnCounter();
         } catch (Exception e) {
             fail();
@@ -36,7 +48,7 @@ public class GameTest {
     void victoryConditionIsTrue() {
         Game game;
         try {
-            game = new Game();
+            game = new Game(new Player("Luca", PlayerColor.WHITE), new Player("Mauro", PlayerColor.BLACK));
             for(int i = 11; i >= 0; i--) {
                 game.getBoard().removePiece(PieceColor.WHITE, i);
             }
@@ -51,12 +63,13 @@ public class GameTest {
     void victoryConditionIsFalse() {
         Game game;
         try {
-            game = new Game();
+            game = new Game(new Player("Luca", PlayerColor.WHITE), new Player("Mauro", PlayerColor.BLACK));
         } catch (Exception e) {
             fail();
             throw new RuntimeException(e);
         }
         assertFalse(game.checkVictoryCondition());
     }
+
 
 }
