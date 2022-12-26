@@ -4,16 +4,12 @@ package it.units.inginf.italiandraughts;
 public class Game {
 
     private final Board board;
-
     private final Player player1; //This is the white player
-    
     private final Player player2; //This is the black player
-    
     private Player currentTurn;
-
     private int turnCounter;
 
-    public Game() throws Exception {
+    public Game(Player player1, Player player2) throws Exception {
         if((player1 == null) || (player2 == null)) {
             throw new Exception("One or both players are not valid");
         } else if((player1.getColor() != PlayerColor.WHITE) || (player2.getColor() != PlayerColor.BLACK)) {
@@ -35,16 +31,16 @@ public class Game {
         return this.currentTurn;
     }
 
-    public int getTurnCounter() {
-        return this.turnCounter;
-    }
-    
     public Player getPlayer1() {
         return this.player1;
     }
 
     public Player getPlayer2() {
         return this.player2;
+    }
+
+    public int getTurnCounter() {
+        return this.turnCounter;
     }
 
     public void incrementTurnCounter() {
