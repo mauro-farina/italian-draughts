@@ -39,7 +39,7 @@ public class Game {
         return this.turnCounter;
     }
     
-     public Player getPlayer1() {
+    public Player getPlayer1() {
         return this.player1;
     }
 
