@@ -70,6 +70,5 @@ public class GameTest {
         }
         assertFalse(game.checkVictoryCondition());
     }
-
-
+    
 }
