@@ -25,7 +25,7 @@ public class BoardDrawer implements CLIWriter {
     private void printBoardForWhitePlayer(){
         for(byte i=7; i>=0; i--){
             for(byte j=0; j<8; j++){
-                System.out.print(this.board.getBoardSquares()[i][j].toString());
+                System.out.print(this.board.getSquare(i, j).getSquareContent().toString());
             }
             System.out.println();
         }
@@ -34,7 +34,7 @@ public class BoardDrawer implements CLIWriter {
     private void printBoardForBlackPlayer(){
         for(byte i=0; i<8; i++){
             for(byte j=7; j>=0; j--){
-                System.out.print(this.board.getBoardSquares()[i][j].toString());
+                System.out.print(this.board.getSquare(i, j).getSquareContent().toString());
             }
             System.out.println();
         }
