@@ -85,6 +85,39 @@ public class Board {
         return this.boardSquares[matrixCoordinateX][matrixCoordinateY];
     }
 
+    @Override
+    public String toString() {
+        return toStringForWhitePlayer();
+    }
+
+    public String toStringFor(PlayerColor playerColor) {
+        if(playerColor.equals(PlayerColor.WHITE))
+            return toStringForWhitePlayer();
+        else
+            return toStringForBlackPlayer();
+    }
+
+    private String toStringForWhitePlayer() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for(byte i=7; i>=0; i--){
+            for(byte j=0; j<8; j++){
+                stringBuilder.append(getSquare(i, j).getSquareContent().toString());
+            }
+            stringBuilder.append(System.lineSeparator());
+        }
+        return stringBuilder.toString();
+    }
+
+    private String toStringForBlackPlayer() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for(byte i=0; i<8; i++){
+            for(byte j=7; j>=0; j--){
+                stringBuilder.append(getSquare(i, j).getSquareContent().toString());
+            }
+            stringBuilder.append(System.lineSeparator());
+        }
+        return stringBuilder.toString();
+    }
 
     public List<Square> getReachableSquares(Piece piece) { //reachable or adjacent
         Square pieceSquare = piece.getSquare();
@@ -149,7 +182,7 @@ public class Board {
             }
         }
     }
-    
+
     public Piece researchPiece(Square square) {
         for(int i = 0; i < whitePieces.size(); i++) {
             if(whitePieces.get(i).getSquare() == square) {
