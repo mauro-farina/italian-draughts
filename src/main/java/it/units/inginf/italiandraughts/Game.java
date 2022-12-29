@@ -1,7 +1,5 @@
 package it.units.inginf.italiandraughts;
 
-import java.util.List;
-
 public class Game {
 
     private final Board board;
