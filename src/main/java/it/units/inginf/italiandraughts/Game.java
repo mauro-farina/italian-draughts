@@ -10,6 +10,7 @@ public class Game {
     private int turnCounter;
     private final InputReader inputReader; // could go in the Main to separate concerns
     private final OutputPrinter outputPrinter; // could go in the Main to separate concerns
+    private GameState gameState;
 
     public Game(Player player1, Player player2) throws Exception {
         if((player1 == null) || (player2 == null)) {
@@ -17,6 +18,7 @@ public class Game {
         } else if((player1.getColor() != PlayerColor.WHITE) || (player2.getColor() != PlayerColor.BLACK)) {
             throw new Exception("player1 uses the white pieces, while player2 uses the black pieces");
         } else {
+            this.gameState = GameState.SETTING_UP;
             this.board = new Board();
             this.turnCounter = 1;
             this.player1 = player1;
