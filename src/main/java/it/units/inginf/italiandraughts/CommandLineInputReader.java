@@ -2,11 +2,11 @@ package it.units.inginf.italiandraughts;
 
 import java.util.Scanner;
 
-public class CommandReader implements CLIReader {
+public class CommandLineInputReader implements InputReader {
 
     private Scanner scanner;
 
-    public CommandReader() {
+    public CommandLineInputReader() {
         scanner = new Scanner(System.in);
     }
 
