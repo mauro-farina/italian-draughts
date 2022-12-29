@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GameTest {
-
+/*
     @Test
     void checkPlayer1() {
         Game game;
@@ -70,5 +70,5 @@ public class GameTest {
         }
         assertFalse(game.checkVictoryCondition());
     }
-    
+    */
 }
