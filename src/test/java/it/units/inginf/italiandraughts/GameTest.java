@@ -11,6 +11,7 @@ public class GameTest {
         Game game;
         try {
             game = new Game(new Player("Luca", PlayerColor.WHITE), new Player("Mauro", PlayerColor.BLACK));
+            game.initGame();
         } catch (Exception e) {
             fail();
             throw new RuntimeException(e);
@@ -23,6 +24,7 @@ public class GameTest {
         Game game;
         try {
             game = new Game(new Player("Luca", PlayerColor.WHITE), new Player("Mauro", PlayerColor.BLACK));
+            game.initGame();
             game.changeTurn();
         } catch (Exception e) {
             fail();
@@ -36,6 +38,7 @@ public class GameTest {
         Game game;
         try {
             game = new Game(new Player("Luca", PlayerColor.WHITE), new Player("Mauro", PlayerColor.BLACK));
+            game.initGame();
             game.incrementTurnCounter();
         } catch (Exception e) {
             fail();
@@ -49,6 +52,7 @@ public class GameTest {
         Game game;
         try {
             game = new Game(new Player("Luca", PlayerColor.WHITE), new Player("Mauro", PlayerColor.BLACK));
+            game.initGame();
             for(int i = 11; i >= 0; i--) {
                 game.getBoard().removePiece(PieceColor.WHITE, i);
             }
@@ -64,6 +68,7 @@ public class GameTest {
         Game game;
         try {
             game = new Game(new Player("Luca", PlayerColor.WHITE), new Player("Mauro", PlayerColor.BLACK));
+            game.initGame();
         } catch (Exception e) {
             fail();
             throw new RuntimeException(e);
@@ -76,6 +81,7 @@ public class GameTest {
         Game game;
         try {
             game = new Game(new Player("Luca", PlayerColor.WHITE), new Player("Mauro", PlayerColor.BLACK));
+            game.initGame();
             game.setWinnerPlayer(game.getPlayer1());
         } catch (Exception e) {
             fail();

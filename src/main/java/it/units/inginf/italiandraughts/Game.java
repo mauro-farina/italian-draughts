@@ -11,6 +11,7 @@ public class Game {
     private final InputReader inputReader; // could go in the Main to separate concerns
     private final OutputPrinter outputPrinter; // could go in the Main to separate concerns
     private GameState gameState;
+    private final CommandManager commandManager;
 
     public Game(Player player1, Player player2) throws Exception {
         if((player1 == null) || (player2 == null)) {
@@ -24,14 +25,12 @@ public class Game {
             this.player2 = player2;
             this.inputReader = new CommandLineInputReader();
             this.outputPrinter = new CommandLineOutputPrinter();
+            this.commandManager = new CommandManager(this);
         }
     }
 
     public void start() {
-        this.gameState = GameState.PLAYING;
-        CommandManager commandManager = new CommandManager(this);
-        this.currentTurn = this.player1;
-        this.turnCounter = 1;
+        initGame();
         //execute command HELP
         while(this.gameState == GameState.PLAYING) {
             outputPrinter.print(board.toStringFor(PlayerColor.WHITE));
@@ -47,6 +46,12 @@ public class Game {
                 }
             }
         }
+    }
+
+    public void initGame() {
+        this.gameState = GameState.PLAYING;
+        this.currentTurn = this.player1;
+        this.turnCounter = 1;
     }
 
     public Board getBoard() {
