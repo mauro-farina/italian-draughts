@@ -5,7 +5,15 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GameTest {
-/*
+    
+    package it.units.inginf.italiandraughts;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+public class GameTest {
+
     @Test
     void checkPlayer1() {
         Game game;
@@ -70,5 +78,19 @@ public class GameTest {
         }
         assertFalse(game.checkVictoryCondition());
     }
-    */
+
+    @Test
+    void checkWinnerPlayer() {
+        Game game;
+        try {
+            game = new Game(new Player("Luca", PlayerColor.WHITE), new Player("Mauro", PlayerColor.BLACK));
+            game.setWinnerPlayer(game.getPlayer1());
+        } catch (Exception e) {
+            fail();
+            throw new RuntimeException(e);
+        }
+        assertEquals(game.getWinnerPlayer(), game.getPlayer1());
+    }
+
+}
 }
