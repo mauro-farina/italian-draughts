@@ -116,5 +116,25 @@ public class BoardTest {
             fail(e.getMessage());
         }
     }
+    
+    @Test
+    void checkResearchPiece() {
+        Board board;
+        Square square;
+        try {
+            board = new Board();
+            square = new Square(0,0);
+        } catch (Exception e) {
+            fail();
+            throw new RuntimeException(e);
+        }
+        int i;
+        for(i= 0; i < board.getWhitePieces().size() - 1; i++) {
+            if(board.getWhitePieces().get(i).getSquare() == board.getSquare(0,1)) {
+                break;
+            }
+        }
+        assertEquals(board.researchPiece(board.getSquare(0,1)), board.getWhitePieces().get(i));
+    }
 
 }
