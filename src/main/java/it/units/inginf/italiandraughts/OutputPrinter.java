@@ -1,6 +1,6 @@
 package it.units.inginf.italiandraughts;
 
-public interface CLIWriter {
+public interface OutputPrinter {
     void printBoard(Board board);
     void printBoardForPlayer(Board board, PlayerColor playerColor);
 }

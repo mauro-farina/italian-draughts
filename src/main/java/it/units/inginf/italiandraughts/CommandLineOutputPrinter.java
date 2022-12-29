@@ -1,10 +1,10 @@
 package it.units.inginf.italiandraughts;
 
-public class BoardDrawer implements CLIWriter {
+public class CommandLineOutputPrinter implements OutputPrinter {
 
     private final Board board;
 
-    public BoardDrawer(Board board) {
+    public CommandLineOutputPrinter(Board board) {
         this.board = board;
     }
 
