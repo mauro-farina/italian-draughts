@@ -8,6 +8,8 @@ public class Game {
     private Player currentTurn;
     private Player winnerPlayer;
     private int turnCounter;
+    private final InputReader inputReader;
+    private final OutputPrinter outputPrinter;
 
     public Game(Player player1, Player player2) throws Exception {
         if((player1 == null) || (player2 == null)) {
@@ -20,6 +22,8 @@ public class Game {
             this.player1 = player1;
             this.player2 = player2;
             this.currentTurn = this.player1;
+            this.inputReader = new CommandLineInputReader();
+            this.outputPrinter = new CommandLineOutputPrinter();
         }
     }
 
