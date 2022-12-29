@@ -5,14 +5,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GameTest {
-    
-    package it.units.inginf.italiandraughts;
-
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-public class GameTest {
 
     @Test
     void checkPlayer1() {
@@ -92,5 +84,4 @@ public class GameTest {
         assertEquals(game.getWinnerPlayer(), game.getPlayer1());
     }
 
-}
 }
