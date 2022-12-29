@@ -4,5 +4,5 @@ public enum CommandType {
     TO,
     CAPTURE,
     SURRENDER,
-    HELP;
+    HELP
 }
