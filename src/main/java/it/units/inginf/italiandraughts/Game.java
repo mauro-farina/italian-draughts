@@ -8,8 +8,8 @@ public class Game {
     private Player currentTurn;
     private Player winnerPlayer;
     private int turnCounter;
-    private final InputReader inputReader;
-    private final OutputPrinter outputPrinter;
+    private final InputReader inputReader; // could go in the Main to separate concerns
+    private final OutputPrinter outputPrinter; // could go in the Main to separate concerns
 
     public Game(Player player1, Player player2) throws Exception {
         if((player1 == null) || (player2 == null)) {
