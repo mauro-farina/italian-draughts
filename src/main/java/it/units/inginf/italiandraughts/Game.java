@@ -20,12 +20,32 @@ public class Game {
         } else {
             this.gameState = GameState.SETTING_UP;
             this.board = new Board();
-            this.turnCounter = 1;
             this.player1 = player1;
             this.player2 = player2;
-            this.currentTurn = this.player1;
             this.inputReader = new CommandLineInputReader();
             this.outputPrinter = new CommandLineOutputPrinter();
+        }
+    }
+
+    public void start() {
+        this.gameState = GameState.PLAYING;
+        CommandManager commandManager = new CommandManager(this);
+        this.currentTurn = this.player1;
+        this.turnCounter = 1;
+        //execute command HELP
+        while(this.gameState == GameState.PLAYING) {
+            outputPrinter.print(board.toStringFor(PlayerColor.WHITE));
+            outputPrinter.print("Turn of " + getCurrentTurn().getNickname());
+            while(true) {
+                String readCommand = inputReader.readInput();
+                try {
+                    Command command = new Command(readCommand);
+                    commandManager.runCommand(command);
+                    break;
+                } catch (Exception exception) {
+                    outputPrinter.print(exception.getMessage());
+                }
+            }
         }
     }
 
@@ -54,6 +74,7 @@ public class Game {
             throw new Exception("The winner player does not exists");
         } else {
             winnerPlayer = player;
+            gameState = GameState.OVER;
         }
     }
 
