@@ -1,43 +1,17 @@
 package it.units.inginf.italiandraughts;
 
+import java.io.PrintStream;
+
 public class CommandLineOutputPrinter implements OutputPrinter {
 
-    private final Board board;
+    private final PrintStream printStream;
 
-    public CommandLineOutputPrinter(Board board) {
-        this.board = board;
+    public CommandLineOutputPrinter() {
+        this.printStream = System.out;
     }
 
     @Override
-    public void printBoard(Board board) {
-        printBoardForWhitePlayer(); // print from White POV as default
+    public void print(String stringToPrint) {
+        printStream.println(stringToPrint);
     }
-
-    @Override
-    public void printBoardForPlayer(Board board, PlayerColor playerColor) {
-        if(playerColor.equals(PlayerColor.WHITE)) {
-            printBoardForWhitePlayer();
-        } else {
-            printBoardForBlackPlayer();
-        }
-    }
-
-    private void printBoardForWhitePlayer(){
-        for(byte i=7; i>=0; i--){
-            for(byte j=0; j<8; j++){
-                System.out.print(this.board.getSquare(i, j).getSquareContent().toString());
-            }
-            System.out.println();
-        }
-    }
-
-    private void printBoardForBlackPlayer(){
-        for(byte i=0; i<8; i++){
-            for(byte j=7; j>=0; j--){
-                System.out.print(this.board.getSquare(i, j).getSquareContent().toString());
-            }
-            System.out.println();
-        }
-    }
-
 }
