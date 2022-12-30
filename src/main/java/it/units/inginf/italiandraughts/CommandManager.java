@@ -11,16 +11,23 @@ public class CommandManager {
     }
 
     public void runCommand(Command command) throws Exception {
-        if(command.getCommandType() == CommandType.SURRENDER) {
+        if(command instanceof CommandSurrender){
             this.runCommandSurrender();
-        } else if(command.getCommandType() == CommandType.HELP) {
+        }
+        if(command instanceof CommandHelp){
             this.runCommandHelp();
-        } else if(command.getCommandType() == CommandType.TO) {
-            this.runCommandTo(command.getCoordinatesStartingSquare(), command.getCoordinatesArrivalSquare());
-        } else if(command.getCommandType() == CommandType.CAPTURE) {
-            this.runCommandCapture(command.getCoordinatesStartingSquare(), command.getCoordinatesArrivalSquare());
-        } else {
-            throw new Exception("Invalid command");
+        }
+        if(command instanceof CommandTo){
+            this.runCommandTo(
+                    ((CommandTo) command).getFromCoordinates(),
+                    ((CommandTo) command).getToCoordinates()
+            );
+        }
+        if(command instanceof CommandCapture){
+            this.runCommandCapture(
+                    ((CommandCapture) command).getFromCoordinates(),
+                    ((CommandCapture) command).getPieceToCaptureCoordinates()
+            );
         }
     }
 

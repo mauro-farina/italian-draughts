@@ -38,7 +38,7 @@ public class Game {
             while(true) {
                 String readCommand = inputReader.readInput();
                 try {
-                    Command command = new Command(readCommand);
+                    Command command = CommandParser.parseCommand(readCommand);
                     commandManager.runCommand(command);
                     break;
                 } catch (Exception exception) {

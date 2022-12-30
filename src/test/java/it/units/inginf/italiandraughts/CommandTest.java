@@ -10,7 +10,7 @@ public class CommandTest {
     void checkCommandTypeHelp() {
         Command command;
         try {
-            command = new Command("help");
+            command = CommandParser.parseCommand("help");
         } catch (Exception e) {
             fail();
             throw new RuntimeException(e);
@@ -22,7 +22,7 @@ public class CommandTest {
     void checkCommandTypeSurrender() {
         Command command;
         try {
-            command = new Command("sur");
+            command = CommandParser.parseCommand("sur");
         } catch (Exception e) {
             fail();
             throw new RuntimeException(e);
@@ -34,13 +34,13 @@ public class CommandTest {
     void checkCoordinatesStartingSquare() {
         Command command;
         try {
-            command = new Command("A1 to B2");
+            command = CommandParser.parseCommand("A1 to B2");
         } catch (Exception e) {
             fail();
             throw new RuntimeException(e);
         }
         int[] expectedCoordinates = {0, 0};
-        int[] coordinates = command.getCoordinatesStartingSquare();
+        int[] coordinates = ((CommandTo)command).getFromCoordinates();
         boolean test = true;
         for(int i = 0; i < 2; i++) {
             if(coordinates[i] != expectedCoordinates[i]) {
@@ -54,13 +54,13 @@ public class CommandTest {
     void checkCoordinatesArrivalSquare() {
         Command command;
         try {
-            command = new Command("A1 to B2");
+            command = CommandParser.parseCommand("A1 to B2");
         } catch (Exception e) {
             fail();
             throw new RuntimeException(e);
         }
         int[] expectedCoordinates = {1, 1};
-        int[] coordinates = command.getCoordinatesArrivalSquare();
+        int[] coordinates = ((CommandTo)command).getToCoordinates();
         boolean test = true;
         for(int i = 0; i < 2; i++) {
             if(coordinates[i] != expectedCoordinates[i]) {
