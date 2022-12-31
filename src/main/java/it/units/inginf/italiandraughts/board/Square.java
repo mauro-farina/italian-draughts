@@ -2,18 +2,15 @@ package it.units.inginf.italiandraughts.board;
 
 public class Square {
 
-    private final char[] coordinates = new char[2]; //coordinates of the cell ( from A1 to H8)
     private final SquareColor squareColor; // square color (black or white)
     // italian-draughts pieces are only allowed on black squares
     private SquareContent squareContent;
-    //private final PieceColor lastRowFor;
-    // (y == 0, or coordinates[1] == 1) is the last row for Black Pieces
-    // (y == 7, or coordinates[1] == 8) is the last row for White Pieces
 
     private final SquareCoordinates squareCoordinates;
     private final SquareName squareName;
 
     public Square(int x, int y) throws Exception {
+        char[] coordinates = new char[2]; //coordinates of the cell ( from A1 to H8)
         switch (x) {
             case 0 -> coordinates[0] = 'A';
             case 1 -> coordinates[0] = 'B';
@@ -55,14 +52,6 @@ public class Square {
             }
         }
 
-        // LastRow
-        /*if(y == 0) { // first row => a black man becomes a black king
-            this.lastRowFor = PieceColor.BLACK;
-        } else if (y == 7) { // last row => a white man becomes a white king
-            this.lastRowFor = PieceColor.WHITE;
-        } else { // if y is not a last row, no piece will become a king
-            this.lastRowFor = null;
-        }*/
         this.squareContent = SquareContent.EMPTY;
     }
 
@@ -73,11 +62,6 @@ public class Square {
     public SquareContent getSquareContent() {
         return squareContent;
     }
-    
-    /*
-    public boolean isLastRowFor(PieceColor pieceColor) {
-        return pieceColor.equals(this.lastRowFor);
-    }*/
 
     public SquareCoordinates getSquareCoordinates() {
         return squareCoordinates;
