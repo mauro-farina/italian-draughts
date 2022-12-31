@@ -1,5 +1,7 @@
 package it.units.inginf.italiandraughts;
 
+import it.units.inginf.italiandraughts.board.SquareName;
+
 public class Utils {
 
     public static int[] convertToCoordinates(String coordinatesString) throws Exception {
@@ -31,5 +33,9 @@ public class Utils {
             }
             return coordinates;
         }
+    }
+
+    public static int[] convertToCoordinates(SquareName squareName) throws Exception {
+        return convertToCoordinates(squareName.toString());
     }
 }
