@@ -32,6 +32,27 @@ public class CoordinateSystemTest {
     }
 
     @Test
+    void createSquareNameFromSquareCoordinates() {
+        int column = 2, row = 1; // C2
+        SquareCoordinates squareCoordinates;
+        SquareName squareName;
+        try {
+            squareCoordinates = new SquareCoordinates(column, row);
+        } catch (Exception e) {
+            fail("coordinates should be valid");
+            throw new RuntimeException(e);
+        }
+        try {
+            squareName = new SquareName(squareCoordinates);
+        } catch (Exception e) {
+            fail("squareName should be valid");
+            throw new RuntimeException(e);
+        }
+        assertEquals("C2", squareName.toString());
+        assertEquals("(2,1)", squareCoordinates.toString());
+    }
+
+    @Test
     void checkCoordinatesFromSquare() {
         Square square;
         try {
