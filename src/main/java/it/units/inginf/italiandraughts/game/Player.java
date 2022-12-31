@@ -2,9 +2,9 @@ package it.units.inginf.italiandraughts.game;
 
 public class Player {
 
-    private String nickname;
+    private final String nickname;
 
-    private PlayerColor color;
+    private final PlayerColor color;
 
     public Player(String nickname, PlayerColor color) throws Exception {
         if(nickname == null) {
