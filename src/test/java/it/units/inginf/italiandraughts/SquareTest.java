@@ -39,8 +39,7 @@ public class SquareTest {
             throw new RuntimeException(e);
         }
         // Assert
-        String coordinateX = square.getCoordinateX();
-        assertEquals(coordinateX, "A");
+        assertEquals(square.getSquareName().getColumn(), 'A');
     }
 
     @Test
@@ -56,8 +55,7 @@ public class SquareTest {
             throw new RuntimeException(e);
         }
         // Assert
-        String coordinateY = square.getCoordinateY();
-        assertEquals(coordinateY, "6");
+        assertEquals(square.getSquareName().getRow(), '6');
     }
 
     @Test

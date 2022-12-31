@@ -123,8 +123,8 @@ public class Board {
 
     public List<Square> getReachableSquares(Piece piece) { //reachable or adjacent
         Square pieceSquare = piece.getSquare();
-        int pieceSquareX = pieceSquare.getMatrixCoordinateX(); // 0-based columns (instead of A, B, ...)
-        int pieceSquareY = pieceSquare.getMatrixCoordinateY(); // 0-based rows (instead of 1, 2, ...)
+        int pieceSquareX = pieceSquare.getSquareCoordinates().getCoordinateX(); // 0-based columns (instead of A, B, ...)
+        int pieceSquareY = pieceSquare.getSquareCoordinates().getCoordinateY(); // 0-based rows (instead of 1, 2, ...)
         List<Square> squaresList = new ArrayList<>();
         // loop through the 4 corner-adjacent squares
         for(short i=-1; i<=1; i+=2){ // i to move on a row

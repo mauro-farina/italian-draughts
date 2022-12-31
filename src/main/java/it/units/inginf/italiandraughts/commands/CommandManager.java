@@ -92,7 +92,8 @@ public class CommandManager {
             }
         }
         selectedPiece.setSquare(arrivalSquare);
-        if(Integer.parseInt(game.getBoard().getLastRow(selectedPiece.getColor())[0].getCoordinateY()) - 1 == arrivalSquare.getMatrixCoordinateY()) {
+        // if(Integer.parseInt(game.getBoard().getLastRow(selectedPiece.getColor())[0].getCoordinateY()) - 1 == arrivalSquare.getMatrixCoordinateY()) {
+        if(game.getBoard().getLastRow(selectedPiece.getColor())[0].getSquareCoordinates().getCoordinateY() == arrivalSquare.getSquareCoordinates().getCoordinateY()) {
             game.getBoard().manBecomesKing(selectedPiece.getColor(), pieceIndex);
         }
     }
