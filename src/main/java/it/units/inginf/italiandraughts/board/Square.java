@@ -1,4 +1,4 @@
-package it.units.inginf.italiandraughts;
+package it.units.inginf.italiandraughts.board;
 
 public class Square {
 

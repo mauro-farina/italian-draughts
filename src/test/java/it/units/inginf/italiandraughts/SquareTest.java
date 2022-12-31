@@ -1,5 +1,8 @@
 package it.units.inginf.italiandraughts;
 
+import it.units.inginf.italiandraughts.board.Square;
+import it.units.inginf.italiandraughts.board.SquareColor;
+import it.units.inginf.italiandraughts.board.SquareContent;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

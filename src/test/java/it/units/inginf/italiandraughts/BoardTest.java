@@ -1,5 +1,6 @@
 package it.units.inginf.italiandraughts;
 
+import it.units.inginf.italiandraughts.board.*;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

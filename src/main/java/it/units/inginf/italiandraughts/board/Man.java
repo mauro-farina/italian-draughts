@@ -1,4 +1,4 @@
-package it.units.inginf.italiandraughts;
+package it.units.inginf.italiandraughts.board;
 import java.lang.Exception;
 
 public class Man implements Piece{

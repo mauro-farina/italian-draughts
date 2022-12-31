@@ -1,5 +1,8 @@
 package it.units.inginf.italiandraughts;
 
+import it.units.inginf.italiandraughts.board.Board;
+import it.units.inginf.italiandraughts.commands.Command;
+import it.units.inginf.italiandraughts.commands.CommandManager;
 import it.units.inginf.italiandraughts.io.CommandLineInputReader;
 import it.units.inginf.italiandraughts.io.CommandLineOutputPrinter;
 import it.units.inginf.italiandraughts.io.InputReader;
