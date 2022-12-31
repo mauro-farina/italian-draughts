@@ -3,15 +3,19 @@ package it.units.inginf.italiandraughts.commands;
 import it.units.inginf.italiandraughts.board.*;
 import it.units.inginf.italiandraughts.game.Game;
 import it.units.inginf.italiandraughts.game.PlayerColor;
+import it.units.inginf.italiandraughts.io.CommandLineOutputPrinter;
+import it.units.inginf.italiandraughts.io.OutputPrinter;
 
 import java.util.List;
 
 public class CommandRunner {
 
     private final Game game;
+    private final OutputPrinter outputPrinter;
 
     public CommandRunner(Game game) {
         this.game = game;
+        this.outputPrinter = new CommandLineOutputPrinter();
     }
 
     public void runCommand(Command command) throws Exception {
@@ -41,14 +45,20 @@ public class CommandRunner {
         } else {
             game.setWinnerPlayer(game.getPlayer1());
         }
-        System.out.println("The winner is " + game.getWinnerPlayer().getNickname());
+        outputPrinter.print("The winner is " + game.getWinnerPlayer().getNickname());
     }
 
     private void runCommandHelp() {
-        System.out.println("Type 'help' to get command instructions");
-        System.out.println("Type 'sur' or 'surrender' to surrender");
-        System.out.println("To move a piece from its square B3 to a free square A4, type 'B3 to A4'");
-        System.out.println("To capture a piece located on square C4 with your piece in B3 type 'B3 capture C4'. You can shorten 'capture' with 'capt' or 'cap'");
+        StringBuilder helpMessageBuilder = new StringBuilder();
+        helpMessageBuilder.append("Type 'help' to get command instructions");
+        helpMessageBuilder.append(System.lineSeparator());
+        helpMessageBuilder.append("Type 'sur' or 'surrender' to surrender");
+        helpMessageBuilder.append(System.lineSeparator());
+        helpMessageBuilder.append("To move a piece from its square B3 to a free square A4, type 'B3 to A4'");
+        helpMessageBuilder.append(System.lineSeparator());
+        helpMessageBuilder.append("To capture a piece located on square C4 with your piece in B3 type 'B3 capture C4'.");
+        helpMessageBuilder.append("You can shorten 'capture' with 'capt' or 'cap'");
+        outputPrinter.print(helpMessageBuilder.toString());
     }
 
     private void runCommandTo(int[] coordinatesStartingSquare, int[] coordinatesArrivalSquare) throws Exception {
