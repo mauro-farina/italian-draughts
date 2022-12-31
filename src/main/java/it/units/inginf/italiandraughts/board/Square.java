@@ -12,6 +12,9 @@ public class Square {
     private final int matrixCoordinateX;
     private final int matrixCoordinateY;
 
+    private final SquareCoordinates squareCoordinates;
+    private final SquareName squareName;
+
     public Square(int x, int y) throws Exception {
         switch (x) {
             case 0 -> coordinates[0] = 'A';
@@ -38,6 +41,9 @@ public class Square {
 
         this.matrixCoordinateX = x;
         this.matrixCoordinateY = y;
+
+        this.squareCoordinates = new SquareCoordinates(x,y);
+        this.squareName = new SquareName(coordinates[0], coordinates[1]);
 
         // Assign color to square (purely based on square coordinates)
         if(x % 2 == 0){ // if x (column) even => B, D, F, H
@@ -92,6 +98,14 @@ public class Square {
     public boolean isLastRowFor(PieceColor pieceColor) {
         return pieceColor.equals(this.lastRowFor);
     }*/
+
+    public SquareCoordinates getSquareCoordinates() {
+        return squareCoordinates;
+    }
+
+    public SquareName getSquareName() {
+        return squareName;
+    }
 
     public void setSquareContent(SquareContent newSquareContent) throws Exception {
         if (newSquareContent == null){
