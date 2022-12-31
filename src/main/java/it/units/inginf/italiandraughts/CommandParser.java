@@ -1,5 +1,8 @@
 package it.units.inginf.italiandraughts;
 
+import it.units.inginf.italiandraughts.Utils;
+import it.units.inginf.italiandraughts.commands.*;
+
 public class CommandParser {
 
     // static ?

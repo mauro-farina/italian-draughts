@@ -1,4 +1,4 @@
-package it.units.inginf.italiandraughts;
+package it.units.inginf.italiandraughts.commands;
 
 public class CommandTo extends Command {
 

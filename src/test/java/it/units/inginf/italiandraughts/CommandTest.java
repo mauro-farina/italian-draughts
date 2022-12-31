@@ -1,5 +1,8 @@
 package it.units.inginf.italiandraughts;
 
+import it.units.inginf.italiandraughts.commands.Command;
+import it.units.inginf.italiandraughts.commands.CommandTo;
+import it.units.inginf.italiandraughts.commands.CommandType;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -1,4 +1,7 @@
-package it.units.inginf.italiandraughts;
+package it.units.inginf.italiandraughts.commands;
+
+import it.units.inginf.italiandraughts.*;
+import it.units.inginf.italiandraughts.board.*;
 
 import java.util.List;
 
