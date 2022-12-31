@@ -3,7 +3,7 @@ package it.units.inginf.italiandraughts.game;
 import it.units.inginf.italiandraughts.CommandParser;
 import it.units.inginf.italiandraughts.board.Board;
 import it.units.inginf.italiandraughts.commands.Command;
-import it.units.inginf.italiandraughts.commands.CommandManager;
+import it.units.inginf.italiandraughts.commands.CommandRunner;
 import it.units.inginf.italiandraughts.io.CommandLineInputReader;
 import it.units.inginf.italiandraughts.io.CommandLineOutputPrinter;
 import it.units.inginf.italiandraughts.io.InputReader;
@@ -20,7 +20,7 @@ public class Game {
     private final InputReader inputReader; // could go in the Main to separate concerns
     private final OutputPrinter outputPrinter; // could go in the Main to separate concerns
     private GameState gameState;
-    private final CommandManager commandManager;
+    private final CommandRunner commandRunner;
 
     public Game(Player player1, Player player2) throws Exception {
         if((player1 == null) || (player2 == null)) {
@@ -34,7 +34,7 @@ public class Game {
             this.player2 = player2;
             this.inputReader = new CommandLineInputReader();
             this.outputPrinter = new CommandLineOutputPrinter();
-            this.commandManager = new CommandManager(this);
+            this.commandRunner = new CommandRunner(this);
         }
     }
 
@@ -48,7 +48,7 @@ public class Game {
                 String readCommand = inputReader.readInput();
                 try {
                     Command command = CommandParser.parseCommand(readCommand);
-                    commandManager.runCommand(command);
+                    commandRunner.runCommand(command);
                     break;
                 } catch (Exception exception) {
                     outputPrinter.print(exception.getMessage());
