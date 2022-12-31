@@ -1,5 +1,6 @@
 package it.units.inginf.italiandraughts;
 
+import it.units.inginf.italiandraughts.board.Board;
 import it.units.inginf.italiandraughts.board.Square;
 import it.units.inginf.italiandraughts.board.SquareCoordinates;
 import it.units.inginf.italiandraughts.board.SquareName;
@@ -63,5 +64,21 @@ public class CoordinateSystemTest {
         }
         assertEquals("(2,4)", square.getSquareCoordinates().toString());
         assertEquals("C5", square.getSquareName().toString());
+    }
+
+    @Test
+    void getSquareFromBoard() {
+        Board board;
+        Square square;
+        SquareCoordinates squareCoordinates;
+        try {
+            board = new Board();
+            squareCoordinates = new SquareCoordinates(1,2); // B3
+            square = board.getSquare(squareCoordinates);
+        } catch (Exception e) {
+            fail();
+            throw new RuntimeException(e);
+        }
+        assertEquals(squareCoordinates.toString(), square.getSquareCoordinates().toString());
     }
 }

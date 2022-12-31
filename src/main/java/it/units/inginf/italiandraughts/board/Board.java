@@ -87,6 +87,14 @@ public class Board {
         return this.boardSquares[matrixCoordinateX][matrixCoordinateY];
     }
 
+    public Square getSquare(SquareCoordinates squareCoordinates){
+        if(squareCoordinates.getColumn() < 0 || squareCoordinates.getColumn() >= 8
+                || squareCoordinates.getRow()<0 || squareCoordinates.getRow()>=8){
+            throw new RuntimeException();
+        }
+        return this.boardSquares[squareCoordinates.getColumn()][squareCoordinates.getRow()];
+    }
+
     @Override
     public String toString() {
         return toStringForWhitePlayer();
