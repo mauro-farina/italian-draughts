@@ -6,28 +6,28 @@ import it.units.inginf.italiandraughts.game.PlayerColor;
 
 import java.util.List;
 
-public class CommandManager {
+public class CommandRunner {
 
     private final Game game;
 
-    public CommandManager(Game game) {
+    public CommandRunner(Game game) {
         this.game = game;
     }
 
     public void runCommand(Command command) throws Exception {
-        if(command instanceof CommandSurrender){
+        if(command == null) {
+            throw new Exception("Command cannot be null");
+        }
+        if(command.getCommandType().equals(CommandType.SURRENDER)) {
             this.runCommandSurrender();
-        }
-        if(command instanceof CommandHelp){
+        } else if(command.getCommandType().equals(CommandType.HELP)) {
             this.runCommandHelp();
-        }
-        if(command instanceof CommandTo){
+        } else if(command.getCommandType().equals(CommandType.TO)) {
             this.runCommandTo(
                     ((CommandTo) command).getFromCoordinates(),
                     ((CommandTo) command).getToCoordinates()
             );
-        }
-        if(command instanceof CommandCapture){
+        } else if(command.getCommandType().equals(CommandType.CAPTURE)) {
             this.runCommandCapture(
                     ((CommandCapture) command).getFromCoordinates(),
                     ((CommandCapture) command).getPieceToCaptureCoordinates()
