@@ -1,6 +1,6 @@
 package it.units.inginf.italiandraughts.board;
 
-import it.units.inginf.italiandraughts.PlayerColor;
+import it.units.inginf.italiandraughts.game.PlayerColor;
 
 import java.util.ArrayList;
 import java.util.List;

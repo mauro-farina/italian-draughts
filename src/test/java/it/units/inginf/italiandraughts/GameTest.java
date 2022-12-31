@@ -1,6 +1,9 @@
 package it.units.inginf.italiandraughts;
 
 import it.units.inginf.italiandraughts.board.PieceColor;
+import it.units.inginf.italiandraughts.game.Game;
+import it.units.inginf.italiandraughts.game.Player;
+import it.units.inginf.italiandraughts.game.PlayerColor;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

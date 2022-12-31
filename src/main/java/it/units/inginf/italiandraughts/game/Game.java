@@ -1,5 +1,6 @@
-package it.units.inginf.italiandraughts;
+package it.units.inginf.italiandraughts.game;
 
+import it.units.inginf.italiandraughts.CommandParser;
 import it.units.inginf.italiandraughts.board.Board;
 import it.units.inginf.italiandraughts.commands.Command;
 import it.units.inginf.italiandraughts.commands.CommandManager;

@@ -1,7 +1,8 @@
 package it.units.inginf.italiandraughts.commands;
 
-import it.units.inginf.italiandraughts.*;
 import it.units.inginf.italiandraughts.board.*;
+import it.units.inginf.italiandraughts.game.Game;
+import it.units.inginf.italiandraughts.game.PlayerColor;
 
 import java.util.List;
 
