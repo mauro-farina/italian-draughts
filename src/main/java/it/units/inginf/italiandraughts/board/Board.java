@@ -133,7 +133,7 @@ public class Board {
                     continue;
                 if(pieceSquareX+j < 0 || pieceSquareX+j >= 8) // columns (A-1) and (H+1) do not exist => continue
                     continue;
-                if(!(piece instanceof King)) {
+                if(piece.isMan()) {
                     if( (piece.getColor().equals(PieceColor.WHITE)) && (i < 0) )
                         continue;
                     if( (piece.getColor().equals(PieceColor.BLACK)) && (i > 0) )
