@@ -1,5 +1,10 @@
 package it.units.inginf.italiandraughts;
 
+import it.units.inginf.italiandraughts.io.CommandLineInputReader;
+import it.units.inginf.italiandraughts.io.CommandLineOutputPrinter;
+import it.units.inginf.italiandraughts.io.InputReader;
+import it.units.inginf.italiandraughts.io.OutputPrinter;
+
 public class Game {
 
     private final Board board;

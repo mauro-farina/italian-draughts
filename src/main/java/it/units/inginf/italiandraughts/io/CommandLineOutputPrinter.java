@@ -1,4 +1,4 @@
-package it.units.inginf.italiandraughts;
+package it.units.inginf.italiandraughts.io;
 
 import java.io.PrintStream;
 
