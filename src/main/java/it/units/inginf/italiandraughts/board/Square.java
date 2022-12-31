@@ -5,37 +5,12 @@ public class Square {
     private final SquareColor squareColor; // square color (black or white)
     // italian-draughts pieces are only allowed on black squares
     private SquareContent squareContent;
-
     private final SquareCoordinates squareCoordinates;
     private final SquareName squareName;
 
     public Square(int x, int y) throws Exception {
-        char[] coordinates = new char[2]; //coordinates of the cell ( from A1 to H8)
-        switch (x) {
-            case 0 -> coordinates[0] = 'A';
-            case 1 -> coordinates[0] = 'B';
-            case 2 -> coordinates[0] = 'C';
-            case 3 -> coordinates[0] = 'D';
-            case 4 -> coordinates[0] = 'E';
-            case 5 -> coordinates[0] = 'F';
-            case 6 -> coordinates[0] = 'G';
-            case 7 -> coordinates[0] = 'H';
-            default -> throw new Exception("Coordinates accepted value are integers from 0 to 7 included");
-        }
-        switch (y) {
-            case 0 -> coordinates[1] = '1';
-            case 1 -> coordinates[1] = '2';
-            case 2 -> coordinates[1] = '3';
-            case 3 -> coordinates[1] = '4';
-            case 4 -> coordinates[1] = '5';
-            case 5 -> coordinates[1] = '6';
-            case 6 -> coordinates[1] = '7';
-            case 7 -> coordinates[1] = '8';
-            default -> throw new Exception("Coordinates accepted value are integers from 0 to 7 included");
-        }
-
         this.squareCoordinates = new SquareCoordinates(x,y);
-        this.squareName = new SquareName(coordinates[0], coordinates[1]);
+        this.squareName = new SquareName(squareCoordinates);
 
         // Assign color to square (purely based on square coordinates)
         if(x % 2 == 0){ // if x (column) even => B, D, F, H
@@ -51,16 +26,11 @@ public class Square {
                 this.squareColor = SquareColor.WHITE; //example: x=0, y=0 => square A1 => white
             }
         }
-
         this.squareContent = SquareContent.EMPTY;
     }
 
     public SquareColor getSquareColor() {
         return this.squareColor;
-    }
-
-    public SquareContent getSquareContent() {
-        return squareContent;
     }
 
     public SquareCoordinates getSquareCoordinates() {
@@ -69,6 +39,10 @@ public class Square {
 
     public SquareName getSquareName() {
         return squareName;
+    }
+
+    public SquareContent getSquareContent() {
+        return squareContent;
     }
 
     public void setSquareContent(SquareContent newSquareContent) throws Exception {
