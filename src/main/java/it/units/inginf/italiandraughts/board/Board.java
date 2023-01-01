@@ -84,13 +84,15 @@ public class Board {
         }
     }
 
+    /*
     public Square getSquare(int matrixCoordinateX, int matrixCoordinateY){
         if(matrixCoordinateX<0 || matrixCoordinateX>=8
                 || matrixCoordinateY<0 || matrixCoordinateY>=8){
             throw new RuntimeException();
         }
-        return this.boardSquares[matrixCoordinateY][matrixCoordinateX];
+        return this.boardSquares[matrixCoordinateX][matrixCoordinateY];
     }
+    */
 
     public Square getSquare(SquareCoordinates squareCoordinates){
         if(squareCoordinates.getColumn() < 0 || squareCoordinates.getColumn() >= 8
@@ -178,7 +180,7 @@ public class Board {
         return squaresList;
     }
 
-    public void removePiece(PieceColor color, int index) throws Exception{
+    public void removePiece(PieceColor color, int index) throws Exception{ // method needs refactoring
         if(color == null) {
             throw new Exception("This color is invalid");
         } else if(color == PieceColor.WHITE) {
@@ -196,7 +198,7 @@ public class Board {
         }
     }
 
-    public void manBecomesKing(PieceColor color, int index) throws Exception{
+    public void manBecomesKing(PieceColor color, int index) throws Exception{ // method needs refactoring
         if(color == null) {
             throw new Exception("This color is invalid");
         } else if(color == PieceColor.WHITE) {
