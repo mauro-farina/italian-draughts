@@ -11,8 +11,16 @@ public class SquareName {
         if(row < '1' || row > '8') {
             throw new Exception("Row value must be in 1 to 8 range");
         }
-        this.row = row;
         this.column = column;
+        this.row = row;
+    }
+
+    public SquareName(String squareName) throws Exception {
+        if(squareName.trim().length() != 2) {
+            throw new Exception(squareName + " is not a valid square name");
+        }
+        this.column = squareName.charAt(0);
+        this.row = squareName.charAt(1);
     }
 
     public SquareName(SquareCoordinates squareCoordinates) throws Exception {
