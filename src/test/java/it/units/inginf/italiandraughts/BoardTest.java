@@ -83,21 +83,16 @@ public class BoardTest {
     void checkReachableSquaresWithMan(){
         try {
             Board board = new Board();
-            Piece piece = new Man(PieceColor.WHITE, board.getSquare(1,2)); // piece in B3*
+            SquareCoordinates squareCoordinatesB3 = new SquareCoordinates(1, 2);
+            Piece piece = new Man(PieceColor.WHITE, board.getSquare(squareCoordinatesB3)); // piece in B3
             List<Square> reachableSquares = board.getReachableSquares(piece);
-            if(!reachableSquares.contains(board.getSquare(0,3))) // if A4 is NOT in the list
+            SquareCoordinates squareCoordinatesA4 = new SquareCoordinates(0, 3);
+            if(!reachableSquares.contains(board.getSquare(squareCoordinatesA4))) // if A4 is NOT in the list
                 fail("A reachable square is not considered so");
-            if(!reachableSquares.contains(board.getSquare(2,3))) // if C4 is NOT in the list
+            SquareCoordinates squareCoordinatesC4 = new SquareCoordinates(2, 3);
+            if(!reachableSquares.contains(board.getSquare(squareCoordinatesC4))) // if C4 is NOT in the list
                 fail("A reachable square is not considered so");
-            if(reachableSquares.contains(board.getSquare(0,1)))  // if A2 IS in the list
-                fail("A non-reachable square is considered reachable");
-            if(reachableSquares.contains(board.getSquare(2,1)))  // if C2 IS in the list
-                fail("A non-reachable square is considered reachable");
-            if(reachableSquares.contains(board.getSquare(1,3))) // if B4 IS in the list
-                fail("A non-reachable square is considered reachable");
-            if(reachableSquares.contains(board.getSquare(2,2))) // if C3 IS in the list
-                fail("A non-reachable square is considered reachable");
-            assertEquals(2, reachableSquares.size());
+            assertEquals(2, reachableSquares.size(), "some non-reachable squares are considered reachable");
         } catch (Exception e) {
             fail(e.getMessage());
         }
@@ -106,13 +101,16 @@ public class BoardTest {
     void checkReachableSquaresWithKing(){
         try {
             Board board = new Board();
-            Piece piece = new King(PieceColor.BLACK, board.getSquare(7,6)); // piece in H7
+            SquareCoordinates squareCoordinatesH7 = new SquareCoordinates(7, 6);
+            Piece piece = new King(PieceColor.BLACK, board.getSquare(squareCoordinatesH7)); // piece in H7
             List<Square> reachableSquares = board.getReachableSquares(piece);
-            if(!reachableSquares.contains(board.getSquare(6,7))) // if G8 is NOT in the list
+            SquareCoordinates squareCoordinatesG8 = new SquareCoordinates(6, 7);
+            if(!reachableSquares.contains(board.getSquare(squareCoordinatesG8))) // if G8 is NOT in the list
                 fail("A reachable square is not considered so");
-            if(!reachableSquares.contains(board.getSquare(6,5))) // if G6 is NOT in the list
+            SquareCoordinates squareCoordinatesG6 = new SquareCoordinates(6, 5);
+            if(!reachableSquares.contains(board.getSquare(squareCoordinatesG6))) // if G6 is NOT in the list
                 fail("A reachable square is not considered so");
-            assertEquals(2, reachableSquares.size());
+            assertEquals(2, reachableSquares.size(), "some non-reachable squares are considered reachable");
         } catch (Exception e) {
             fail(e.getMessage());
         }
@@ -121,21 +119,27 @@ public class BoardTest {
     @Test
     void checkResearchPiece() {
         Board board;
-        Square square;
         try {
             board = new Board();
-            square = new Square(0,0);
         } catch (Exception e) {
             fail();
             throw new RuntimeException(e);
         }
         int i;
-        for(i= 0; i < board.getWhitePieces().size() - 1; i++) {
-            if(board.getWhitePieces().get(i).getSquare() == board.getSquare(0,1)) {
-                break;
+        try {
+            for(i= 0; i < board.getWhitePieces().size() - 1; i++) {
+                if(board.getWhitePieces().get(i).getSquare() == board.getSquare(new SquareCoordinates(0,1))) {
+                    break;
+                }
             }
+            assertEquals(
+                    board.researchPiece(board.getSquare(new SquareCoordinates(0,1))),
+                    board.getWhitePieces().get(i)
+            );
+        } catch (Exception e){
+            fail();
+            throw new RuntimeException();
         }
-        assertEquals(board.researchPiece(board.getSquare(0,1)), board.getWhitePieces().get(i));
     }
 
 }
