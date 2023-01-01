@@ -18,7 +18,6 @@ public class Board {
             for(byte j=0; j<8; j++) {
                 boardSquares[i][j] = new Square(i, j);
             }
-            System.out.println();
         }
         initBoard();
     }
@@ -32,8 +31,11 @@ public class Board {
                     j--;
                     continue;
                 }
-                this.boardSquares[i][j].setSquareContent(SquareContent.WHITE_MAN);
-                whitePieces.add(new Man(PieceColor.WHITE, this.boardSquares[i][j]));
+                SquareCoordinates squareCoordinates = new SquareCoordinates(j, i);
+                getSquare(squareCoordinates).setSquareContent(SquareContent.WHITE_MAN);
+                //this.boardSquares[j][i].setSquareContent(SquareContent.WHITE_MAN);
+                whitePieces.add(new Man(PieceColor.WHITE, getSquare(squareCoordinates)));
+                //whitePieces.add(new Man(PieceColor.WHITE, this.boardSquares[i][j]));
             }
         }
         blackPieces = new ArrayList<>();
@@ -44,10 +46,13 @@ public class Board {
                     j--;
                     continue;
                 }
-                this.boardSquares[i][j].setSquareContent(SquareContent.BLACK_MAN);
-                blackPieces.add(new Man(PieceColor.BLACK, this.boardSquares[i][j]));
+                SquareCoordinates squareCoordinates = new SquareCoordinates(j, i);
+                getSquare(squareCoordinates).setSquareContent(SquareContent.BLACK_MAN);
+                //this.boardSquares[j][i].setSquareContent(SquareContent.BLACK_MAN);
+                blackPieces.add(new Man(PieceColor.BLACK, getSquare(squareCoordinates)));
+                //blackPieces.add(new Man(PieceColor.BLACK, this.boardSquares[i][j]));
+
             }
-            System.out.println();
         }
     }
 
@@ -84,7 +89,7 @@ public class Board {
                 || matrixCoordinateY<0 || matrixCoordinateY>=8){
             throw new RuntimeException();
         }
-        return this.boardSquares[matrixCoordinateX][matrixCoordinateY];
+        return this.boardSquares[matrixCoordinateY][matrixCoordinateX];
     }
 
     public Square getSquare(SquareCoordinates squareCoordinates){
@@ -109,23 +114,43 @@ public class Board {
 
     private String toStringForWhitePlayer() {
         StringBuilder stringBuilder = new StringBuilder();
-        for(byte i=7; i>=0; i--){
-            for(byte j=0; j<8; j++){
-                stringBuilder.append(getSquare(i, j).getSquareContent().toString());
+
+        for(byte i=7; i>=0; i--) {
+            stringBuilder.append(i+1);
+            stringBuilder.append("\t");
+            for(byte j=0; j<8; j++) {
+                try {
+                    SquareCoordinates squareCoordinates = new SquareCoordinates(j, i);
+                    stringBuilder.append(getSquare(squareCoordinates).getSquareContent().toString());
+                    stringBuilder.append("\t");
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
             stringBuilder.append(System.lineSeparator());
         }
+        //stringBuilder.append(System.lineSeparator());
+        stringBuilder.append("\t A \t B \t C \t D \t E \t F \t G \t H");
         return stringBuilder.toString();
     }
 
     private String toStringForBlackPlayer() {
         StringBuilder stringBuilder = new StringBuilder();
-        for(byte i=0; i<8; i++){
-            for(byte j=7; j>=0; j--){
-                stringBuilder.append(getSquare(i, j).getSquareContent().toString());
+        for(byte i=0; i<8; i++) {
+            stringBuilder.append(i+1);
+            stringBuilder.append("\t");
+            for(byte j=7; j>=0; j--) {
+                try {
+                    SquareCoordinates squareCoordinates = new SquareCoordinates(j,i);
+                    stringBuilder.append(getSquare(squareCoordinates).getSquareContent().toString());
+                    stringBuilder.append("\t");
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
             stringBuilder.append(System.lineSeparator());
         }
+        stringBuilder.append("\t H \t G \t F \t E \t D \t C \t B \t A");
         return stringBuilder.toString();
     }
 
