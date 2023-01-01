@@ -63,30 +63,35 @@ public class CommandRunner {
     }
 
     private void runCommandTo(SquareCoordinates coordinatesStartingSquare, SquareCoordinates coordinatesArrivalSquare) throws Exception {
-        PieceColor selectedPieceColor;
-        Piece selectedPiece;
         Square startingSquare = game.getBoard().getSquare(coordinatesStartingSquare);
         Square arrivalSquare = game.getBoard().getSquare(coordinatesArrivalSquare);
-        if(game.getCurrentTurn().getColor() == PlayerColor.WHITE) {
-            selectedPieceColor = PieceColor.WHITE;
-        } else if (game.getCurrentTurn().getColor() == PlayerColor.BLACK) {
-            selectedPieceColor = PieceColor.BLACK;
-        } else {
-            throw new Exception("Invalid turn");
+        Piece selectedPiece = game.getBoard().researchPiece(startingSquare);
+        if(selectedPiece == null) {
+            throw new Exception("No piece located on " + startingSquare.getSquareName().toString());
         }
-        selectedPiece = game.getBoard().researchPiece(startingSquare);
-        if((selectedPiece.getColor() != selectedPieceColor) && (!arrivalSquare.isFree())) {
-            throw new Exception("Invalid coordinates");
+        if(!selectedPiece.getColor().toString().equalsIgnoreCase(game.getCurrentTurn().getColor().toString())) {
+            throw new Exception("Cannot move opponent pieces");
+        }
+        if(!arrivalSquare.isFree()) {
+            throw new Exception("There already is a piece on " + arrivalSquare.getSquareName().toString());
         }
         List<Square> listReachableSquares = game.getBoard().getReachableSquares(selectedPiece);
+
+        //      /*
         int pieceIndex = -1;
-        for(int i = 0; i < listReachableSquares.size() - 1; i++) {
+        for(int i = 0; i < listReachableSquares.size() - 1; i++) { // -1 ??
             if(arrivalSquare == listReachableSquares.get(i)) {
                 pieceIndex = i;
                 break;
-            } else if (i == listReachableSquares.size() - 1) {
+            } else if (i == listReachableSquares.size() - 1) { // ???
                 throw new Exception("Invalid arrival square");
             }
+        }
+        //      */
+
+        if(!listReachableSquares.contains(arrivalSquare)) {
+            throw new Exception("Cannot reach " + arrivalSquare.getSquareName().toString()
+                    + " from " + startingSquare.getSquareName().toString());
         }
         startingSquare.setSquareContent(SquareContent.EMPTY);
         if(selectedPiece.isMan()) {
@@ -103,9 +108,8 @@ public class CommandRunner {
             }
         }
         selectedPiece.setSquare(arrivalSquare);
-        // if(Integer.parseInt(game.getBoard().getLastRow(selectedPiece.getColor())[0].getCoordinateY()) - 1 == arrivalSquare.getMatrixCoordinateY()) {
         if(game.getBoard().getLastRow(selectedPiece.getColor())[0].getSquareCoordinates().getCoordinateY() == arrivalSquare.getSquareCoordinates().getCoordinateY()) {
-            game.getBoard().manBecomesKing(selectedPiece.getColor(), pieceIndex);
+            game.getBoard().manBecomesKing(selectedPiece.getColor(), pieceIndex); // method needs refactoring
         }
     }
 
