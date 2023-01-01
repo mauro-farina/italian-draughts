@@ -42,7 +42,7 @@ public class Game {
         initGame();
         //execute command HELP
         while(this.gameState == GameState.PLAYING) {
-            outputPrinter.print(board.toStringFor(PlayerColor.WHITE));
+            outputPrinter.print(board.toStringFor(getCurrentTurn().getColor()));
             outputPrinter.print("Turn of " + getCurrentTurn().getNickname());
             while(true) {
                 String readCommand = inputReader.readInput();
