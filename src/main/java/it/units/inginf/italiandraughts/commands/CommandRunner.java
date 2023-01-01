@@ -34,7 +34,8 @@ public class CommandRunner {
         } else if(command.getCommandType().equals(CommandType.CAPTURE)) {
             this.runCommandCapture(
                     ((CommandCapture) command).getFromCoordinates(),
-                    ((CommandCapture) command).getPieceToCaptureCoordinates()
+                    ((CommandCapture) command).getPieceToCaptureCoordinates(),
+                    ((CommandCapture) command).getToCoordinates()
             );
         }
     }
@@ -61,11 +62,11 @@ public class CommandRunner {
         outputPrinter.print(helpMessageBuilder.toString());
     }
 
-    private void runCommandTo(int[] coordinatesStartingSquare, int[] coordinatesArrivalSquare) throws Exception {
+    private void runCommandTo(SquareCoordinates coordinatesStartingSquare, SquareCoordinates coordinatesArrivalSquare) throws Exception {
         PieceColor selectedPieceColor;
         Piece selectedPiece;
-        Square startingSquare = game.getBoard().getSquare(coordinatesStartingSquare[0], coordinatesStartingSquare[1]);
-        Square arrivalSquare = game.getBoard().getSquare(coordinatesArrivalSquare[0], coordinatesArrivalSquare[1]);
+        Square startingSquare = game.getBoard().getSquare(coordinatesStartingSquare);
+        Square arrivalSquare = game.getBoard().getSquare(coordinatesArrivalSquare);
         if(game.getCurrentTurn().getColor() == PlayerColor.WHITE) {
             selectedPieceColor = PieceColor.WHITE;
         } else if (game.getCurrentTurn().getColor() == PlayerColor.BLACK) {
@@ -108,29 +109,14 @@ public class CommandRunner {
         }
     }
 
-    private void runCommandCapture(int[] coordinatesSelectedPieceSquare, int[] coordinatesCapturedPieceSquare) throws Exception {
+    private void runCommandCapture(SquareCoordinates coordinatesSelectedPieceSquare, SquareCoordinates coordinatesCapturedPieceSquare, SquareCoordinates coordinatesDestinationSquare) throws Exception {
         Board board = game.getBoard();
         PieceColor selectedPieceColor;
         Piece selectedPiece;
         Piece capturedPiece;
-        Square selectedPieceSquare = board.getSquare(coordinatesSelectedPieceSquare[0], coordinatesSelectedPieceSquare[1]);
-        Square capturedPieceSquare = board.getSquare(coordinatesCapturedPieceSquare[0], coordinatesCapturedPieceSquare[1]);
-        int[] coordinatesDestinationSquare = new int[2];
-        if(coordinatesSelectedPieceSquare[0] - 1 == coordinatesCapturedPieceSquare[0]) {
-            coordinatesDestinationSquare[0] = coordinatesCapturedPieceSquare[0] - 1;
-        } else if (coordinatesSelectedPieceSquare[0] + 1 == coordinatesCapturedPieceSquare[0]) {
-            coordinatesDestinationSquare[0] = coordinatesCapturedPieceSquare[0] + 1;
-        } else {
-            throw new Exception("Invalid coordinates, capture not possible");
-        }
-        if(coordinatesSelectedPieceSquare[1] - 1 == coordinatesCapturedPieceSquare[1]) {
-            coordinatesDestinationSquare[1] = coordinatesCapturedPieceSquare[1] - 1;
-        } else if (coordinatesSelectedPieceSquare[1] + 1 == coordinatesCapturedPieceSquare[1]) {
-            coordinatesDestinationSquare[1] = coordinatesCapturedPieceSquare[1] + 1;
-        } else {
-            throw new Exception("Invalid coordinates, capture not possible");
-        }
-        Square destinationSquare = board.getSquare(coordinatesDestinationSquare[0], coordinatesDestinationSquare[1]);
+        Square selectedPieceSquare = board.getSquare(coordinatesSelectedPieceSquare);
+        Square capturedPieceSquare = board.getSquare(coordinatesCapturedPieceSquare);
+        Square destinationSquare = board.getSquare(coordinatesDestinationSquare);
         if(game.getCurrentTurn().getColor() == PlayerColor.WHITE) {
             selectedPieceColor = PieceColor.WHITE;
         } else if (game.getCurrentTurn().getColor() == PlayerColor.BLACK) {

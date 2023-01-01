@@ -1,5 +1,6 @@
 package it.units.inginf.italiandraughts;
 
+import it.units.inginf.italiandraughts.board.SquareCoordinates;
 import it.units.inginf.italiandraughts.commands.Command;
 import it.units.inginf.italiandraughts.commands.CommandTo;
 import it.units.inginf.italiandraughts.commands.CommandType;
@@ -36,41 +37,35 @@ public class CommandTest {
     @Test
     void checkCoordinatesStartingSquare() {
         Command command;
+        SquareCoordinates expectedCoordinates;
         try {
+            expectedCoordinates = new SquareCoordinates(0, 0); // A1
             command = CommandParser.parseCommand("A1 to B2");
+            SquareCoordinates commandStartingSquareCoordinates = ((CommandTo)command).getFromCoordinates();
+            if(expectedCoordinates.getCoordinateX() != commandStartingSquareCoordinates.getCoordinateX()
+                    || expectedCoordinates.getCoordinateY() != commandStartingSquareCoordinates.getCoordinateY())
+                fail();
         } catch (Exception e) {
             fail();
             throw new RuntimeException(e);
         }
-        int[] expectedCoordinates = {0, 0};
-        int[] coordinates = ((CommandTo)command).getFromCoordinates();
-        boolean test = true;
-        for(int i = 0; i < 2; i++) {
-            if(coordinates[i] != expectedCoordinates[i]) {
-                test = false;
-            }
-        }
-        assertTrue(test);
     }
 
     @Test
     void checkCoordinatesArrivalSquare() {
         Command command;
+        SquareCoordinates expectedCoordinates;
         try {
+            expectedCoordinates = new SquareCoordinates(1, 1); // B2
             command = CommandParser.parseCommand("A1 to B2");
+            SquareCoordinates commandMoveToSquareCoordinates = ((CommandTo)command).getToCoordinates();
+            if(expectedCoordinates.getCoordinateX() != commandMoveToSquareCoordinates.getCoordinateX()
+                    || expectedCoordinates.getCoordinateY() != commandMoveToSquareCoordinates.getCoordinateY())
+                fail();
         } catch (Exception e) {
             fail();
             throw new RuntimeException(e);
         }
-        int[] expectedCoordinates = {1, 1};
-        int[] coordinates = ((CommandTo)command).getToCoordinates();
-        boolean test = true;
-        for(int i = 0; i < 2; i++) {
-            if(coordinates[i] != expectedCoordinates[i]) {
-                test = false;
-            }
-        }
-        assertTrue(test);
     }
 
 }
