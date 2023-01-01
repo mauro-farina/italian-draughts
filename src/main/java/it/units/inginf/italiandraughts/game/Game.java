@@ -54,6 +54,11 @@ public class Game {
                     outputPrinter.print(exception.getMessage());
                 }
             }
+            try {
+                changeTurn();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
