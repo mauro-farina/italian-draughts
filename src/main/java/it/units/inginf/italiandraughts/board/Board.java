@@ -93,14 +93,6 @@ public class Board {
         }
         return this.boardSquares[squareCoordinates.getColumn()][squareCoordinates.getRow()];
     }
-    
-    public Square getSquare(int coordinateY, int coordinateX) {
-        if(coordinateY < 0 || coordinateY >= 8
-                || coordinateX < 0 || coordinateX >= 8) {
-            throw new RuntimeException();
-        }
-        return this.boardSquares[coordinateY][coordinateX];
-    }
 
     @Override
     public String toString() {
