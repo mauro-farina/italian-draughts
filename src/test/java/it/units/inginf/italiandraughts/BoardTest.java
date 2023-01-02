@@ -60,7 +60,7 @@ public class BoardTest {
             lastRow = board.getLastRow(PieceColor.WHITE);
             expectedLastRow = new Square[8];
             for(int i = 0; i < 8; i++) {
-                expectedLastRow[i] = board.getSquare(i, 7);
+                expectedLastRow[i] = boardSquares[i][7];
                 if (expectedLastRow[i] != lastRow[i]) {
                     check = false;
                     break;
