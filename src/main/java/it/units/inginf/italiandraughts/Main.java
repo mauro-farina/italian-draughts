@@ -4,8 +4,9 @@ import it.units.inginf.italiandraughts.game.Game;
 import it.units.inginf.italiandraughts.game.Player;
 import it.units.inginf.italiandraughts.game.PlayerColor;
 
+import java.util.Scanner;
+
 public class Main {
-    
     private final static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) throws Exception {
@@ -14,7 +15,7 @@ public class Main {
                 new Player(readName(PlayerColor.BLACK), PlayerColor.BLACK)
         ).start();
     }
-    
+
     private static String readName(PlayerColor color) throws Exception{
         while(true) {
             if(color == PlayerColor.WHITE) {
