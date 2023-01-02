@@ -120,7 +120,7 @@ public class CommandRunner {
         Piece capturedPiece;
         Square selectedPieceSquare = board.getSquare(coordinatesSelectedPieceSquare);
         Square capturedPieceSquare = board.getSquare(coordinatesCapturedPieceSquare);
-        Square destinationSquare = board.getSquare(coordinatesDestinationSquare.getCoordinateY(), coordinatesDestinationSquare.getCoordinateX());
+        Square destinationSquare = board.getSquare(coordinatesDestinationSquare);
         if(game.getCurrentTurn().getColor() == PlayerColor.WHITE) {
             selectedPieceColor = PieceColor.WHITE;
         } else if (game.getCurrentTurn().getColor() == PlayerColor.BLACK) {
