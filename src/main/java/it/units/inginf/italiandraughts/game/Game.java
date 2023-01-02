@@ -40,7 +40,12 @@ public class Game {
 
     public void start() {
         initGame();
-        //execute command HELP
+        try {
+            commandRunner.runCommand(CommandParser.parseCommand("help"));
+            outputPrinter.print("\n");
+        } catch (Exception exception) {
+            outputPrinter.print(exception.getMessage());
+        }
         while(this.gameState == GameState.PLAYING) {
             outputPrinter.print(board.toStringFor(getCurrentTurn().getColor()));
             outputPrinter.print("Turn of " + getCurrentTurn().getNickname());
