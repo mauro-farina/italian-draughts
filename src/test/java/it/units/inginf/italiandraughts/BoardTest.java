@@ -53,16 +53,24 @@ public class BoardTest {
     void checkGetLastRow() {
         Square[] lastRow;
         Square[] expectedLastRow;
+        boolean check = true;
         try {
             Board board = new Board();
             Square[][] boardSquares = board.getBoardSquares();
             lastRow = board.getLastRow(PieceColor.WHITE);
-            expectedLastRow = boardSquares[7];
+            expectedLastRow = new Square[8];
+            for(int i = 0; i < 8; i++) {
+                expectedLastRow[i] = board.getSquare(i, 7);
+                if (expectedLastRow[i] != lastRow[i]) {
+                    check = false;
+                    break;
+                }
+            }
         } catch (Exception e) {
             fail();
             throw new RuntimeException(e);
         }
-        assertEquals(lastRow, expectedLastRow);
+        assertTrue(check);
     }
 
     @Test
