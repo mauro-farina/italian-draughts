@@ -14,11 +14,11 @@ public class CommandCapture extends Command {
         this.pieceToCaptureCoordinates = pieceToCaptureCoordinates;
         // calculate toCoordinates
         // given fromSquareCoordinates and pieceToCaptureSquareCoordinates, find toSquareCoordinates
-        int toCoordinatesY, toCoordinateX;
+        int toCoordinateY, toCoordinateX;
         if(fromCoordinates.getCoordinateY() > pieceToCaptureCoordinates.getCoordinateY()){ // *6 capture *5 (ex: C6 capture B5)
-            toCoordinatesY = pieceToCaptureCoordinates.getCoordinateY() - 1; // moves to *4
+            toCoordinateY = pieceToCaptureCoordinates.getCoordinateY() - 1; // moves to *4
         } else { // *3 capture *4 (ex: B3 capture C4)
-            toCoordinatesY = pieceToCaptureCoordinates.getCoordinateY() + 1; // moves to *5
+            toCoordinateY = pieceToCaptureCoordinates.getCoordinateY() + 1; // moves to *5
         }
         if(fromCoordinates.getCoordinateX() > pieceToCaptureCoordinates.getCoordinateX()) { // ex: D* capture C* (ex: D3 capture C4)
             toCoordinateX = pieceToCaptureCoordinates.getCoordinateX() - 1; // moves to B*
@@ -26,7 +26,7 @@ public class CommandCapture extends Command {
             toCoordinateX = pieceToCaptureCoordinates.getCoordinateX() + 1; // moves to D*
         }
         try {
-            this.toCoordinates = new SquareCoordinates(toCoordinatesY, toCoordinateX);
+            this.toCoordinates = new SquareCoordinates(toCoordinateX, toCoordinateY);
         } catch (Exception exception) {
             throw new Exception("Cannot capture piece on the edge of the board");
         }
