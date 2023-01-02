@@ -33,9 +33,7 @@ public class Board {
                 }
                 SquareCoordinates squareCoordinates = new SquareCoordinates(j, i);
                 getSquare(squareCoordinates).setSquareContent(SquareContent.WHITE_MAN);
-                //this.boardSquares[j][i].setSquareContent(SquareContent.WHITE_MAN);
                 whitePieces.add(new Man(PieceColor.WHITE, getSquare(squareCoordinates)));
-                //whitePieces.add(new Man(PieceColor.WHITE, this.boardSquares[i][j]));
             }
         }
         blackPieces = new ArrayList<>();
@@ -48,9 +46,7 @@ public class Board {
                 }
                 SquareCoordinates squareCoordinates = new SquareCoordinates(j, i);
                 getSquare(squareCoordinates).setSquareContent(SquareContent.BLACK_MAN);
-                //this.boardSquares[j][i].setSquareContent(SquareContent.BLACK_MAN);
                 blackPieces.add(new Man(PieceColor.BLACK, getSquare(squareCoordinates)));
-                //blackPieces.add(new Man(PieceColor.BLACK, this.boardSquares[i][j]));
 
             }
         }
@@ -121,7 +117,6 @@ public class Board {
             }
             stringBuilder.append(System.lineSeparator());
         }
-        //stringBuilder.append(System.lineSeparator());
         stringBuilder.append("\t A \t B \t C \t D \t E \t F \t G \t H");
         return stringBuilder.toString();
     }
