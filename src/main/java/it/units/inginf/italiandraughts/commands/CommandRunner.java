@@ -136,29 +136,33 @@ public class CommandRunner {
         }
         List<Square> listReachableSquaresOfSelectedPiece = board.getReachableSquares(selectedPiece);
         int pieceIndex = -1;
-        for(int i = 0; i < listReachableSquaresOfSelectedPiece.size() - 1; i++) {
+        for(int i = 0; i < listReachableSquaresOfSelectedPiece.size(); i++) {
             if(capturedPieceSquare == listReachableSquaresOfSelectedPiece.get(i)) {
                 pieceIndex = i;
                 break;
-            } else if (i == listReachableSquaresOfSelectedPiece.size() - 1) {
-                throw new Exception("Invalid arrival square");
             }
         }
+        if(pieceIndex == -1) {
+            throw new Exception("Invalid command");
+        }
         selectedPieceSquare.setSquareContent(SquareContent.EMPTY);
+        capturedPieceSquare.setSquareContent(SquareContent.EMPTY);
         if(selectedPiece.isMan()) {
             if(selectedPiece.getColor() == PieceColor.WHITE) {
-                capturedPieceSquare.setSquareContent(SquareContent.WHITE_MAN);
+                destinationSquare.setSquareContent(SquareContent.WHITE_MAN);
             } else {
-                capturedPieceSquare.setSquareContent(SquareContent.BLACK_MAN);
+                destinationSquare.setSquareContent(SquareContent.BLACK_MAN);
             }
         } else { // isKing
             if(selectedPiece.getColor() == PieceColor.WHITE) {
-                capturedPieceSquare.setSquareContent(SquareContent.WHITE_KING);
+                destinationSquare.setSquareContent(SquareContent.WHITE_KING);
             } else {
-                capturedPieceSquare.setSquareContent(SquareContent.BLACK_KING);
+                destinationSquare.setSquareContent(SquareContent.BLACK_KING);
             }
         }
-        selectedPiece.setSquare(capturedPieceSquare);
-        this.runCommandTo(coordinatesCapturedPieceSquare, coordinatesDestinationSquare);
+        selectedPiece.setSquare(destinationSquare);
+        if(game.getBoard().getLastRow(selectedPiece.getColor())[0].getSquareCoordinates().getCoordinateY() == destinationSquare.getSquareCoordinates().getCoordinateY()) {
+            game.getBoard().manBecomesKing(selectedPiece.getColor(), pieceIndex);
+        }
     }
 }
