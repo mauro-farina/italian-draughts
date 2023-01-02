@@ -73,11 +73,17 @@ public class Board {
     }
 
     public Square[] getLastRow(PieceColor color) {//LastRow is the row in which a Man becomes a King
+        Square[] lastRow = new Square[8];
         if(color == PieceColor.WHITE) {
-            return boardSquares[7];
+            for(int i = 0; i < 8; i++) {
+                lastRow[i] = boardSquares[i][7];
+            }
         } else {
-            return boardSquares[0];
+            for(int i = 0; i < 8; i++) {
+                lastRow[i] = boardSquares[i][0];
+            }
         }
+        return lastRow;
     }
 
     public Square getSquare(SquareCoordinates squareCoordinates){
