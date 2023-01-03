@@ -51,4 +51,20 @@ public class OperationTest {
         }
         assertTrue(board.getWhitePieces().get(board.getWhitePieces().size() - 1).isKing());
     }
+    
+    @Test
+    void checkOperationResearchPiece() {
+        Piece piece;
+        Board board;
+        try {
+            board = new Board();
+            Square square = board.getSquare(new SquareCoordinates(new SquareName("A2")));
+            piece = new OperationResearchPiece(board, square).getPieceSought();
+        } catch(Exception e) {
+            fail();
+            throw new RuntimeException(e);
+        }
+        assertEquals(piece, board.getWhitePieces().get(4));
+    }
+    
 }
