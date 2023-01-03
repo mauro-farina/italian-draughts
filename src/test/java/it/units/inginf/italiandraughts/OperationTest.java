@@ -6,6 +6,7 @@ import it.units.inginf.italiandraughts.board.operation.Operation;
 import it.units.inginf.italiandraughts.board.operation.OperationRemovePiece;
 import it.units.inginf.italiandraughts.board.operation.OperationManBecomesKing;
 import it.units.inginf.italiandraughts.board.Board;
+import it.units.inginf.italiandraughts.board.Piece;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
