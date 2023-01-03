@@ -60,7 +60,11 @@ public class Game {
                 }
             }
             try {
-                changeTurn();
+                if(checkVictoryCondition() == true) {
+                    setWinnerPlayer(this.currentTurn);
+                } else {
+                    changeTurn();
+                }
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
