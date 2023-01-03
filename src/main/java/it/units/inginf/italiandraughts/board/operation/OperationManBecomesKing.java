@@ -7,8 +7,8 @@ import it.units.inginf.italiandraughts.board.SquareContent;
 
 public class OperationManBecomesKing extends Operation {
 
-    PieceColor pieceColor;
-    int index;
+    private PieceColor pieceColor;
+    private int index;
 
     public OperationManBecomesKing(Board board, PieceColor pieceColor, int index) {
         super(board, OperationType.REMOVE_PIECE);
