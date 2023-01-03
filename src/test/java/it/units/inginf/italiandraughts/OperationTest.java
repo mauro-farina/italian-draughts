@@ -1,12 +1,7 @@
 package it.units.inginf.italiandraughts;
 
-import it.units.inginf.italiandraughts.board.PieceColor;
-import it.units.inginf.italiandraughts.board.operation.OperationType;
-import it.units.inginf.italiandraughts.board.operation.Operation;
-import it.units.inginf.italiandraughts.board.operation.OperationRemovePiece;
-import it.units.inginf.italiandraughts.board.operation.OperationManBecomesKing;
-import it.units.inginf.italiandraughts.board.Board;
-import it.units.inginf.italiandraughts.board.Piece;
+import it.units.inginf.italiandraughts.board.*;
+import it.units.inginf.italiandraughts.board.operation.*;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
