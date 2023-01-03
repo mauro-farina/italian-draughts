@@ -5,8 +5,8 @@ import it.units.inginf.italiandraughts.board.PieceColor;
 
 public class OperationRemovePiece extends Operation {
 
-    PieceColor pieceColor;
-    int index;
+    private PieceColor pieceColor;
+    private int index;
 
     public OperationRemovePiece(Board board, PieceColor pieceColor, int index) throws Exception {
         super(board, OperationType.REMOVE_PIECE);
