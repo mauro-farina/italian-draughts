@@ -66,5 +66,27 @@ public class BoardUtils {
             throw new Exception("This color is invalid");
         }
     }
+    
+    public static Piece researchPiece(Board board, Square square) throws Exception {
+        if(board == null) {
+            throw new Exception("Board cannot be null");
+        }
+        if(square == null) {
+            throw new Exception("Square cannot be null");
+        }
+        if ((square.getSquareColor() == SquareColor.BLACK) || (!square.isFree())) {
+            for(int i = 0; i < board.getWhitePieces().size(); i++) {
+                if(board.getWhitePieces().get(i).getSquare() == square) {
+                    return board.getWhitePieces().get(i);
+                }
+            }
+            for(int i = 0; i < board.getBlackPieces().size(); i++) {
+                if (board.getBlackPieces().get(i).getSquare() == square) {
+                    return board.getBlackPieces().get(i);
+                }
+            }
+        }
+        return null;
+    }
 
 }
