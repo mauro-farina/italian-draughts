@@ -58,7 +58,7 @@ public class GameTest {
             game = new Game(new Player("Luca", PlayerColor.WHITE), new Player("Mauro", PlayerColor.BLACK));
             game.initGame();
             for(int i = 11; i >= 0; i--) {
-                game.getBoard().removePiece(PieceColor.WHITE, i);
+                BoardUtils.removePiece(game.getBoard(), game.getBoard().getWhitePieces().get(i));
             }
         } catch (Exception e) {
             fail();
