@@ -65,7 +65,7 @@ public class CommandRunner {
     private void runCommandTo(SquareCoordinates coordinatesStartingSquare, SquareCoordinates coordinatesArrivalSquare) throws Exception {
         Square startingSquare = game.getBoard().getSquare(coordinatesStartingSquare);
         Square arrivalSquare = game.getBoard().getSquare(coordinatesArrivalSquare);
-        Piece selectedPiece = game.getBoard().researchPiece(startingSquare);
+        Piece selectedPiece = BoardUtils.researchPiece(this.game.getBoard(), startingSquare);
         if(selectedPiece == null) {
             throw new Exception("No piece located on " + startingSquare.getSquareName().toString());
         }
@@ -128,8 +128,8 @@ public class CommandRunner {
         } else {
             throw new Exception("Invalid turn");
         }
-        selectedPiece = board.researchPiece(selectedPieceSquare);
-        capturedPiece = board.researchPiece(capturedPieceSquare);
+        selectedPiece = BoardUtils.researchPiece(this.game.getBoard(), selectedPieceSquare);
+        capturedPiece = BoardUtils.researchPiece(this.game.getBoard(), capturedPieceSquare);
         if((selectedPiece.getColor() != selectedPieceColor) && (capturedPiece.getColor() == selectedPieceColor)
                 && (capturedPieceSquare.isFree()) && (!destinationSquare.isFree())) {
             throw new Exception("Invalid coordinates");
