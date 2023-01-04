@@ -218,15 +218,4 @@ public class Board {
         }
     }
 
-    public Piece researchPiece(Square square) {
-        for(int i = 0; i < whitePieces.size(); i++) {
-            if(whitePieces.get(i).getSquare() == square) {
-                return whitePieces.get(i);
-            } else if (blackPieces.get(i).getSquare() == square) {
-                return blackPieces.get(i);
-            }
-        }
-        return null;
-    }
-
 }
