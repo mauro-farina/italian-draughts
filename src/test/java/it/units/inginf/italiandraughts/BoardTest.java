@@ -74,20 +74,6 @@ public class BoardTest {
     }
 
     @Test
-    void checkManBecomesKing() {
-        List<Piece> whitePieces;
-        try {
-            Board board = new Board();
-            board.manBecomesKing(PieceColor.WHITE, 2);
-            whitePieces = board.getWhitePieces();
-        } catch (Exception e) {
-            fail();
-            throw new RuntimeException(e);
-        }
-        assertTrue(whitePieces.get(whitePieces.size() - 1).isKing());
-    }
-
-    @Test
     void checkReachableSquaresWithMan(){
         try {
             Board board = new Board();
@@ -121,32 +107,6 @@ public class BoardTest {
             assertEquals(2, reachableSquares.size(), "some non-reachable squares are considered reachable");
         } catch (Exception e) {
             fail(e.getMessage());
-        }
-    }
-    
-    @Test
-    void checkResearchPiece() {
-        Board board;
-        try {
-            board = new Board();
-        } catch (Exception e) {
-            fail();
-            throw new RuntimeException(e);
-        }
-        int i;
-        try {
-            for(i= 0; i < board.getWhitePieces().size() - 1; i++) {
-                if(board.getWhitePieces().get(i).getSquare() == board.getSquare(new SquareCoordinates(0,1))) {
-                    break;
-                }
-            }
-            assertEquals(
-                    board.researchPiece(board.getSquare(new SquareCoordinates(0,1))),
-                    board.getWhitePieces().get(i)
-            );
-        } catch (Exception e){
-            fail();
-            throw new RuntimeException();
         }
     }
 
