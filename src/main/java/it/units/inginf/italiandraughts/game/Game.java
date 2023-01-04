@@ -47,8 +47,12 @@ public class Game {
             outputPrinter.print(exception.getMessage());
         }
         while(this.gameState == GameState.PLAYING) {
-            outputPrinter.print(board.toStringFor(getCurrentTurn().getColor()));
-            outputPrinter.print("Turn of " + getCurrentTurn().getNickname());
+            try{
+                outputPrinter.print(board.toStringFor(getCurrentTurn().getColor()));
+                outputPrinter.print("Turn of " + getCurrentTurn().getNickname());
+            } catch (Exception exception) {
+                outputPrinter.print(exception.getMessage());
+            }
             while(true) {
                 String readCommand = inputReader.readInput();
                 try {
