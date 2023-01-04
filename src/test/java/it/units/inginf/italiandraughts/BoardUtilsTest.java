@@ -35,5 +35,22 @@ public class BoardUtilsTest {
         }
         assertTrue(board.getWhitePieces().get(board.getWhitePieces().size() - 1).isKing());
     }
+    
+    @Test
+    void checkResearchPiece() {
+        Piece piece;
+        try {
+            Board board = new Board();
+            Square square = board.getSquare(new SquareCoordinates(0, 1));
+            piece = BoardUtils.researchPiece(board, square);
+            if(piece == null) {
+                throw new Exception();
+            }
+        } catch(Exception e) {
+            fail();
+            throw new RuntimeException(e);
+        }
+        assertEquals(piece.getSquare().getSquareName().toString(), "A2");
+    }
 
 }
