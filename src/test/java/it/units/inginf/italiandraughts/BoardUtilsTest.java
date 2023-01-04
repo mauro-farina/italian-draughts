@@ -23,7 +23,7 @@ public class BoardUtilsTest {
     }
 
     @Test
-    void checktoCrown() {
+    void checkToCrown() {
         Board board;
         try {
             board = new Board();
