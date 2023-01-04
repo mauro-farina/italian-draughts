@@ -37,6 +37,8 @@ public class BoardUtils {
         }
         if(piece == null) {
             throw new Exception("Invalid Piece");
+        } else if (!piece.isMan()) {
+            throw new Exception("This piece is not a Man");
         }
         if(piece.getColor() == PieceColor.WHITE) {
             for(int i = 0; i < board.getWhitePieces().size(); i++) {
