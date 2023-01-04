@@ -31,12 +31,12 @@ public class BoardUtils {
         }
     }
 
-    public static void manBecomesKing(Board board, Piece piece) throws Exception {
+    public static void toCrown(Board board, Piece piece) throws Exception {
         if(board == null) {
             throw new Exception("Invalid Board");
         }
         if(piece == null) {
-            throw new Exception("Invalid Piece");
+            throw new Exception("Piece cannot be null");
         } else if (!piece.isMan()) {
             throw new Exception("This piece is not a Man");
         }
