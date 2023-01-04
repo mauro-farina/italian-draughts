@@ -64,24 +64,28 @@ public class Board {
         return this.blackPieces;
     }
 
-    public int getNumberOfPieces(PieceColor color) {
-        if(color == PieceColor.WHITE) {
+    public int getNumberOfPieces(PieceColor pieceColor) throws Exception {
+        if(pieceColor == PieceColor.WHITE) {
             return getWhitePieces().size();
-        } else {
+        } else if (pieceColor == PieceColor.BLACK) {
             return getBlackPieces().size();
+        } else {
+            throw new Exception("Board.getNumberOfPieces(...) does not accept this PieceColor");
         }
     }
 
-    public Square[] getLastRow(PieceColor color) {//LastRow is the row in which a Man becomes a King
+    public Square[] getLastRow(PieceColor pieceColor) throws Exception {//LastRow is the row in which a Man becomes a King
         Square[] lastRow = new Square[8];
-        if(color == PieceColor.WHITE) {
+        if(pieceColor == PieceColor.WHITE) {
             for(int i = 0; i < 8; i++) {
                 lastRow[i] = boardSquares[i][7];
             }
-        } else {
+        } else if (pieceColor == PieceColor.BLACK) {
             for(int i = 0; i < 8; i++) {
                 lastRow[i] = boardSquares[i][0];
             }
+        } else {
+            throw new Exception("Board.getLastRow(...) does not accept this PieceColor");
         }
         return lastRow;
     }
