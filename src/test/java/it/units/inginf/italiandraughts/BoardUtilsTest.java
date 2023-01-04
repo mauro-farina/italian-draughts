@@ -2,6 +2,7 @@ package it.units.inginf.italiandraughts;
 
 import it.units.inginf.italiandraughts.board.Board;
 import it.units.inginf.italiandraughts.board.Piece;
+import it.units.inginf.italiandraughts.board.Square;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
