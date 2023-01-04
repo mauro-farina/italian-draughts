@@ -4,6 +4,7 @@ import it.units.inginf.italiandraughts.board.Board;
 import it.units.inginf.italiandraughts.board.Piece;
 import it.units.inginf.italiandraughts.board.Square;
 
+import it.units.inginf.italiandraughts.board.SquareCoordinates;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -36,7 +37,7 @@ public class BoardUtilsTest {
         }
         assertTrue(board.getWhitePieces().get(board.getWhitePieces().size() - 1).isKing());
     }
-    
+
     @Test
     void checkResearchPiece() {
         Piece piece;
