@@ -178,44 +178,4 @@ public class Board {
         return squaresList;
     }
 
-    public void removePiece(PieceColor color, int index) throws Exception{ // method needs refactoring
-        if(color == null) {
-            throw new Exception("This color is invalid");
-        } else if(color == PieceColor.WHITE) {
-            if(whitePieces.get(index) == null) {
-                throw new Exception("This piece does not exist");
-            } else {
-                whitePieces.remove(index);
-            }
-        } else { //color = PieceColor.BLACK
-            if(blackPieces.get(index) == null) {
-                throw new Exception("This piece does not exist");
-            } else {
-                blackPieces.remove(index);
-            }
-        }
-    }
-
-    public void manBecomesKing(PieceColor color, int index) throws Exception{ // method needs refactoring
-        if(color == null) {
-            throw new Exception("This color is invalid");
-        } else if(color == PieceColor.WHITE) {
-            if(whitePieces.get(index) == null) {
-                throw new Exception("This piece does not exist");
-            } else {
-                whitePieces.add(new King(color, whitePieces.get(index).getSquare()));
-                whitePieces.get(index).getSquare().setSquareContent(SquareContent.WHITE_KING);
-                removePiece(color, index);
-            }
-        } else { //color = PieceColor.BLACK
-            if(blackPieces.get(index) == null) {
-                throw new Exception("This piece does not exist");
-            } else {
-                blackPieces.add(new King(color, blackPieces.get(index).getSquare()));
-                blackPieces.get(index).getSquare().setSquareContent(SquareContent.BLACK_KING);
-                removePiece(color, index);
-            }
-        }
-    }
-
 }
