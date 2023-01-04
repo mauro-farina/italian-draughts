@@ -103,11 +103,14 @@ public class Board {
         return toStringForWhitePlayer();
     }
 
-    public String toStringFor(PlayerColor playerColor) {
-        if(playerColor.equals(PlayerColor.WHITE))
+    public String toStringFor(PlayerColor playerColor) throws Exception {
+        if(playerColor.equals(PlayerColor.WHITE)) {
             return toStringForWhitePlayer();
-        else
+        } else if((playerColor.equals(PlayerColor.BLACK))) {
             return toStringForBlackPlayer();
+        } else {
+            throw new Exception("Board.toStringFor(...) does not accept this PlayerColor");
+        }
     }
 
     private String toStringForWhitePlayer() {
