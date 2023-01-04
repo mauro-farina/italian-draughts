@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class BoardUtilsTest {
 
     @Test
-    void checkOperationRemovePiece() {
+    void checkRemovePiece() {
         Board board;
         try {
             board = new Board();
@@ -21,19 +21,19 @@ public class BoardUtilsTest {
         }
         assertEquals(board.getWhitePieces().size(), 11);
     }
-/*
+
     @Test
-    void checkOperationManBecomesKing() {
+    void checktoCrown() {
         Board board;
         try {
             board = new Board();
             Piece piece = board.getWhitePieces().get(0);
-            BoardUtils.manBecomesKing(board, piece);
+            BoardUtils.toCrown(board, piece);
         } catch(Exception e) {
             fail();
             throw new RuntimeException(e);
         }
         assertTrue(board.getWhitePieces().get(board.getWhitePieces().size() - 1).isKing());
-    }*/
+    }
 
 }
