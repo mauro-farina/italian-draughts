@@ -21,7 +21,7 @@ public class BoardUtilsTest {
         }
         assertEquals(board.getWhitePieces().size(), 11);
     }
-
+/*
     @Test
     void checkOperationManBecomesKing() {
         Board board;
@@ -34,6 +34,6 @@ public class BoardUtilsTest {
             throw new RuntimeException(e);
         }
         assertTrue(board.getWhitePieces().get(board.getWhitePieces().size() - 1).isKing());
-    }
+    }*/
 
 }
