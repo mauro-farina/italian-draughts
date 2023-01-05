@@ -2,7 +2,7 @@ package it.units.inginf.italiandraughts.exception;
 
 public class PieceColorException extends Exception {
 
-    private String message;
+    private final String message;
 
     public PieceColorException(String message) {
         this.message = message;
