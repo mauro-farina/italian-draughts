@@ -1,31 +1,41 @@
 package it.units.inginf.italiandraughts.board;
 
+import it.units.inginf.italiandraughts.exception.CoordinatesException;
+import it.units.inginf.italiandraughts.exception.SquareNameException;
+
 public class SquareName {
     private final char row; // 1, 2, ..., 8
     private final char column; // A, B, ..., H
 
-    public SquareName(char column, char row) throws Exception {
+    public SquareName(char column, char row) throws CoordinatesException {
         if(column < 'A' || column > 'H') {
-            throw new Exception("Column value must be in A to H range");
+            throw new CoordinatesException("SquareName.squareName() -> column value must be in A to H range");
         }
         if(row < '1' || row > '8') {
-            throw new Exception("Row value must be in 1 to 8 range");
+            throw new CoordinatesException("SquareName.squareName() -> row value must be in 1 to 8 range");
         }
         this.column = column;
         this.row = row;
     }
 
-    public SquareName(String squareName) throws Exception {
+    public SquareName(String squareName) throws SquareNameException, CoordinatesException {
         if(squareName.trim().length() != 2) {
-            throw new Exception(squareName + " is not a valid square name");
+            throw new SquareNameException("SquareName.squareName() because does not accept this value" + 
+                    squareName + " of SquareName");
         }
         this.column = squareName.charAt(0);
         this.row = squareName.charAt(1);
+        if(column < 'A' || column > 'H') {
+            throw new CoordinatesException("SquareName.squareName() -> column value must be in A to H range");
+        }
+        if(row < '1' || row > '8') {
+            throw new CoordinatesException("SquareName.squareName() -> row value must be in 1 to 8 range");
+        }
     }
 
-    public SquareName(SquareCoordinates squareCoordinates) throws Exception {
+    public SquareName(SquareCoordinates squareCoordinates) throws CoordinatesException {
         if(squareCoordinates == null) {
-            throw new Exception("square coordinates cannot be null");
+            throw new CoordinatesException("SquareName.squareName() -> square coordinates cannot be null");
         }
         int x = squareCoordinates.getCoordinateX();
         int y = squareCoordinates.getCoordinateY();
@@ -38,7 +48,7 @@ public class SquareName {
             case 5 -> this.column = 'F';
             case 6 -> this.column = 'G';
             case 7 -> this.column = 'H';
-            default -> throw new Exception("Coordinates accepted value are integers from 0 to 7 included");
+            default -> throw new CoordinatesException("SquareName.squareName()-> coordinates accepted value are integers from 0 to 7 included");
         }
         switch (y) {
             case 0 -> this.row = '1';
@@ -49,7 +59,7 @@ public class SquareName {
             case 5 -> this.row = '6';
             case 6 -> this.row = '7';
             case 7 -> this.row = '8';
-            default -> throw new Exception("Coordinates accepted value are integers from 0 to 7 included");
+            default -> throw new CoordinatesException("Coordinates accepted value are integers from 0 to 7 included");
         }
     }
 
