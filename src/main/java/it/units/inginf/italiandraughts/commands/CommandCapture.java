@@ -9,7 +9,7 @@ public class CommandCapture extends Command {
     private final SquareCoordinates pieceToCaptureCoordinates;
     private final SquareCoordinates toCoordinates;
 
-    public CommandCapture(SquareCoordinates fromCoordinates, SquareCoordinates pieceToCaptureCoordinates) throws Exception {
+    public CommandCapture(SquareCoordinates fromCoordinates, SquareCoordinates pieceToCaptureCoordinates) throws CoordinatesException {
         super(CommandType.CAPTURE);
         this.fromCoordinates = fromCoordinates;
         this.pieceToCaptureCoordinates = pieceToCaptureCoordinates;
