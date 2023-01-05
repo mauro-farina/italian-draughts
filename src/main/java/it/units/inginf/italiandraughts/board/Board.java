@@ -1,6 +1,12 @@
 package it.units.inginf.italiandraughts.board;
 
 import it.units.inginf.italiandraughts.game.PlayerColor;
+import it.units.inginf.italiandraughts.exception.CoordinatesException;
+import it.units.inginf.italiandraughts.exception.SquareNameException;
+import it.units.inginf.italiandraughts.exception.SquareContentException;
+import it.units.inginf.italiandraughts.exception.PieceColorException;
+import it.units.inginf.italiandraughts.exception.SquareException;
+import it.units.inginf.italiandraughts.exception.PlayerColorException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +18,7 @@ public class Board {
     private List<Piece> whitePieces;
     private List<Piece> blackPieces;
 
-    public Board() throws Exception {
+    public Board() throws SquareNameException, SquareContentException, CoordinatesException, PieceColorException, SquareException {
         boardSquares = new Square[8][8];
         for(byte i=0; i<8; i++){
             for(byte j=0; j<8; j++) {
@@ -22,7 +28,7 @@ public class Board {
         initBoard();
     }
 
-    private void initBoard() throws Exception {
+    private void initBoard() throws SquareContentException, CoordinatesException, PieceColorException, SquareException {
         whitePieces = new ArrayList<>();
         // add White initial pieces (rows 1, 2, 3)
         for(byte i=0; i<3; i++){
@@ -47,7 +53,6 @@ public class Board {
                 SquareCoordinates squareCoordinates = new SquareCoordinates(j, i);
                 getSquare(squareCoordinates).setSquareContent(SquareContent.BLACK_MAN);
                 blackPieces.add(new Man(PieceColor.BLACK, getSquare(squareCoordinates)));
-
             }
         }
     }
@@ -64,17 +69,18 @@ public class Board {
         return this.blackPieces;
     }
 
-    public int getNumberOfPieces(PieceColor pieceColor) throws Exception {
+    public int getNumberOfPieces(PieceColor pieceColor) throws PieceColorException {
         if(pieceColor == PieceColor.WHITE) {
             return getWhitePieces().size();
         } else if (pieceColor == PieceColor.BLACK) {
             return getBlackPieces().size();
         } else {
-            throw new Exception("Board.getNumberOfPieces(...) does not accept this PieceColor");
+            throw new PieceColorException("Board.getNumberOfPieces(...) does not accept this PieceColor");
         }
     }
 
-    public Square[] getLastRow(PieceColor pieceColor) throws Exception {//LastRow is the row in which a Man becomes a King
+    public Square[] getLastRow(PieceColor pieceColor) throws PieceColorException {
+        //LastRow is the row in which a Man becomes a King
         Square[] lastRow = new Square[8];
         if(pieceColor == PieceColor.WHITE) {
             for(int i = 0; i < 8; i++) {
@@ -85,7 +91,7 @@ public class Board {
                 lastRow[i] = boardSquares[i][0];
             }
         } else {
-            throw new Exception("Board.getLastRow(...) does not accept this PieceColor");
+            throw new PieceColorException("Board.getLastRow(...) does not accept this PieceColor");
         }
         return lastRow;
     }
@@ -97,19 +103,18 @@ public class Board {
         }
         return this.boardSquares[squareCoordinates.getColumn()][squareCoordinates.getRow()];
     }
-
     @Override
     public String toString() {
         return toStringForWhitePlayer();
     }
 
-    public String toStringFor(PlayerColor playerColor) throws Exception {
+    public String toStringFor(PlayerColor playerColor) throws PlayerColorException {
         if(playerColor.equals(PlayerColor.WHITE)) {
             return toStringForWhitePlayer();
         } else if((playerColor.equals(PlayerColor.BLACK))) {
             return toStringForBlackPlayer();
         } else {
-            throw new Exception("Board.toStringFor(...) does not accept this PlayerColor");
+            throw new PlayerColorException("Board.toStringFor(...) does not accept this PlayerColor");
         }
     }
 
@@ -130,6 +135,7 @@ public class Board {
             }
             stringBuilder.append(System.lineSeparator());
         }
+        //stringBuilder.append(System.lineSeparator());
         stringBuilder.append("\t A \t B \t C \t D \t E \t F \t G \t H");
         return stringBuilder.toString();
     }
