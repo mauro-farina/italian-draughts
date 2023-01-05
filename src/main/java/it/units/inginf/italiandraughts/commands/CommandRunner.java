@@ -71,7 +71,7 @@ public class CommandRunner {
         outputPrinter.print(helpMessageBuilder.toString());
     }
 
-    private void runCommandTo(SquareCoordinates coordinatesStartingSquare, SquareCoordinates coordinatesArrivalSquare) throws BoardException, PieceException, PieceColorException, SquareException, SquareContentException {
+    private void runCommandTo(SquareCoordinates coordinatesStartingSquare, SquareCoordinates coordinatesArrivalSquare) throws  BoardException, PieceException, PieceColorException, SquareException, SquareContentException {
         Square startingSquare = game.getBoard().getSquare(coordinatesStartingSquare);
         Square arrivalSquare = game.getBoard().getSquare(coordinatesArrivalSquare);
         Piece selectedPiece = BoardUtils.researchPiece(this.game.getBoard(), startingSquare);
@@ -101,7 +101,7 @@ public class CommandRunner {
         //      */
 
         if(!listReachableSquares.contains(arrivalSquare)) {
-            throw new SquareException("CommandRunner.runCommandTo() -> cannot reach " + 
+            throw new SquareException("CommandRunner.runCommandTo() -> cannot reach " +
                     arrivalSquare.getSquareName().toString() + " from " + startingSquare.getSquareName().toString());
         }
         startingSquare.setSquareContent(SquareContent.EMPTY);
