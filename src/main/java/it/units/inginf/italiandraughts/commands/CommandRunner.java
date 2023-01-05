@@ -12,6 +12,8 @@ import it.units.inginf.italiandraughts.exception.PieceException;
 import it.units.inginf.italiandraughts.exception.PieceColorException;
 import it.units.inginf.italiandraughts.exception.SquareException;
 import it.units.inginf.italiandraughts.exception.CoordinatesException;
+import it.units.inginf.italiandraughts.exception.SquareContentException;
+import it.units.inginf.italiandraughts.exception.BoardException;
 
 import java.util.List;
 
@@ -25,7 +27,7 @@ public class CommandRunner {
         this.outputPrinter = new CommandLineOutputPrinter();
     }
 
-    public void runCommand(Command command) throws Exception {
+    public void runCommand(Command command) throws PlayerException, CommandException, CoordinatesException, BoardException, PieceException, PieceColorException, SquareException, SquareContentException {
         if(command == null) {
             throw new CommandException("Command cannot be null");
         }
@@ -69,7 +71,7 @@ public class CommandRunner {
         outputPrinter.print(helpMessageBuilder.toString());
     }
 
-    private void runCommandTo(SquareCoordinates coordinatesStartingSquare, SquareCoordinates coordinatesArrivalSquare) throws Exception {
+    private void runCommandTo(SquareCoordinates coordinatesStartingSquare, SquareCoordinates coordinatesArrivalSquare) throws BoardException, PieceException, PieceColorException, SquareException, SquareContentException {
         Square startingSquare = game.getBoard().getSquare(coordinatesStartingSquare);
         Square arrivalSquare = game.getBoard().getSquare(coordinatesArrivalSquare);
         Piece selectedPiece = BoardUtils.researchPiece(this.game.getBoard(), startingSquare);
@@ -122,7 +124,7 @@ public class CommandRunner {
         }
     }
 
-    private void runCommandCapture(SquareCoordinates coordinatesSelectedPieceSquare, SquareCoordinates coordinatesCapturedPieceSquare, SquareCoordinates coordinatesDestinationSquare) throws Exception {
+    private void runCommandCapture(SquareCoordinates coordinatesSelectedPieceSquare, SquareCoordinates coordinatesCapturedPieceSquare, SquareCoordinates coordinatesDestinationSquare) throws CommandException, CoordinatesException, BoardException, PieceException, PieceColorException, SquareException, SquareContentException {
         Board board = game.getBoard();
         PieceColor selectedPieceColor;
         Piece selectedPiece;
