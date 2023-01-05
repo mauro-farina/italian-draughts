@@ -1,5 +1,9 @@
 package it.units.inginf.italiandraughts.board;
 
+import it.units.inginf.italiandraughts.exception.CoordinatesException;
+import it.units.inginf.italiandraughts.exception.SquareNameException;
+import it.units.inginf.italiandraughts.exception.SquareContentException;
+
 public class Square {
 
     private final SquareColor squareColor; // square color (black or white)
@@ -8,7 +12,7 @@ public class Square {
     private final SquareCoordinates squareCoordinates;
     private final SquareName squareName;
 
-    public Square(int x, int y) throws Exception {
+    public Square(int x, int y) throws SquareNameException, CoordinatesException {
         this.squareCoordinates = new SquareCoordinates(x,y);
         this.squareName = new SquareName(squareCoordinates);
 
@@ -45,9 +49,9 @@ public class Square {
         return squareContent;
     }
 
-    public void setSquareContent(SquareContent newSquareContent) throws Exception {
+    public void setSquareContent(SquareContent newSquareContent) throws SquareContentException {
         if (newSquareContent == null){
-            throw new Exception("Square content cannot be null");
+            throw new SquareContentException("Square.setSquareContent() because SquareContent cannot be null");
         } else {
             this.squareContent = newSquareContent;
         }
