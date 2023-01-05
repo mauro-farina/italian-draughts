@@ -3,6 +3,7 @@ package it.units.inginf.italiandraughts;
 import it.units.inginf.italiandraughts.board.SquareCoordinates;
 import it.units.inginf.italiandraughts.board.SquareName;
 import it.units.inginf.italiandraughts.commands.*;
+import it.units.inginf.italiandraughts.exception.CommandException;
 
 public class CommandParser {
 
@@ -31,6 +32,7 @@ public class CommandParser {
                 return new CommandCapture(firstSquareCoordinates, secondSquareCoordinates);
             }
         }
-        throw new Exception("Unknown command. Type HELP to see the available commands.");
+        throw new CommandException("CommandParser.parseCommand() does not accept this unknown command. " +
+                "\n Type HELP to see the available commands.");
     }
 }
