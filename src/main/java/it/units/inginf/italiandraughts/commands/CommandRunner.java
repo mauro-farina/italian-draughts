@@ -6,6 +6,12 @@ import it.units.inginf.italiandraughts.game.Game;
 import it.units.inginf.italiandraughts.game.PlayerColor;
 import it.units.inginf.italiandraughts.io.CommandLineOutputPrinter;
 import it.units.inginf.italiandraughts.io.OutputPrinter;
+import it.units.inginf.italiandraughts.exception.CommandException;
+import it.units.inginf.italiandraughts.exception.PlayerException;
+import it.units.inginf.italiandraughts.exception.PieceException;
+import it.units.inginf.italiandraughts.exception.PieceColorException;
+import it.units.inginf.italiandraughts.exception.SquareException;
+import it.units.inginf.italiandraughts.exception.CoordinatesException;
 
 import java.util.List;
 
@@ -21,7 +27,7 @@ public class CommandRunner {
 
     public void runCommand(Command command) throws Exception {
         if(command == null) {
-            throw new Exception("Command cannot be null");
+            throw new CommandException("Command cannot be null");
         }
         if(command.getCommandType().equals(CommandType.SURRENDER)) {
             this.runCommandSurrender();
@@ -41,7 +47,7 @@ public class CommandRunner {
         }
     }
 
-    private void runCommandSurrender() throws Exception {
+    private void runCommandSurrender() throws PlayerException {
         if(game.getCurrentTurn() == game.getPlayer1()) {
             game.setWinnerPlayer(game.getPlayer2());
         } else {
@@ -68,13 +74,15 @@ public class CommandRunner {
         Square arrivalSquare = game.getBoard().getSquare(coordinatesArrivalSquare);
         Piece selectedPiece = BoardUtils.researchPiece(this.game.getBoard(), startingSquare);
         if(selectedPiece == null) {
-            throw new Exception("No piece located on " + startingSquare.getSquareName().toString());
+            throw new PieceException("CommandRunner.runCommandTo()," +
+                    "\n no piece located on " + startingSquare.getSquareName().toString());
         }
         if(!selectedPiece.getColor().toString().equalsIgnoreCase(game.getCurrentTurn().getColor().toString())) {
-            throw new Exception("Cannot move opponent pieces");
+            throw new PieceException("CommandRunner.runCommandTo() -> cannot move opponent pieces");
         }
         if(!arrivalSquare.isFree()) {
-            throw new Exception("There already is a piece on " + arrivalSquare.getSquareName().toString());
+            throw new SquareException("CommandRunner.runCommandTo(), " +
+                    "\n there already is a piece on " + arrivalSquare.getSquareName().toString());
         }
         List<Square> listReachableSquares = game.getBoard().getReachableSquares(selectedPiece);
 
@@ -85,14 +93,14 @@ public class CommandRunner {
                 pieceIndex = i;
                 break;
             } else if (i == listReachableSquares.size() - 1) { // ???
-                throw new Exception("Invalid arrival square");
+                throw new SquareException("CommandRunner.runCommandTo() does not accept arrivalSquare");
             }
         }
         //      */
 
         if(!listReachableSquares.contains(arrivalSquare)) {
-            throw new Exception("Cannot reach " + arrivalSquare.getSquareName().toString()
-                    + " from " + startingSquare.getSquareName().toString());
+            throw new SquareException("CommandRunner.runCommandTo() -> cannot reach " + 
+                    arrivalSquare.getSquareName().toString() + " from " + startingSquare.getSquareName().toString());
         }
         startingSquare.setSquareContent(SquareContent.EMPTY);
         if(selectedPiece.isMan()) {
@@ -127,13 +135,14 @@ public class CommandRunner {
         } else if (game.getCurrentTurn().getColor() == PlayerColor.BLACK) {
             selectedPieceColor = PieceColor.BLACK;
         } else {
-            throw new Exception("Invalid turn");
+            throw new PieceColorException("CommandRunner.runCommandCapture() -> invalid turn");
         }
         selectedPiece = BoardUtils.researchPiece(this.game.getBoard(), selectedPieceSquare);
         capturedPiece = BoardUtils.researchPiece(this.game.getBoard(), capturedPieceSquare);
         if((selectedPiece.getColor() != selectedPieceColor) && (capturedPiece.getColor() == selectedPieceColor)
                 && (capturedPieceSquare.isFree()) && (!destinationSquare.isFree())) {
-            throw new Exception("Invalid coordinates");
+            throw new CoordinatesException("CommandRunner.runCommandCapture() does not accept the coordinates " +
+                    "of capturedPieceSquare and destinationSquare");
         }
         List<Square> listReachableSquaresOfSelectedPiece = board.getReachableSquares(selectedPiece);
         int pieceIndex = -1;
@@ -144,7 +153,7 @@ public class CommandRunner {
             }
         }
         if(pieceIndex == -1) {
-            throw new Exception("Invalid command");
+            throw new CommandException("CommandRunner.runCommandCapture() does not accept the Command");
         }
         selectedPieceSquare.setSquareContent(SquareContent.EMPTY);
         capturedPieceSquare.setSquareContent(SquareContent.EMPTY);
