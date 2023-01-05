@@ -1,4 +1,5 @@
 package it.units.inginf.italiandraughts.board;
+import it.units.inginf.italiandraughts.exception.SquareException;
 
 public interface Piece {
 
