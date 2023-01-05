@@ -1,13 +1,14 @@
 package it.units.inginf.italiandraughts;
 
 import it.units.inginf.italiandraughts.board.SquareName;
+import it.units.inginf.italiandraughts.exception.CoordinatesException;
 
 public class Utils {
 
-    public static int[] convertToCoordinates(String coordinatesString) throws Exception {
+    public static int[] convertToCoordinates(String coordinatesString) throws CoordinatesException {
         int[] coordinates = new int[2];
         if(coordinatesString.length() != 2) {
-            throw new Exception("Invalid coordinates");
+            throw new CoordinatesException("Utils.convertToCoordinates() does not accept this coordinatesString");
         } else {
             switch(coordinatesString.charAt(0)) {
                 case 'A' -> coordinates[0] = 0;
@@ -18,7 +19,7 @@ public class Utils {
                 case 'F' -> coordinates[0] = 5;
                 case 'G' -> coordinates[0] = 6;
                 case 'H' -> coordinates[0] = 7;
-                default -> throw new Exception("Invalid coordinates");
+                default -> throw new CoordinatesException("Utils.convertToCoordinates() does not accept this coordinatesString");
             }
             switch(coordinatesString.charAt(1)) {
                 case '1' -> coordinates[1] = 0;
@@ -29,7 +30,7 @@ public class Utils {
                 case '6' -> coordinates[1] = 5;
                 case '7' -> coordinates[1] = 6;
                 case '8' -> coordinates[1] = 7;
-                default -> throw new Exception("Invalid coordinates");
+                default -> throw new CoordinatesException("Utils.convertToCoordinates() does not accept this coordinatesString");
             }
             return coordinates;
         }
