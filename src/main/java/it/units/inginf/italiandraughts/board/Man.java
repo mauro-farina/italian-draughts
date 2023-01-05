@@ -2,26 +2,26 @@ package it.units.inginf.italiandraughts.board;
 import java.lang.Exception;
 
 public class Man implements Piece{
-    protected PieceColor color; // color of the piece, either black or white
+    
+    protected PieceColor pieceColor; // color of the piece, either black or white
     protected Square square; // current square on which the piece is positioned
-    //protected ManSymbol symbol;
 
-    public Man(PieceColor color, Square square) throws Exception {
-        if(color == null){
+    public Man(PieceColor pieceColor, Square square) throws Exception {
+        if(pieceColor == null){
             throw new Exception("Color cannot be null");
         } else {
-            this.color = color;
+            this.pieceColor = pieceColor;
         }
-        if(square.getSquareColor().equals(SquareColor.WHITE)) {
+        if(!square.getSquareColor().equals(SquareColor.BLACK)) {
             throw new Exception("Pieces cannot be on white squares");
         } else {
             this.square = square;
         }
     }
-    
+
     @Override
     public PieceColor getColor() {
-        return this.color;
+        return this.pieceColor;
     }
 
     @Override
@@ -31,12 +31,13 @@ public class Man implements Piece{
 
     @Override
     public void setSquare(Square newSquare) throws Exception {
-        if(newSquare.getSquareColor().equals(SquareColor.WHITE)) {
+        if(!newSquare.getSquareColor().equals(SquareColor.BLACK)) {
             throw new Exception("Pieces cannot be on white squares");
         } else {
             this.square = newSquare;
         }
     }
+    
     @Override
     public boolean isMan() {
         return true;
