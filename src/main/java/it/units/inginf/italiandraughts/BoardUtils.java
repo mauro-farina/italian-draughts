@@ -9,8 +9,9 @@ import it.units.inginf.italiandraughts.board.King;
 import it.units.inginf.italiandraughts.board.SquareColor;
 import it.units.inginf.italiandraughts.exception.BoardException;
 import it.units.inginf.italiandraughts.exception.PieceException;
-import it.units.inginf.italiandraughts.exception.SquareException;
 import it.units.inginf.italiandraughts.exception.PieceColorException;
+import it.units.inginf.italiandraughts.exception.SquareException;
+import it.units.inginf.italiandraughts.exception.SquareContentException;
 
 public class BoardUtils {
 
@@ -46,7 +47,7 @@ public class BoardUtils {
         }
     }
 
-    public static void toCrown(Board board, Piece piece) throws Exception {
+    public static void toCrown(Board board, Piece piece) throws BoardException, PieceException, PieceColorException, SquareException, SquareContentException {
         if(board == null) {
             throw new BoardException("BoardUtils.toCrown() does not accept this Board, because it is null");
         }
