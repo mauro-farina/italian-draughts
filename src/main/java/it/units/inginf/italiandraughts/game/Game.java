@@ -8,6 +8,7 @@ import it.units.inginf.italiandraughts.io.CommandLineInputReader;
 import it.units.inginf.italiandraughts.io.CommandLineOutputPrinter;
 import it.units.inginf.italiandraughts.io.InputReader;
 import it.units.inginf.italiandraughts.io.OutputPrinter;
+import it.units.inginf.italiandraughts.exception.PlayerException;
 
 public class Game {
 
@@ -24,9 +25,10 @@ public class Game {
 
     public Game(Player player1, Player player2) throws Exception {
         if((player1 == null) || (player2 == null)) {
-            throw new Exception("One or both players are not valid");
+            throw new PlayerException("Game.Game() does not accept one or both players");
         } else if((player1.getColor() != PlayerColor.WHITE) || (player2.getColor() != PlayerColor.BLACK)) {
-            throw new Exception("player1 uses the white pieces, while player2 uses the black pieces");
+            throw new PlayerException("Game.game() does not accept one or both player's color." + 
+                                      "\n Player1 uses the white pieces, while player2 uses the black pieces");
         } else {
             this.gameState = GameState.SETTING_UP;
             this.board = new Board();
@@ -101,9 +103,9 @@ public class Game {
         return winnerPlayer;
     }
 
-    public void setWinnerPlayer(Player player) throws Exception {
+    public void setWinnerPlayer(Player player) throws PlayerException {
         if((player != player1) && (player != player2)) {
-            throw new Exception("The winner player does not exists");
+            throw new PlayerException("Game.setWinnerPlayer() the entered player cannot be the winner player");
         } else {
             winnerPlayer = player;
             gameState = GameState.OVER;
@@ -118,13 +120,13 @@ public class Game {
         this.turnCounter++;
     }
 
-    public void changeTurn() throws Exception {
+    public void changeTurn() throws PlayerException {
         if(this.currentTurn == player1) {
             this.currentTurn = player2;
         } else if(this.currentTurn == player2){
             this.currentTurn = player1;
         } else {
-            throw new Exception("currentTurn cannot be null");
+            throw new PlayerException("Player.changeTurn() currentTurn cannot be null");
         }
         incrementTurnCounter();
     }
