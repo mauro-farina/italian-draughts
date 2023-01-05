@@ -2,7 +2,7 @@ package it.units.inginf.italiandraughts.exception;
 
 public class SquareContentException extends Exception {
 
-    private String message;
+    private final String message;
 
     public SquareContentException(String message) {
         this.message = message;
