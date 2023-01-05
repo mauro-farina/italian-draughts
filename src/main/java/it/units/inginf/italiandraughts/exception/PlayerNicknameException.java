@@ -2,7 +2,7 @@ package it.units.inginf.italiandraughts.exception;
 
 public class PlayerNicknameException extends Exception {
 
-    private String message;
+    private final String message;
 
     public PlayerNicknameException(String message) {
         this.message = message;
