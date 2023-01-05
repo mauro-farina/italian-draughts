@@ -36,7 +36,7 @@ public class Utils {
         }
     }
 
-    public static int[] convertToCoordinates(SquareName squareName) throws Exception {
+    public static int[] convertToCoordinates(SquareName squareName) throws CoordinatesException {
         return convertToCoordinates(squareName.toString());
     }
 }
