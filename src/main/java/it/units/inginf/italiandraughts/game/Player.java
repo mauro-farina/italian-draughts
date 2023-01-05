@@ -16,7 +16,7 @@ public class Player {
         if((playerColor == PlayerColor.WHITE) || (playerColor == PlayerColor.BLACK)) {
             this.playerColor = playerColor;
         } else {
-            throw new PlayerColorException("Player.Player()");
+            throw new PlayerColorException("Player.Player() does not accept this PlayerColor");
         }
     }
 
