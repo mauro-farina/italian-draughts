@@ -9,6 +9,11 @@ import it.units.inginf.italiandraughts.io.CommandLineOutputPrinter;
 import it.units.inginf.italiandraughts.io.InputReader;
 import it.units.inginf.italiandraughts.io.OutputPrinter;
 import it.units.inginf.italiandraughts.exception.PlayerException;
+import it.units.inginf.italiandraughts.exception.CoordinatesException;
+import it.units.inginf.italiandraughts.exception.SquareNameException;
+import it.units.inginf.italiandraughts.exception.SquareContentException;
+import it.units.inginf.italiandraughts.exception.PieceColorException;
+import it.units.inginf.italiandraughts.exception.SquareException;
 
 public class Game {
 
@@ -23,7 +28,7 @@ public class Game {
     private GameState gameState;
     private final CommandRunner commandRunner;
 
-    public Game(Player player1, Player player2) throws Exception {
+    public Game(Player player1, Player player2) throws PlayerException, SquareNameException, SquareContentException, CoordinatesException, PieceColorException, SquareException {
         if((player1 == null) || (player2 == null)) {
             throw new PlayerException("Game.Game() does not accept one or both players");
         } else if((player1.getColor() != PlayerColor.WHITE) || (player2.getColor() != PlayerColor.BLACK)) {
