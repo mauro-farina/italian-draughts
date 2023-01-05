@@ -1,21 +1,22 @@
 package it.units.inginf.italiandraughts.game;
 
+import it.units.inginf.italiandraughts.exception.PlayerColorException;
+
 public class Player {
 
-    private final String nickname;
+    private String nickname;
+    private PlayerColor playerColor;
 
-    private final PlayerColor color;
-
-    public Player(String nickname, PlayerColor color) throws Exception {
+    public Player(String nickname, PlayerColor playerColor) throws Exception {
         if(nickname == null) {
             throw new Exception("The player's nickname is not valid");
         } else {
             this.nickname = nickname;
         }
-        if(color == null) {
-            throw new Exception("The player's color is not valid");
+        if((playerColor == PlayerColor.WHITE) || (playerColor == PlayerColor.BLACK)) {
+            this.playerColor = playerColor;
         } else {
-            this.color = color;
+            throw new PlayerColorException("Player.Player()");
         }
     }
 
@@ -24,7 +25,7 @@ public class Player {
     }
 
     public PlayerColor getColor() {
-        return this.color;
+        return this.playerColor;
     }
 
 }
