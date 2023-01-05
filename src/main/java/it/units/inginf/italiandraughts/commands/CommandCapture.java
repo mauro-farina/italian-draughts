@@ -1,6 +1,7 @@
 package it.units.inginf.italiandraughts.commands;
 
 import it.units.inginf.italiandraughts.board.SquareCoordinates;
+import it.units.inginf.italiandraughts.exception.CoordinatesException;
 
 public class CommandCapture extends Command {
 
@@ -28,7 +29,7 @@ public class CommandCapture extends Command {
         try {
             this.toCoordinates = new SquareCoordinates(toCoordinateX, toCoordinateY);
         } catch (Exception exception) {
-            throw new Exception("Cannot capture piece on the edge of the board");
+            throw new CoordinatesException("CommandCapture.CommandCapture() -> cannot capture piece on the edge of the board");
         }
     }
 
