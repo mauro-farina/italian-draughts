@@ -1,7 +1,7 @@
 package it.units.inginf.italiandraughts.exception;
 
 public class PlayerColorException extends Exception{
-    private String message;
+    private final String message;
 
     public PlayerColorException(String message) {
         this.message = message;
