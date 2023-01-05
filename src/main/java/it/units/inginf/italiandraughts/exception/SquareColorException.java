@@ -2,7 +2,7 @@ package it.units.inginf.italiandraughts.exception;
 
 public class SquareColorException extends Exception {
 
-    private String message;
+    private final String message;
 
     public SquareColorException(String message) {
         this.message = message;
