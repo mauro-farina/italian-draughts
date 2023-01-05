@@ -1,15 +1,16 @@
 package it.units.inginf.italiandraughts.game;
 
 import it.units.inginf.italiandraughts.exception.PlayerColorException;
+import it.units.inginf.italiandraughts.exception.PlayerNicknameException;
 
 public class Player {
 
     private String nickname;
     private PlayerColor playerColor;
 
-    public Player(String nickname, PlayerColor playerColor) throws Exception {
+    public Player(String nickname, PlayerColor playerColor) throws PlayerColorException, PlayerNicknameException {
         if(nickname == null) {
-            throw new Exception("The player's nickname is not valid");
+            throw new PlayerNicknameException("Player.Player() does not accept this nickname");
         } else {
             this.nickname = nickname;
         }
