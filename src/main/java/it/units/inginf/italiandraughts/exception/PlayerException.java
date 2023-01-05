@@ -10,6 +10,6 @@ public class PlayerException extends Exception {
 
     @Override
     public String getMessage() {
-        return "PlayerNicknameException: invalid PlayerNickname, " + message;
+        return "PlayerException: invalid Player, " + message;
     }
 }
