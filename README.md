@@ -2,6 +2,8 @@
 
 Italian Draughts game, made by [Luca Filippi](https://github.com/Luca-Filippi) and [Mauro Farina](https://github.com/mauro-farina) as a project for the course Software Development Methods.
 
+The rules and the description of the game are visible on this [link](https://en.m.wikipedia.org/wiki/Italian_draughts)
+
 The src folder contains the java code of the game and related tests.
 
 The [main](https://github.com/mauro-farina/italian-draughts/tree/main/src/main/java/it/units/inginf/italiandraughts) folder has the following elements:
@@ -31,4 +33,4 @@ The [main](https://github.com/mauro-farina/italian-draughts/tree/main/src/main/j
 -> the packege [it.units.inginf.italiandraughts.io](https://github.com/mauro-farina/italian-draughts/tree/main/src/main/java/it/units/inginf/italiandraughts/io);
 
 
-The [test](https://github.com/mauro-farina/italian-draughts/tree/main/src/test/java/it/units/inginf/italiandraughts) folder contains many test classes associated with individual classes contained in the main folder
+The [test](https://github.com/mauro-farina/italian-draughts/tree/main/src/test/java/it/units/inginf/italiandraughts) folder contains many test classes associated with individual classes contained in the main folder.
