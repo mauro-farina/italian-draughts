@@ -4,6 +4,7 @@ import it.units.inginf.italiandraughts.CommandParser;
 import it.units.inginf.italiandraughts.board.Board;
 import it.units.inginf.italiandraughts.commands.Command;
 import it.units.inginf.italiandraughts.commands.CommandRunner;
+import it.units.inginf.italiandraughts.commands.CommandType;
 import it.units.inginf.italiandraughts.io.CommandLineInputReader;
 import it.units.inginf.italiandraughts.io.CommandLineOutputPrinter;
 import it.units.inginf.italiandraughts.io.InputReader;
@@ -23,8 +24,8 @@ public class Game {
     private Player currentTurn;
     private Player winnerPlayer;
     private int turnCounter;
-    private final InputReader inputReader; // could go in the Main to separate concerns
-    private final OutputPrinter outputPrinter; // could go in the Main to separate concerns
+    private final InputReader inputReader; // could go in the it.units.inginf.italiandraughts.Main to separate concerns
+    private final OutputPrinter outputPrinter; // could go in the it.units.inginf.italiandraughts.Main to separate concerns
     private GameState gameState;
     private final CommandRunner commandRunner;
 
@@ -32,8 +33,8 @@ public class Game {
         if((player1 == null) || (player2 == null)) {
             throw new PlayerException("Game.Game() does not accept one or both players");
         } else if((player1.getColor() != PlayerColor.WHITE) || (player2.getColor() != PlayerColor.BLACK)) {
-            throw new PlayerException("Game.game() does not accept one or both player's color." + 
-                                      "\n Player1 uses the white pieces, while player2 uses the black pieces");
+            throw new PlayerException("Game.game() does not accept one or both player's color." +
+                     "\n Player1 uses the white pieces, while player2 uses the black pieces");
         } else {
             this.gameState = GameState.SETTING_UP;
             this.board = new Board();
@@ -48,7 +49,7 @@ public class Game {
     public void start() {
         initGame();
         try {
-            commandRunner.runCommand(CommandParser.parseCommand("help"));
+            commandRunner.runCommand(CommandParser.parseCommand( "help"));
             outputPrinter.print("\n");
         } catch (Exception exception) {
             outputPrinter.print(exception.getMessage());
