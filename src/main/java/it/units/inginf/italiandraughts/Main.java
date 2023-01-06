@@ -1,14 +1,15 @@
 package it.units.inginf.italiandraughts;
 
+import it.units.inginf.italiandraughts.io.InputReader;
+import it.units.inginf.italiandraughts.io.CommandLineInputReader;
 import it.units.inginf.italiandraughts.game.Game;
 import it.units.inginf.italiandraughts.game.Player;
 import it.units.inginf.italiandraughts.game.PlayerColor;
 import it.units.inginf.italiandraughts.exception.PlayerColorException;
 
-import java.util.Scanner;
-
 public class Main {
-    private final static Scanner scanner = new Scanner(System.in);
+    
+    private final static InputReader inputReader = new CommandLineInputReader();
 
     public static void main(String[] args) throws Exception {
         new Game(
@@ -26,7 +27,7 @@ public class Main {
             } else {
                 throw new PlayerColorException("Main.main() does not accept this PlayerColor");
             }
-            String name = scanner.nextLine();
+            String name = inputReader.readInput();
             if((!name.equals("")) && (name.charAt(0) != ' ')) {
                 return name;
             } else {
