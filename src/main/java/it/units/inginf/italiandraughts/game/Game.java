@@ -54,6 +54,7 @@ public class Game {
             outputPrinter.print(exception.getMessage());
         }
         while(this.gameState == GameState.PLAYING) {
+            Command command;
             try{
                 outputPrinter.print(board.toStringFor(getCurrentTurn().getColor()));
                 outputPrinter.print("Turn of " + getCurrentTurn().getNickname());
@@ -63,7 +64,7 @@ public class Game {
             while(true) {
                 String readCommand = inputReader.readInput();
                 try {
-                    Command command = CommandParser.parseCommand(readCommand);
+                    command = CommandParser.parseCommand(readCommand);
                     commandRunner.runCommand(command);
                     break;
                 } catch (Exception exception) {
@@ -73,7 +74,7 @@ public class Game {
             try {
                 if(checkVictoryCondition()) {
                     setWinnerPlayer(this.currentTurn);
-                } else {
+                } else if(command.getCommandType() != CommandType.HELP) {
                     changeTurn();
                 }
             } catch (Exception e) {
