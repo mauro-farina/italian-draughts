@@ -4,12 +4,14 @@ import it.units.inginf.italiandraughts.board.SquareCoordinates;
 import it.units.inginf.italiandraughts.board.SquareName;
 import it.units.inginf.italiandraughts.commands.*;
 import it.units.inginf.italiandraughts.exception.CommandException;
+import it.units.inginf.italiandraughts.exception.CoordinatesException;
+import it.units.inginf.italiandraughts.exception.SquareNameException;
 
 public class CommandParser {
 
     // static ?
     // probably a command parser should not require board
-    public static Command parseCommand(String commandAsString) throws Exception {
+    public static Command parseCommand(String commandAsString) throws CommandException, CoordinatesException, SquareNameException {
         String[] commandTokens = commandAsString.trim().split(" "); //with trim
         if(commandTokens.length == 1) {
             if(commandTokens[0].equalsIgnoreCase("help")){
