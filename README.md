@@ -2,7 +2,7 @@
 
 Italian Draughts game, made by [Luca Filippi](https://github.com/Luca-Filippi) and [Mauro Farina](https://github.com/mauro-farina) as a project for the course Software Development Methods.
 
-The rules and the description of the game are visible on this [link](https://en.m.wikipedia.org/wiki/Italian_draughts)
+The rules and the description of the game are visible on this [link](https://en.m.wikipedia.org/wiki/Italian_draughts).
 
 The src folder contains the java code of the game and related tests.
 
