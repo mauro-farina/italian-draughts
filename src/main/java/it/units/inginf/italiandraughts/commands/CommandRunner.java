@@ -1,7 +1,12 @@
 package it.units.inginf.italiandraughts.commands;
 
 import it.units.inginf.italiandraughts.BoardUtils;
-import it.units.inginf.italiandraughts.board.*;
+import it.units.inginf.italiandraughts.board.Board;
+import it.units.inginf.italiandraughts.board.SquareCoordinates;
+import it.units.inginf.italiandraughts.board.Square;
+import it.units.inginf.italiandraughts.board.SquareContent;
+import it.units.inginf.italiandraughts.board.Piece;
+import it.units.inginf.italiandraughts.board.PieceColor;
 import it.units.inginf.italiandraughts.game.Game;
 import it.units.inginf.italiandraughts.game.PlayerColor;
 import it.units.inginf.italiandraughts.io.CommandLineOutputPrinter;
