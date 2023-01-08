@@ -75,7 +75,8 @@ public class SingleCapture {
         return board.getSquare(toCoordinates).isFree();
     }
 
-    public void run() throws BoardException, SquareException, SquareContentException {
+    public void run() throws BoardException, SquareException, SquareContentException,
+            PieceColorException, PieceException {
         Square selectedPieceSquare = board.getSquare(fromCoordinates);
         Square capturedPieceSquare = board.getSquare(pieceToCaptureCoordinates);
         Square destinationSquare = board.getSquare(toCoordinates);
@@ -84,6 +85,7 @@ public class SingleCapture {
         if(selectedPiece != null && capturedPiece != null) {
             selectedPieceSquare.setSquareContent(SquareContent.EMPTY);
             capturedPieceSquare.setSquareContent(SquareContent.EMPTY);
+            BoardUtils.removePiece(board, capturedPiece);
             if (selectedPiece.isMan()) {
                 if (selectedPiece.getColor() == PieceColor.WHITE) {
                     destinationSquare.setSquareContent(SquareContent.WHITE_MAN);
