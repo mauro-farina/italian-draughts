@@ -101,7 +101,7 @@ public class SingleCapture {
             selectedPiece.setSquare(destinationSquare);
         }
     }
-    
+
     public void runBack() throws BoardException, SquareException, SquareContentException,
             PieceColorException {
         Square selectedPieceSquare = board.getSquare(fromCoordinates);
@@ -153,6 +153,14 @@ public class SingleCapture {
     }
 
     public boolean pieceOnToCoordinatesIsKing() throws BoardException, SquareException {
+        Piece piece = BoardUtils.researchPiece(this.board, this.board.getSquare(toCoordinates));
+        if(piece == null) {
+            return false;
+        }
+        return piece.isKing();
+    }
+
+    private boolean pieceOnCaptureCoordinatesIsKing() throws BoardException, SquareException {
         Piece piece = BoardUtils.researchPiece(this.board, this.board.getSquare(toCoordinates));
         if(piece == null) {
             return false;
