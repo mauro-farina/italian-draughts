@@ -7,10 +7,7 @@ import it.units.inginf.italiandraughts.board.SquareCoordinates;
 import it.units.inginf.italiandraughts.board.SquareContent;
 import it.units.inginf.italiandraughts.board.Piece;
 import it.units.inginf.italiandraughts.board.PieceColor;
-import it.units.inginf.italiandraughts.exception.CoordinatesException;
-import it.units.inginf.italiandraughts.exception.SquareException;
-import it.units.inginf.italiandraughts.exception.BoardException;
-import it.units.inginf.italiandraughts.exception.SquareContentException;
+import it.units.inginf.italiandraughts.exception.*;
 
 public class SingleCapture {
 
