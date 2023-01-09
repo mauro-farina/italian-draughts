@@ -22,6 +22,8 @@ import it.units.inginf.italiandraughts.exception.SquareContentException;
 import it.units.inginf.italiandraughts.exception.PieceColorException;
 import it.units.inginf.italiandraughts.exception.SquareException;
 
+import java.util.List;
+
 public class Game {
 
     private final Board board;
