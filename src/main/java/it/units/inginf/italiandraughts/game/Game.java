@@ -58,7 +58,6 @@ public class Game {
         initGame();
         List<CommandCapture> obligatoryCapture;
         Piece lastMovedPiece = null;
-        Board simulatedBoard;
         try {
             commandRunner.runCommand(CommandParser.parseCommand( "help"));
             outputPrinter.print("\n");
@@ -69,8 +68,6 @@ public class Game {
             Command command;
             obligatoryCapture = null;
             try{
-                simulatedBoard = new Board();
-                ObligatoryCapture.copyBoard(this.board, simulatedBoard);
                 outputPrinter.print(board.toStringFor(getCurrentTurn().getColor()));
                 outputPrinter.print("Turn of " + getCurrentTurn().getNickname());
                 if(lastMovedPiece != null) {
