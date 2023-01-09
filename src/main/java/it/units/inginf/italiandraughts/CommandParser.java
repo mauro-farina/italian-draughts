@@ -37,4 +37,32 @@ public class CommandParser {
         throw new CommandException("CommandParser.parseCommand() does not accept this unknown command. " +
                 "\n Type HELP to see the available commands.");
     }
+
+    public static CommandTo parseCommandTo(String commandAsString) throws CommandException, SquareNameException, CoordinatesException{
+        String[] commandTokens = commandAsString.trim().split(" "); //with trim
+        if(commandTokens.length == 3) {
+            SquareCoordinates firstSquareCoordinates = new SquareCoordinates(new SquareName(commandTokens[0]));
+            SquareCoordinates secondSquareCoordinates = new SquareCoordinates(new SquareName(commandTokens[2]));
+            if (commandTokens[1].equalsIgnoreCase("to")) {
+                return new CommandTo(firstSquareCoordinates, secondSquareCoordinates);
+            }
+        }
+        throw new CommandException("CommandParser.parseCommandTo() does not accept this unknown commandTo. " +
+                "\n Type HELP to see the available commands.");
+    }
+
+    public static CommandCapture parseCommandCapture(String commandAsString) throws CommandException, SquareNameException, CoordinatesException{
+        String[] commandTokens = commandAsString.trim().split(" "); //with trim
+        if(commandTokens.length == 3) {
+            SquareCoordinates firstSquareCoordinates = new SquareCoordinates(new SquareName(commandTokens[0]));
+            SquareCoordinates secondSquareCoordinates = new SquareCoordinates(new SquareName(commandTokens[2]));
+            if (commandTokens[1].equalsIgnoreCase("capture")
+                    || commandTokens[1].equalsIgnoreCase("capt")
+                    || commandTokens[1].equalsIgnoreCase("cap")) {
+                return new CommandCapture(firstSquareCoordinates, secondSquareCoordinates);
+            }
+        }
+        throw new CommandException("CommandParser.parseCommandCapture() does not accept this unknown " +
+                "commandCapture. \n Type HELP to see the available commands.");
+    }
 }
