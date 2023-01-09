@@ -77,7 +77,7 @@ public class ObligatoryCapture {
         copyBoard(mainBoard, supportedBoard);
         List<CommandCapture> obligatoryCaptureList = new ArrayList<>();
         List<SingleCapture> singleCaptureList = new ArrayList<>();
-        updateSingleCaptureList(supportedBoard, singleCaptureList, movedPiece);
+        updateSingleCaptureList(mainBoard, singleCaptureList, movedPiece);
         //copyBoard(mainBoard, supportedBoard);
         for(SingleCapture singleCapture : singleCaptureList) {
             obligatoryCaptureList.add(
@@ -101,7 +101,7 @@ public class ObligatoryCapture {
                 if (singleCapture.isValid()) {
                     newSingleCaptureList.add(singleCapture);
                     singleCapture.run();
-                    recursiveUpdateSingleCaptureList(supportedBoard, singleCaptureList,
+                    recursiveUpdateSingleCaptureList(mainBoard, singleCaptureList,
                                 BoardUtils.researchPiece(mainBoard,
                                         mainBoard.getSquare(singleCapture.getToCoordinates())));
                     compareTwoLists(singleCaptureList, newSingleCaptureList);
