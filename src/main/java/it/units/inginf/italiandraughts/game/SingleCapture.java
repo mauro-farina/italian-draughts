@@ -107,7 +107,7 @@ public class SingleCapture {
         Square selectedPieceSquare = board.getSquare(fromCoordinates);
         Square capturedPieceSquare = board.getSquare(pieceToCaptureCoordinates);
         Square destinationSquare = board.getSquare(toCoordinates);
-        Piece selectedPiece = BoardUtils.researchPiece(this.board, selectedPieceSquare);
+        Piece selectedPiece = BoardUtils.researchPiece(this.board, destinationSquare);
         if(selectedPiece != null) {
             destinationSquare.setSquareContent(SquareContent.EMPTY);
             if (selectedPiece.isMan()) {
