@@ -1,8 +1,14 @@
 package it.units.inginf.italiandraughts.game;
 
+import it.units.inginf.italiandraughts.BoardUtils;
 import it.units.inginf.italiandraughts.CommandParser;
 import it.units.inginf.italiandraughts.board.Board;
+import it.units.inginf.italiandraughts.board.Piece;
+import it.units.inginf.italiandraughts.board.SquareCoordinates;
+import it.units.inginf.italiandraughts.board.SquareName;
 import it.units.inginf.italiandraughts.commands.Command;
+import it.units.inginf.italiandraughts.commands.CommandCapture;
+import it.units.inginf.italiandraughts.commands.CommandTo;
 import it.units.inginf.italiandraughts.commands.CommandRunner;
 import it.units.inginf.italiandraughts.commands.CommandType;
 import it.units.inginf.italiandraughts.io.CommandLineInputReader;
@@ -46,8 +52,11 @@ public class Game {
         }
     }
 
-    public void start() {
+   public void start() {
         initGame();
+        List<CommandCapture> obligatoryCapture;
+        Piece lastMovedPiece = null;
+        Board simulatedBoard;
         try {
             commandRunner.runCommand(CommandParser.parseCommand( "help"));
             outputPrinter.print("\n");
@@ -56,9 +65,29 @@ public class Game {
         }
         while(this.gameState == GameState.PLAYING) {
             Command command;
+            obligatoryCapture = null;
             try{
+                simulatedBoard = new Board();
+                ObligatoryCapture.copyBoard(this.board, simulatedBoard);
                 outputPrinter.print(board.toStringFor(getCurrentTurn().getColor()));
                 outputPrinter.print("Turn of " + getCurrentTurn().getNickname());
+                if(lastMovedPiece != null) {
+                    obligatoryCapture = ObligatoryCapture.getObligatoryCapture(this.board, lastMovedPiece);
+                    if(obligatoryCapture.size() > 0) {
+                        //outputPrinter.print(board.toStringFor(getCurrentTurn().getColor()));
+                        outputPrinter.print("this is a obligatory capture list, make them all");
+                        for (CommandCapture commandCapture: obligatoryCapture) {
+                            outputPrinter.print(
+                                    this.board.getSquare(commandCapture.getFromCoordinates())
+                                            .getSquareName()
+                                            .toString()
+                                            + " capture "
+                                            + this.board.getSquare(commandCapture.getPieceToCaptureCoordinates())
+                                            .getSquareName()
+                                            .toString());
+                        }
+                    }
+                }
             } catch (Exception exception) {
                 outputPrinter.print(exception.getMessage());
             }
@@ -67,6 +96,64 @@ public class Game {
                 try {
                     command = CommandParser.parseCommand(readCommand);
                     commandRunner.runCommand(command);
+                    if(command.getCommandType() == CommandType.TO) {
+                        CommandTo commandTo = CommandParser.parseCommandTo(readCommand);
+                        lastMovedPiece = BoardUtils.researchPiece(this.board, this.board.getSquare(
+                                commandTo.getToCoordinates()));
+                    }
+                    if(command.getCommandType() == CommandType.CAPTURE) {
+                        CommandCapture commandCapture = CommandParser.parseCommandCapture(readCommand);
+                        lastMovedPiece = BoardUtils.researchPiece(this.board, this.board.getSquare(
+                                commandCapture.getToCoordinates()));
+                    } /*
+                    if(obligatoryCapture != null && obligatoryCapture.size() > 0) {
+                        for(int i = 0; i < obligatoryCapture.size(); i++) {
+                            readCommand = inputReader.readInput();
+                            command = CommandParser.parseCommand(readCommand);
+                            if(command.getCommandType() == CommandType.HELP ||
+                                    command.getCommandType() == CommandType.SURRENDER) {
+                                commandRunner.runCommand(command);
+                            }
+                            if(command.getCommandType() == CommandType.TO) {
+                                outputPrinter.print("Invalid command, read the obligatory capture list");
+                                i--;
+                            }
+                            if(command.getCommandType() == CommandType.CAPTURE) {
+                                String[] readCommandSplit = readCommand.split(" ");
+                                if((obligatoryCapture.get(i)
+                                        .getFromCoordinates()
+                                        .toString()
+                                        .equalsIgnoreCase("(" + readCommandSplit[0] + ")"))
+                                && (obligatoryCapture.get(i)
+                                        .getPieceToCaptureCoordinates()
+                                        .toString()
+                                        .equalsIgnoreCase("(" + readCommandSplit[2] + ")"))) {
+                                    commandRunner.runCommand(command);
+                                } else {
+                                    outputPrinter.print("Invalid command, read the obligatory capture list");
+                                    i--;
+                                }
+                            }
+                        }
+                        if(command.getCommandType() == CommandType.CAPTURE) {
+                            CommandCapture commandCapture = CommandParser.parseCommandCapture(readCommand);
+                            lastMovedPiece = BoardUtils.researchPiece(this.board, this.board.getSquare(
+                                    commandCapture.getToCoordinates()));
+                        }
+                    } else {
+                        command = CommandParser.parseCommand(readCommand);
+                        commandRunner.runCommand(command);
+                        if(command.getCommandType() == CommandType.TO) {
+                            CommandTo commandTo = CommandParser.parseCommandTo(readCommand);
+                            lastMovedPiece = BoardUtils.researchPiece(this.board, this.board.getSquare(
+                                    commandTo.getToCoordinates()));
+                        }
+                        if(command.getCommandType() == CommandType.CAPTURE) {
+                            CommandCapture commandCapture = CommandParser.parseCommandCapture(readCommand);
+                            lastMovedPiece = BoardUtils.researchPiece(this.board, this.board.getSquare(
+                                    commandCapture.getToCoordinates()));
+                        }
+                    } */
                     break;
                 } catch (Exception exception) {
                     outputPrinter.print(exception.getMessage());
