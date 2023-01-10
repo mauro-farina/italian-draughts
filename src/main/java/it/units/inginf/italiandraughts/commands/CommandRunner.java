@@ -144,6 +144,9 @@ public class CommandRunner {
                 throw new CoordinatesException("CommandRunner.runCommandCapture() does not accept the coordinates " +
                         "of capturedPieceSquare and destinationSquare");
             }
+            if(selectedPiece.isMan() && capturedPiece.isKing()) {
+                throw  new CommandException("CommandRunner.runCommandCapture(), a man does not capture a king");
+            }
             List<Square> listReachableSquaresOfSelectedPiece = board.getReachableSquares(selectedPiece);
             int pieceIndex = -1;
             for (int i = 0; i < listReachableSquaresOfSelectedPiece.size(); i++) {
