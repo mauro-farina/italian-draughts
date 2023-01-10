@@ -42,27 +42,30 @@ public class SingleCapture {
     }
 
     public SquareCoordinates getFromCoordinates() {
-        return fromCoordinates;
+        return this.fromCoordinates;
     }
 
     public SquareCoordinates getPieceToCaptureCoordinates() {
-        return pieceToCaptureCoordinates;
+        return this.pieceToCaptureCoordinates;
     }
 
     public SquareCoordinates getToCoordinates() {
-        return toCoordinates;
+        return this.toCoordinates;
     }
 
     public boolean isValid() throws SquareException, BoardException {
-        if(fromCoordinates == null || pieceToCaptureCoordinates == null || toCoordinates == null) {
+        if(this.fromCoordinates == null || this.pieceToCaptureCoordinates == null || this.toCoordinates == null) {
             return false;
         }
-        Piece selectedPiece = BoardUtils.researchPiece(this.board, this.board.getSquare(fromCoordinates));
-        Piece capturedPiece = BoardUtils.researchPiece(this.board, this.board.getSquare(pieceToCaptureCoordinates));
+        Piece selectedPiece = BoardUtils.researchPiece(this.board, this.board.getSquare(this.fromCoordinates));
+        Piece capturedPiece = BoardUtils.researchPiece(this.board, this.board.getSquare(this.pieceToCaptureCoordinates));
         if(selectedPiece == null || capturedPiece == null) {
             return false;
         }
         if(selectedPiece.getColor() == capturedPiece.getColor()) {
+            return false;
+        }
+        if(selectedPiece.isMan() && capturedPiece.isKing()) {
             return false;
         }
         if((this.fromCoordinates.getRow() != this.pieceToCaptureCoordinates.getRow() + 1
@@ -71,20 +74,20 @@ public class SingleCapture {
                 && this.fromCoordinates.getColumn() != this.pieceToCaptureCoordinates.getColumn() - 1)) {
             return false;
         }
-        return board.getSquare(toCoordinates).isFree();
+        return this.board.getSquare(toCoordinates).isFree();
     }
 
     public void run() throws BoardException, SquareException, SquareContentException,
             PieceColorException, PieceException {
-        Square selectedPieceSquare = board.getSquare(fromCoordinates);
-        Square capturedPieceSquare = board.getSquare(pieceToCaptureCoordinates);
-        Square destinationSquare = board.getSquare(toCoordinates);
+        Square selectedPieceSquare = board.getSquare(this.fromCoordinates);
+        Square capturedPieceSquare = board.getSquare(this.pieceToCaptureCoordinates);
+        Square destinationSquare = board.getSquare(this.toCoordinates);
         Piece selectedPiece = BoardUtils.researchPiece(this.board, selectedPieceSquare);
         Piece capturedPiece = BoardUtils.researchPiece(this.board, capturedPieceSquare);
         if(selectedPiece != null && capturedPiece != null) {
             selectedPieceSquare.setSquareContent(SquareContent.EMPTY);
             capturedPieceSquare.setSquareContent(SquareContent.EMPTY);
-            BoardUtils.removePiece(board, capturedPiece);
+            BoardUtils.removePiece(this.board, capturedPiece);
             if (selectedPiece.isMan()) {
                 if (selectedPiece.getColor() == PieceColor.WHITE) {
                     destinationSquare.setSquareContent(SquareContent.WHITE_MAN);
@@ -127,25 +130,25 @@ public class SingleCapture {
             if(pieceOnCaptureCoordinatesIsKing()) {
                 if(selectedPiece.getColor() == PieceColor.WHITE) {
                     capturedPieceSquare.setSquareContent(SquareContent.BLACK_KING);
-                    board.getBlackPieces().add(new King(PieceColor.BLACK, capturedPieceSquare));
+                    this.board.getBlackPieces().add(new King(PieceColor.BLACK, capturedPieceSquare));
                 } else {
                     capturedPieceSquare.setSquareContent(SquareContent.WHITE_KING);
-                    board.getWhitePieces().add(new King(PieceColor.WHITE, capturedPieceSquare));
+                    this.board.getWhitePieces().add(new King(PieceColor.WHITE, capturedPieceSquare));
                 }
             } else {
                 if(selectedPiece.getColor() == PieceColor.WHITE) {
                     capturedPieceSquare.setSquareContent(SquareContent.BLACK_MAN);
-                    board.getBlackPieces().add(new Man(PieceColor.BLACK, capturedPieceSquare));
+                    this.board.getBlackPieces().add(new Man(PieceColor.BLACK, capturedPieceSquare));
                 } else {
                     capturedPieceSquare.setSquareContent(SquareContent.WHITE_MAN);
-                    board.getWhitePieces().add(new Man(PieceColor.WHITE, capturedPieceSquare));
+                    this.board.getWhitePieces().add(new Man(PieceColor.WHITE, capturedPieceSquare));
                 }
             }
         }
     }
 
     public boolean pieceOnFromCoordinatesIsKing() throws BoardException, SquareException {
-        Piece piece = BoardUtils.researchPiece(this.board, this.board.getSquare(fromCoordinates));
+        Piece piece = BoardUtils.researchPiece(this.board, this.board.getSquare(this.fromCoordinates));
         if(piece == null) {
             return false;
         }
@@ -153,7 +156,7 @@ public class SingleCapture {
     }
 
     public boolean pieceOnToCoordinatesIsKing() throws BoardException, SquareException {
-        Piece piece = BoardUtils.researchPiece(this.board, this.board.getSquare(toCoordinates));
+        Piece piece = BoardUtils.researchPiece(this.board, this.board.getSquare(this.toCoordinates));
         if(piece == null) {
             return false;
         }
@@ -161,7 +164,7 @@ public class SingleCapture {
     }
 
     private boolean pieceOnCaptureCoordinatesIsKing() throws BoardException, SquareException {
-        Piece piece = BoardUtils.researchPiece(this.board, this.board.getSquare(toCoordinates));
+        Piece piece = BoardUtils.researchPiece(this.board, this.board.getSquare(this.toCoordinates));
         if(piece == null) {
             return false;
         }
