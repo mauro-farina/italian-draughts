@@ -161,6 +161,7 @@ public class Game {
             try {
                 if(checkVictoryCondition()) {
                     setWinnerPlayer(this.currentTurn);
+                    outputPrinter.print("The winner is " + this.currentTurn.getNickname());
                 } else if(command.getCommandType() != CommandType.HELP) {
                     changeTurn();
                 }
