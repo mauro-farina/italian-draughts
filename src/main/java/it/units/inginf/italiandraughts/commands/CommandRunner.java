@@ -157,6 +157,7 @@ public class CommandRunner {
             }
             selectedPieceSquare.setSquareContent(SquareContent.EMPTY);
             capturedPieceSquare.setSquareContent(SquareContent.EMPTY);
+            BoardUtils.removePiece(this.game.getBoard(), capturedPiece);
             if (selectedPiece.isMan()) {
                 if (selectedPiece.getColor() == PieceColor.WHITE) {
                     destinationSquare.setSquareContent(SquareContent.WHITE_MAN);
