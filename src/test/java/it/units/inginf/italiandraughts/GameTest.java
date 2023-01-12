@@ -93,5 +93,24 @@ public class GameTest {
         }
         assertEquals(game.getWinnerPlayer(), game.getPlayer1());
     }
+    
+    @Test
+    void checkDrawConditionIsTrue() {
+        Game game;
+        try {
+            game = new Game(new Player("Luca", PlayerColor.WHITE), new Player("Mauro", PlayerColor.BLACK));
+            game.initGame();
+            for(int i = 10; i >= 0; i--) {
+                BoardUtils.removePiece(game.getBoard(), game.getBoard().getBlackPieces().get(i));
+            }
+            game.getBoard().getBlackPieces().get(0).setSquare(game.getBoard()
+                    .getSquare(new SquareCoordinates(0, 3)));
+            game.changeTurn();
+            assertTrue(game.checkDrawCondition());
+        } catch (Exception e) {
+            fail();
+            throw new RuntimeException(e);
+        }
+    }
 
 }
