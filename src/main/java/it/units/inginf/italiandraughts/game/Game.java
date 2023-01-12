@@ -4,6 +4,7 @@ import it.units.inginf.italiandraughts.BoardUtils;
 import it.units.inginf.italiandraughts.CommandParser;
 import it.units.inginf.italiandraughts.board.Board;
 import it.units.inginf.italiandraughts.board.Piece;
+import it.units.inginf.italiandraughts.board.Square;
 import it.units.inginf.italiandraughts.board.SquareCoordinates;
 import it.units.inginf.italiandraughts.board.SquareName;
 import it.units.inginf.italiandraughts.commands.Command;
@@ -11,16 +12,11 @@ import it.units.inginf.italiandraughts.commands.CommandCapture;
 import it.units.inginf.italiandraughts.commands.CommandTo;
 import it.units.inginf.italiandraughts.commands.CommandRunner;
 import it.units.inginf.italiandraughts.commands.CommandType;
+import it.units.inginf.italiandraughts.exception.*;
 import it.units.inginf.italiandraughts.io.CommandLineInputReader;
 import it.units.inginf.italiandraughts.io.CommandLineOutputPrinter;
 import it.units.inginf.italiandraughts.io.InputReader;
 import it.units.inginf.italiandraughts.io.OutputPrinter;
-import it.units.inginf.italiandraughts.exception.PlayerException;
-import it.units.inginf.italiandraughts.exception.CoordinatesException;
-import it.units.inginf.italiandraughts.exception.SquareNameException;
-import it.units.inginf.italiandraughts.exception.SquareContentException;
-import it.units.inginf.italiandraughts.exception.PieceColorException;
-import it.units.inginf.italiandraughts.exception.SquareException;
 
 import java.util.List;
 
@@ -37,7 +33,9 @@ public class Game {
     private GameState gameState;
     private final CommandRunner commandRunner;
 
-    public Game(Player player1, Player player2) throws PlayerException, SquareNameException, SquareContentException, CoordinatesException, PieceColorException, SquareException {
+    public Game(Player player1, Player player2) throws PlayerException,
+            SquareNameException, SquareContentException, CoordinatesException,
+            PieceColorException, SquareException {
         if((player1 == null) || (player2 == null)) {
             throw new PlayerException("Game.Game() does not accept one or both players");
         } else if((player1.getColor() != PlayerColor.WHITE) || (player2.getColor() != PlayerColor.BLACK)) {
@@ -54,7 +52,7 @@ public class Game {
         }
     }
 
-   public void start() {
+    public void start() {
         initGame();
         List<CommandCapture> obligatoryCapture;
         Piece lastMovedPiece = null;
@@ -162,6 +160,11 @@ public class Game {
                 if(checkVictoryCondition()) {
                     setWinnerPlayer(this.currentTurn);
                     outputPrinter.print("The winner is " + this.currentTurn.getNickname());
+                } else if(checkDrawCondition()) {
+                    this.gameState = GameState.OVER;
+                    outputPrinter.print("The game ends in a draw: none of " +
+                            this.currentTurn.getNickname() +
+                            "'s pieces can move");
                 } else if(command.getCommandType() != CommandType.HELP) {
                     changeTurn();
                 }
@@ -194,15 +197,15 @@ public class Game {
     }
 
     public Player getWinnerPlayer() {
-        return winnerPlayer;
+        return this.winnerPlayer;
     }
 
     public void setWinnerPlayer(Player player) throws PlayerException {
         if((player != player1) && (player != player2)) {
             throw new PlayerException("Game.setWinnerPlayer() the entered player cannot be the winner player");
         } else {
-            winnerPlayer = player;
-            gameState = GameState.OVER;
+            this.winnerPlayer = player;
+            this.gameState = GameState.OVER;
         }
     }
 
@@ -226,11 +229,44 @@ public class Game {
     }
 
     public boolean checkVictoryCondition() {
-        if((board.getWhitePieces().size() == 0) || (board.getBlackPieces().size() == 0)) {
+        if(board.getWhitePieces().size() == 0 || board.getBlackPieces().size() == 0) {
             return true;
         } else {
             return false;
         }
+    }
+
+    public boolean checkDrawCondition() throws CoordinatesException, BoardException, SquareException {
+        if(this.currentTurn == this.player1) {
+            for(Piece piece: this.board.getWhitePieces()) {
+                for(Square reachableSquare: this.board.getReachableSquares(piece)) {
+                    if(reachableSquare.isFree()) {
+                        return false;
+                    } else {
+                        if(new SingleCapture(this.board,
+                                piece.getSquare().getSquareCoordinates(),
+                                reachableSquare.getSquareCoordinates()).isValid()) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        } else if (this.currentTurn == this.player2) {
+            for(Piece piece: this.board.getBlackPieces()) {
+                for(Square reachableSquare: this.board.getReachableSquares(piece)) {
+                    if(reachableSquare.isFree()) {
+                        return false;
+                    } else {
+                        if(new SingleCapture(this.board,
+                                piece.getSquare().getSquareCoordinates(),
+                                reachableSquare.getSquareCoordinates()).isValid()) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
     }
 
 }
