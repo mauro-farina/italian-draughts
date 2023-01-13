@@ -68,13 +68,21 @@ public class SingleCapture {
         if(selectedPiece.isMan() && capturedPiece.isKing()) {
             return false;
         }
+        if(!this.board.getSquare(toCoordinates).isFree()) {
+            return false;
+        }
         if((this.fromCoordinates.getRow() != this.pieceToCaptureCoordinates.getRow() + 1
                 && this.fromCoordinates.getRow() != this.pieceToCaptureCoordinates.getRow() - 1)
                 || (this.fromCoordinates.getColumn() != this.pieceToCaptureCoordinates.getColumn() + 1
                 && this.fromCoordinates.getColumn() != this.pieceToCaptureCoordinates.getColumn() - 1)) {
             return false;
         }
-        return this.board.getSquare(toCoordinates).isFree();
+        for(Square square: this.board.getReachableSquares(selectedPiece)) {
+            if(square.getSquareCoordinates() == this.pieceToCaptureCoordinates) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void run() throws BoardException, SquareException, SquareContentException,
