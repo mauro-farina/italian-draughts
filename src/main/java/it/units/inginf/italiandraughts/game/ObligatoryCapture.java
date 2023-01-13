@@ -1,10 +1,19 @@
 package it.units.inginf.italiandraughts.game;
 
 import it.units.inginf.italiandraughts.BoardUtils;
-import it.units.inginf.italiandraughts.commands.CommandCapture;
 import it.units.inginf.italiandraughts.board.Board;
 import it.units.inginf.italiandraughts.board.Piece;
-import it.units.inginf.italiandraughts.exception.*;
+import it.units.inginf.italiandraughts.board.Square;
+import it.units.inginf.italiandraughts.commands.CommandCapture;
+import it.units.inginf.italiandraughts.exception.BoardException;
+import it.units.inginf.italiandraughts.exception.SquareException;
+import it.units.inginf.italiandraughts.exception.SquareContentException;
+import it.units.inginf.italiandraughts.exception.CoordinatesException;
+import it.units.inginf.italiandraughts.exception.PieceException;
+import it.units.inginf.italiandraughts.exception.PieceColorException;
+
+import java.util.List;
+import java.util.ArrayList;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -57,12 +66,12 @@ public class ObligatoryCapture {
         }
     }
 
-    public static List<CommandCapture> getObligatoryCapture(Board mainBoard, Piece movedPiece)
+    public static List<CommandCapture> getObligatoryCapture(Board board, Piece movedPiece)
             throws BoardException, SquareContentException, CoordinatesException,
             PieceColorException, SquareException, PieceException {
         List<CommandCapture> obligatoryCaptureList = new ArrayList<>();
         List<SingleCapture> singleCaptureList = new ArrayList<>();
-        updateSingleCaptureList(mainBoard, singleCaptureList, movedPiece);
+        updateSingleCaptureList(board, singleCaptureList, movedPiece);
         for(SingleCapture singleCapture : singleCaptureList) {
             obligatoryCaptureList.add(
                     new CommandCapture(singleCapture.getFromCoordinates(),
@@ -71,21 +80,22 @@ public class ObligatoryCapture {
         return obligatoryCaptureList;
     }
 
-    private static void updateSingleCaptureList(Board mainBoard, List<SingleCapture> singleCaptureList, Piece movedPiece)
+    private static void updateSingleCaptureList(Board board, List<SingleCapture> singleCaptureList, Piece movedPiece)
             throws SquareContentException, CoordinatesException, PieceColorException,
             SquareException, BoardException, PieceException {
         if(movedPiece != null) {
-            for (int i = 0; i < mainBoard.getReachableSquares(movedPiece).size(); i++) {
+            List<Square> reachableSquaresList = BoardUtils.getAllReachableSquares(board, movedPiece.getSquare());
+            for (Square square: reachableSquaresList) {
                 List<SingleCapture> newSingleCaptureList = new ArrayList<>();
-                SingleCapture singleCapture = new SingleCapture(mainBoard,
-                        mainBoard.getReachableSquares(movedPiece).get(i).getSquareCoordinates(),
+                SingleCapture singleCapture = new SingleCapture(board,
+                        square.getSquareCoordinates(),
                         movedPiece.getSquare().getSquareCoordinates());
                 if (singleCapture.isValid()) {
                     newSingleCaptureList.add(singleCapture);
                     singleCapture.run();
-                    recursiveUpdateSingleCaptureList(mainBoard, singleCaptureList,
-                                BoardUtils.researchPiece(mainBoard,
-                                        mainBoard.getSquare(singleCapture.getToCoordinates())));
+                    recursiveUpdateSingleCaptureList(board, singleCaptureList,
+                                BoardUtils.researchPiece(board,
+                                        board.getSquare(singleCapture.getToCoordinates())));
                     compareTwoLists(singleCaptureList, newSingleCaptureList);
                     singleCapture.runBack();
                 }
@@ -93,22 +103,23 @@ public class ObligatoryCapture {
         }
     }
 
-    private static void recursiveUpdateSingleCaptureList(Board mainBoard, List<SingleCapture> singleCaptureList,
+    private static void recursiveUpdateSingleCaptureList(Board board, List<SingleCapture> singleCaptureList,
                                                          Piece piece)
             throws SquareContentException, CoordinatesException, PieceColorException,
             SquareException, BoardException, PieceException {
         if(piece != null) {
-            for (int i = 0; i < mainBoard.getReachableSquares(piece).size(); i++) {
+            List<Square> reachableSquaresList = BoardUtils.getAllReachableSquares(board, piece.getSquare());
+            for(Square square: reachableSquaresList) {
                 List<SingleCapture> newSingleCaptureList = new ArrayList<>();
-                SingleCapture singleCapture = new SingleCapture(mainBoard,
+                SingleCapture singleCapture = new SingleCapture(board,
                         piece.getSquare().getSquareCoordinates(),
-                        mainBoard.getReachableSquares(piece).get(i).getSquareCoordinates());
+                        square.getSquareCoordinates());
                 if (singleCapture.isValid()) {
                     newSingleCaptureList.add(singleCapture);
                     singleCapture.run();
-                    recursiveUpdateSingleCaptureList(mainBoard, singleCaptureList,
-                            BoardUtils.researchPiece(mainBoard,
-                                    mainBoard.getSquare(singleCapture.getToCoordinates())));
+                    recursiveUpdateSingleCaptureList(board, singleCaptureList,
+                            BoardUtils.researchPiece(board,
+                                    board.getSquare(singleCapture.getToCoordinates())));
                     compareTwoLists(singleCaptureList, newSingleCaptureList);
                     singleCapture.runBack();
                 }
