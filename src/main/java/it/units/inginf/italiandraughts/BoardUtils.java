@@ -4,14 +4,20 @@ import it.units.inginf.italiandraughts.board.Board;
 import it.units.inginf.italiandraughts.board.Piece;
 import it.units.inginf.italiandraughts.board.PieceColor;
 import it.units.inginf.italiandraughts.board.Square;
+import it.units.inginf.italiandraughts.board.SquareCoordinates;
 import it.units.inginf.italiandraughts.board.SquareContent;
-import it.units.inginf.italiandraughts.board.King;
 import it.units.inginf.italiandraughts.board.SquareColor;
+import it.units.inginf.italiandraughts.board.King;
+
 import it.units.inginf.italiandraughts.exception.BoardException;
 import it.units.inginf.italiandraughts.exception.PieceException;
 import it.units.inginf.italiandraughts.exception.PieceColorException;
 import it.units.inginf.italiandraughts.exception.SquareException;
 import it.units.inginf.italiandraughts.exception.SquareContentException;
+import it.units.inginf.italiandraughts.exception.CoordinatesException;
+
+import java.util.List;
+import java.util.ArrayList;
 
 public class BoardUtils {
 
@@ -105,6 +111,23 @@ public class BoardUtils {
             }
         }
         return null;
+    }
+    
+     public static List<Square> getAllReachableSquare(Board board, Square square) throws CoordinatesException {
+        List<Square> squaresList = new ArrayList<>();
+        int pieceSquareX = square.getSquareCoordinates().getCoordinateX();
+        int pieceSquareY = square.getSquareCoordinates().getCoordinateY();
+        for(short i=-1; i<=1; i+=2){ // i to move on a row
+            for(short j=-1; j<=1; j+=2){ // j to move on a column
+                if(pieceSquareY+i < 0 || pieceSquareY+i >= 8) // rows -1 and 8 do not exist => continue
+                    continue;
+                if(pieceSquareX+j < 0 || pieceSquareX+j >= 8) // columns (A-1) and (H+1) do not exist => continue
+                    continue;
+                squaresList.add(board.getSquare(new SquareCoordinates(pieceSquareX + j,
+                        pieceSquareY+ i)));
+            }
+        }
+        return squaresList;
     }
 
 }
