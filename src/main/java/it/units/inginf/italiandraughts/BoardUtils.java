@@ -113,7 +113,7 @@ public class BoardUtils {
         return null;
     }
     
-     public static List<Square> getAllReachableSquare(Board board, Square square) throws CoordinatesException {
+     public static List<Square> getAllReachableSquares(Board board, Square square) throws CoordinatesException {
         List<Square> squaresList = new ArrayList<>();
         int pieceSquareX = square.getSquareCoordinates().getCoordinateX();
         int pieceSquareY = square.getSquareCoordinates().getCoordinateY();
