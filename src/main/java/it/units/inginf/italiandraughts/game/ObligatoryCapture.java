@@ -86,17 +86,17 @@ public class ObligatoryCapture {
         if(movedPiece != null) {
             List<Square> reachableSquaresList = BoardUtils.getAllReachableSquares(board, movedPiece.getSquare());
             for (Square square: reachableSquaresList) {
-                List<SingleCapture> newSingleCaptureList = new ArrayList<>();
+                List<SingleCapture> newSingleCaptureList = new ArrayList<>(singleCaptureList);
                 SingleCapture singleCapture = new SingleCapture(board,
                         square.getSquareCoordinates(),
                         movedPiece.getSquare().getSquareCoordinates());
                 if (singleCapture.isValid()) {
                     newSingleCaptureList.add(singleCapture);
                     singleCapture.run();
+                    compareTwoLists(singleCaptureList, newSingleCaptureList);
                     recursiveUpdateSingleCaptureList(board, singleCaptureList,
                                 BoardUtils.researchPiece(board,
                                         board.getSquare(singleCapture.getToCoordinates())));
-                    compareTwoLists(singleCaptureList, newSingleCaptureList);
                     singleCapture.runBack();
                 }
             }
@@ -110,17 +110,17 @@ public class ObligatoryCapture {
         if(piece != null) {
             List<Square> reachableSquaresList = BoardUtils.getAllReachableSquares(board, piece.getSquare());
             for(Square square: reachableSquaresList) {
-                List<SingleCapture> newSingleCaptureList = new ArrayList<>();
                 SingleCapture singleCapture = new SingleCapture(board,
                         piece.getSquare().getSquareCoordinates(),
                         square.getSquareCoordinates());
+                List<SingleCapture> newSingleCaptureList = new ArrayList<>(singleCaptureList);
                 if (singleCapture.isValid()) {
                     newSingleCaptureList.add(singleCapture);
                     singleCapture.run();
+                    compareTwoLists(singleCaptureList, newSingleCaptureList);
                     recursiveUpdateSingleCaptureList(board, singleCaptureList,
                             BoardUtils.researchPiece(board,
                                     board.getSquare(singleCapture.getToCoordinates())));
-                    compareTwoLists(singleCaptureList, newSingleCaptureList);
                     singleCapture.runBack();
                 }
             }
