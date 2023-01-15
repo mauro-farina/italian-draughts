@@ -160,4 +160,45 @@ public class ObligatoryCaptureTest {
         }
     }
     
+    @Test
+    void checkCaptureWithCloserKing() {
+        try {
+            Game game = new Game(new Player("1", PlayerColor.WHITE),
+                    new Player("2", PlayerColor.BLACK));
+            game.initGame();
+            Board board = game.getBoard();
+            board.getWhitePieces().clear();
+            board.getBlackPieces().clear();
+            for(int i = 0; i < 8; i++) {
+                for(int j = 0; j < 8; j++) {
+                    board.getSquare(new SquareCoordinates(j, i)).setSquareContent(SquareContent.EMPTY);
+                }
+            }
+            board.getSquare(new SquareCoordinates(0, 3)).setSquareContent(SquareContent.WHITE_KING);
+            board.getSquare(new SquareCoordinates(7, 2)).setSquareContent(SquareContent.WHITE_KING);
+            board.getSquare(new SquareCoordinates(1, 4)).setSquareContent(SquareContent.BLACK_MAN);
+            board.getSquare(new SquareCoordinates(3, 6)).setSquareContent(SquareContent.BLACK_KING);
+            board.getSquare(new SquareCoordinates(6, 3)).setSquareContent(SquareContent.BLACK_KING);
+            board.getSquare(new SquareCoordinates(4, 3)).setSquareContent(SquareContent.BLACK_MAN);
+            board.getWhitePieces().add(new King(PieceColor.WHITE,
+                    board.getSquare(new SquareCoordinates(0, 3))));
+            board.getWhitePieces().add(new King(PieceColor.WHITE,
+                    board.getSquare(new SquareCoordinates(7, 2))));
+            board.getBlackPieces().add(new Man(PieceColor.BLACK,
+                    board.getSquare(new SquareCoordinates(1, 4))));
+            board.getBlackPieces().add(new King(PieceColor.BLACK,
+                    board.getSquare(new SquareCoordinates(6, 3))));
+            board.getBlackPieces().add(new Man(PieceColor.BLACK,
+                    board.getSquare(new SquareCoordinates(3, 6))));
+            board.getBlackPieces().add(new King(PieceColor.BLACK,
+                    board.getSquare(new SquareCoordinates(4, 3))));
+            List<CommandCapture> obligatoryCaptureList = ObligatoryCapture.getObligatoryCaptureList(game);
+            //check the fromCoordinates of king that captured the closer king
+            assertEquals(obligatoryCaptureList.get(0).getFromCoordinates().toString(), "(7,2)");
+        } catch (Exception e) {
+            fail();
+            throw new RuntimeException(e);
+        }
+    }
+    
 }
