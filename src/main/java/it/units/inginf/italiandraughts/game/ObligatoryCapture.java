@@ -76,8 +76,6 @@ public class ObligatoryCapture {
                         numberOfKingInNewSingleCaptureList++;
                     }
                 }
-                System.out.println(numberOfKingInSingleCaptureList);
-                System.out.println(numberOfKingInNewSingleCaptureList);
                 if(numberOfKingInNewSingleCaptureList > numberOfKingInSingleCaptureList) {
                     //third check number of captured king
                     singleCaptureList.clear();
