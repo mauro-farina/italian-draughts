@@ -9,7 +9,12 @@ import it.units.inginf.italiandraughts.board.Piece;
 import it.units.inginf.italiandraughts.board.PieceColor;
 import it.units.inginf.italiandraughts.board.Man;
 import it.units.inginf.italiandraughts.board.King;
-import it.units.inginf.italiandraughts.exception.*;
+import it.units.inginf.italiandraughts.exception.CoordinatesException;
+import it.units.inginf.italiandraughts.exception.BoardException;
+import it.units.inginf.italiandraughts.exception.SquareException;
+import it.units.inginf.italiandraughts.exception.SquareContentException;
+import it.units.inginf.italiandraughts.exception.PieceException;
+import it.units.inginf.italiandraughts.exception.PieceColorException;
 
 public class SingleCapture {
 
@@ -17,6 +22,8 @@ public class SingleCapture {
     private final SquareCoordinates fromCoordinates;
     private final SquareCoordinates pieceToCaptureCoordinates;
     private final SquareCoordinates toCoordinates;
+
+    private boolean capturedPieceIsKing;
 
     public SingleCapture(Board board, SquareCoordinates fromCoordinates,
                          SquareCoordinates pieceToCaptureCoordinates) throws CoordinatesException {
@@ -39,6 +46,7 @@ public class SingleCapture {
         } else {
             this.toCoordinates = null;
         }
+        this.capturedPieceIsKing = false;
     }
 
     public SquareCoordinates getFromCoordinates() {
@@ -93,6 +101,7 @@ public class SingleCapture {
         Piece selectedPiece = BoardUtils.researchPiece(this.board, selectedPieceSquare);
         Piece capturedPiece = BoardUtils.researchPiece(this.board, capturedPieceSquare);
         if(selectedPiece != null && capturedPiece != null) {
+            this.capturedPieceIsKing = capturedPiece.isKing();
             selectedPieceSquare.setSquareContent(SquareContent.EMPTY);
             capturedPieceSquare.setSquareContent(SquareContent.EMPTY);
             BoardUtils.removePiece(this.board, capturedPiece);
@@ -135,7 +144,7 @@ public class SingleCapture {
                 }
             }
             selectedPiece.setSquare(selectedPieceSquare);
-            if(pieceOnCaptureCoordinatesIsKing()) {
+            if(capturedPieceIsKing) {
                 if(selectedPiece.getColor() == PieceColor.WHITE) {
                     capturedPieceSquare.setSquareContent(SquareContent.BLACK_KING);
                     this.board.getBlackPieces().add(new King(PieceColor.BLACK, capturedPieceSquare));
