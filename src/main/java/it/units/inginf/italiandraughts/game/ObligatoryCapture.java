@@ -54,8 +54,8 @@ public class ObligatoryCapture {
                 //second check piece is a king
                 singleCaptureList.clear();
                 singleCaptureList.addAll(newSingleCaptureList);
-            } else if((!singleCaptureList.get(0).pieceOnFromCoordinatesIsKing()) &&
-                    (!newSingleCaptureList.get(0).pieceOnFromCoordinatesIsKing())) {
+            } else if((singleCaptureList.get(0).pieceOnFromCoordinatesIsKing()) &&
+                    (newSingleCaptureList.get(0).pieceOnFromCoordinatesIsKing())) {
                 int numberOfKingInSingleCaptureList = 0;
                 for(SingleCapture singleCapture : singleCaptureList) {
                     if(singleCapture.pieceOnToCoordinatesIsKing()) {
