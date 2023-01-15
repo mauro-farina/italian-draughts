@@ -1,23 +1,26 @@
 package it.units.inginf.italiandraughts.game;
 
-import it.units.inginf.italiandraughts.BoardUtils;
 import it.units.inginf.italiandraughts.CommandParser;
 import it.units.inginf.italiandraughts.board.Board;
 import it.units.inginf.italiandraughts.board.Piece;
 import it.units.inginf.italiandraughts.board.Square;
-import it.units.inginf.italiandraughts.board.SquareCoordinates;
-import it.units.inginf.italiandraughts.board.SquareName;
 import it.units.inginf.italiandraughts.commands.Command;
 import it.units.inginf.italiandraughts.commands.CommandCapture;
-import it.units.inginf.italiandraughts.commands.CommandTo;
 import it.units.inginf.italiandraughts.commands.CommandRunner;
 import it.units.inginf.italiandraughts.commands.CommandType;
-import it.units.inginf.italiandraughts.exception.*;
+import it.units.inginf.italiandraughts.exception.PlayerException;
+import it.units.inginf.italiandraughts.exception.BoardException;
+import it.units.inginf.italiandraughts.exception.SquareException;
+import it.units.inginf.italiandraughts.exception.SquareNameException;
+import it.units.inginf.italiandraughts.exception.SquareContentException;
+import it.units.inginf.italiandraughts.exception.CoordinatesException;
+import it.units.inginf.italiandraughts.exception.PieceColorException;
 import it.units.inginf.italiandraughts.io.CommandLineInputReader;
 import it.units.inginf.italiandraughts.io.CommandLineOutputPrinter;
 import it.units.inginf.italiandraughts.io.InputReader;
 import it.units.inginf.italiandraughts.io.OutputPrinter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
@@ -54,8 +57,7 @@ public class Game {
 
     public void start() {
         initGame();
-        List<CommandCapture> obligatoryCapture;
-        Piece lastMovedPiece = null;
+        List<CommandCapture> obligatoryCapture = new ArrayList<>();
         try {
             commandRunner.runCommand(CommandParser.parseCommand( "help"));
             outputPrinter.print("\n");
@@ -64,25 +66,21 @@ public class Game {
         }
         while(this.gameState == GameState.PLAYING) {
             Command command;
-            obligatoryCapture = null;
             try{
                 outputPrinter.print(board.toStringFor(getCurrentTurn().getColor()));
                 outputPrinter.print("Turn of " + getCurrentTurn().getNickname());
-                if(lastMovedPiece != null) {
-                    obligatoryCapture = ObligatoryCapture.getObligatoryCapture(this.board, lastMovedPiece);
-                    if(obligatoryCapture.size() > 0) {
-                        //outputPrinter.print(board.toStringFor(getCurrentTurn().getColor()));
-                        outputPrinter.print("this is a obligatory capture list, make them all");
-                        for (CommandCapture commandCapture: obligatoryCapture) {
-                            outputPrinter.print(
-                                    this.board.getSquare(commandCapture.getFromCoordinates())
-                                            .getSquareName()
-                                            .toString()
-                                            + " capture "
-                                            + this.board.getSquare(commandCapture.getPieceToCaptureCoordinates())
-                                            .getSquareName()
-                                            .toString());
-                        }
+                obligatoryCapture.addAll(ObligatoryCapture.getObligatoryCaptureList(this));
+                if(obligatoryCapture.size() > 0) {
+                    outputPrinter.print("this is a obligatory capture list, make them all");
+                    for (CommandCapture commandCapture: obligatoryCapture) {
+                        outputPrinter.print(
+                                this.board.getSquare(commandCapture.getFromCoordinates())
+                                        .getSquareName()
+                                        .toString()
+                                        + " capture "
+                                        + this.board.getSquare(commandCapture.getPieceToCaptureCoordinates())
+                                        .getSquareName()
+                                        .toString());
                     }
                 }
             } catch (Exception exception) {
@@ -93,16 +91,7 @@ public class Game {
                 try {
                     command = CommandParser.parseCommand(readCommand);
                     commandRunner.runCommand(command);
-                    if(command.getCommandType() == CommandType.TO) {
-                        CommandTo commandTo = CommandParser.parseCommandTo(readCommand);
-                        lastMovedPiece = BoardUtils.researchPiece(this.board, this.board.getSquare(
-                                commandTo.getToCoordinates()));
-                    }
-                    if(command.getCommandType() == CommandType.CAPTURE) {
-                        CommandCapture commandCapture = CommandParser.parseCommandCapture(readCommand);
-                        lastMovedPiece = BoardUtils.researchPiece(this.board, this.board.getSquare(
-                                commandCapture.getToCoordinates()));
-                    } /*
+                    /*
                     if(obligatoryCapture != null && obligatoryCapture.size() > 0) {
                         for(int i = 0; i < obligatoryCapture.size(); i++) {
                             readCommand = inputReader.readInput();
@@ -151,6 +140,7 @@ public class Game {
                                     commandCapture.getToCoordinates()));
                         }
                     } */
+                    obligatoryCapture.clear();
                     break;
                 } catch (Exception exception) {
                     outputPrinter.print(exception.getMessage());
@@ -163,8 +153,7 @@ public class Game {
                 } else if(checkDrawCondition()) {
                     this.gameState = GameState.OVER;
                     outputPrinter.print("The game ends in a draw: none of " +
-                            this.currentTurn.getNickname() +
-                            "'s pieces can move");
+                            this.currentTurn.getNickname() + "'s pieces can move");
                 } else if(command.getCommandType() != CommandType.HELP) {
                     changeTurn();
                 }
