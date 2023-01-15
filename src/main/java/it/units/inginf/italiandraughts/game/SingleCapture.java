@@ -171,8 +171,8 @@ public class SingleCapture {
         return piece.isKing();
     }
 
-    private boolean pieceOnCaptureCoordinatesIsKing() throws BoardException, SquareException {
-        Piece piece = BoardUtils.researchPiece(this.board, this.board.getSquare(this.toCoordinates));
+    public boolean pieceOnCaptureCoordinatesIsKing() throws BoardException, SquareException {
+        Piece piece = BoardUtils.researchPiece(this.board, this.board.getSquare(this.pieceToCaptureCoordinates));
         if(piece == null) {
             return false;
         }
