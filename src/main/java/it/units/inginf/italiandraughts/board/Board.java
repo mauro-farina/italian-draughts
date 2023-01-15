@@ -69,16 +69,6 @@ public class Board {
         return this.blackPieces;
     }
 
-    public int getNumberOfPieces(PieceColor pieceColor) throws PieceColorException {
-        if(pieceColor == PieceColor.WHITE) {
-            return getWhitePieces().size();
-        } else if (pieceColor == PieceColor.BLACK) {
-            return getBlackPieces().size();
-        } else {
-            throw new PieceColorException("Board.getNumberOfPieces(...) does not accept this PieceColor");
-        }
-    }
-
     public Square[] getLastRow(PieceColor pieceColor) throws PieceColorException {
         //LastRow is the row in which a Man becomes a King
         Square[] lastRow = new Square[8];
