@@ -8,9 +8,12 @@ import it.units.inginf.italiandraughts.board.Board;
 import it.units.inginf.italiandraughts.board.Man;
 import it.units.inginf.italiandraughts.board.King;
 import it.units.inginf.italiandraughts.board.SquareContent;
+import it.units.inginf.italiandraughts.board.Piece;
 import it.units.inginf.italiandraughts.board.PieceColor;
 import it.units.inginf.italiandraughts.board.SquareCoordinates;
+import it.units.inginf.italiandraughts.commands.CommandCapture;
 import org.junit.jupiter.api.Test;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -76,4 +79,85 @@ public class ObligatoryCaptureTest {
             throw new RuntimeException(e);
         }
     }
+    
+    @Test
+    void checkCaptureWithKing() {
+        try {
+            Game game = new Game(new Player("1", PlayerColor.WHITE),
+                    new Player("2", PlayerColor.BLACK));
+            game.initGame();
+            Board board = game.getBoard();
+            board.getWhitePieces().clear();
+            board.getBlackPieces().clear();
+            for(int i = 0; i < 8; i++) {
+                for(int j = 0; j < 8; j++) {
+                    board.getSquare(new SquareCoordinates(j, i)).setSquareContent(SquareContent.EMPTY);
+                }
+            }
+            board.getSquare(new SquareCoordinates(0, 3)).setSquareContent(SquareContent.WHITE_MAN);
+            board.getSquare(new SquareCoordinates(6, 3)).setSquareContent(SquareContent.WHITE_KING);
+            board.getSquare(new SquareCoordinates(1, 4)).setSquareContent(SquareContent.BLACK_MAN);
+            board.getSquare(new SquareCoordinates(5, 4)).setSquareContent(SquareContent.BLACK_MAN);
+            board.getWhitePieces().add(new Man(PieceColor.WHITE,
+                    board.getSquare(new SquareCoordinates(0, 3))));
+            board.getWhitePieces().add(new King(PieceColor.WHITE,
+                    board.getSquare(new SquareCoordinates(6, 3))));
+            board.getBlackPieces().add(new Man(PieceColor.BLACK,
+                    board.getSquare(new SquareCoordinates(1, 4))));
+            board.getBlackPieces().add(new Man(PieceColor.BLACK,
+                    board.getSquare(new SquareCoordinates(5, 4))));
+            List<CommandCapture> obligatoryCaptureList = ObligatoryCapture.getObligatoryCaptureList(game);
+            Piece piece = BoardUtils.researchPiece(board,
+                    board.getSquare(obligatoryCaptureList.get(0).getFromCoordinates()));
+            if(piece != null) {
+                assertTrue(piece.isKing());
+            } else {
+                throw new Exception();
+            }
+        } catch (Exception e) {
+            fail();
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    void checkCaptureOfMostKing() {
+        try {
+            Game game = new Game(new Player("1", PlayerColor.WHITE),
+                    new Player("2", PlayerColor.BLACK));
+            game.initGame();
+            Board board = game.getBoard();
+            board.getWhitePieces().clear();
+            board.getBlackPieces().clear();
+            for(int i = 0; i < 8; i++) {
+                for(int j = 0; j < 8; j++) {
+                    board.getSquare(new SquareCoordinates(j, i)).setSquareContent(SquareContent.EMPTY);
+                }
+            }
+            board.getSquare(new SquareCoordinates(0, 3)).setSquareContent(SquareContent.WHITE_KING);
+            board.getSquare(new SquareCoordinates(6, 3)).setSquareContent(SquareContent.WHITE_KING);
+            board.getSquare(new SquareCoordinates(1, 4)).setSquareContent(SquareContent.BLACK_MAN);
+            board.getSquare(new SquareCoordinates(5, 4)).setSquareContent(SquareContent.BLACK_KING);
+            board.getWhitePieces().add(new King(PieceColor.WHITE,
+                    board.getSquare(new SquareCoordinates(0, 3))));
+            board.getWhitePieces().add(new King(PieceColor.WHITE,
+                    board.getSquare(new SquareCoordinates(6, 3))));
+            board.getBlackPieces().add(new Man(PieceColor.BLACK,
+                    board.getSquare(new SquareCoordinates(1, 4))));
+            board.getBlackPieces().add(new King(PieceColor.BLACK,
+                    board.getSquare(new SquareCoordinates(5, 4))));
+            List<CommandCapture> obligatoryCaptureList = ObligatoryCapture.getObligatoryCaptureList(game);
+            Piece piece = BoardUtils.researchPiece(board,
+                    board.getSquare(obligatoryCaptureList.get(0).getPieceToCaptureCoordinates()));
+            if(piece != null) {
+                assertTrue(piece.isKing());
+            } else {
+                throw new Exception();
+            }
+        } catch (Exception e) {
+            fail();
+            throw new RuntimeException(e);
+        }
+    }
+    
 }
