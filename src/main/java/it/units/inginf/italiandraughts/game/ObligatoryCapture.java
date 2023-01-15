@@ -19,6 +19,34 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class ObligatoryCapture {
+    
+    public static List<CommandCapture> getObligatoryCaptureList(Game game)
+            throws BoardException, SquareContentException, CoordinatesException,
+            PieceColorException, SquareException, PieceException, PlayerException {
+        List<CommandCapture> obligatoryCaptureList = new ArrayList<>();
+        List<SingleCapture> singleCaptureList = new ArrayList<>();
+        List<SingleCapture> newSingleCaptureList = new ArrayList<>();
+        if(game.getCurrentTurn() == game.getPlayer1()) {
+            for(Piece piece: game.getBoard().getWhitePieces()) {
+                recursiveUpdateSingleCaptureList(game.getBoard(), newSingleCaptureList, piece);
+                compareTwoLists(singleCaptureList, newSingleCaptureList);
+            }
+        } else if(game.getCurrentTurn() == game.getPlayer2()) {
+            for(Piece piece: game.getBoard().getBlackPieces()) {
+                recursiveUpdateSingleCaptureList(game.getBoard(), newSingleCaptureList, piece);
+                compareTwoLists(singleCaptureList, newSingleCaptureList);
+            }
+        } else {
+            throw new PlayerException("ObligatoryCapture.getObligatoryCaptureList():" +
+                    " this method does not accept this player");
+        }
+        for(SingleCapture singleCapture : singleCaptureList) {
+            obligatoryCaptureList.add(
+                    new CommandCapture(singleCapture.getFromCoordinates(),
+                            singleCapture.getPieceToCaptureCoordinates()));
+        }
+        return obligatoryCaptureList;
+    }
 
     private static void compareTwoLists(List<SingleCapture> singleCaptureList,
                                        List<SingleCapture> newSingleCaptureList)
