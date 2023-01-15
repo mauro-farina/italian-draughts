@@ -1,29 +1,36 @@
 package it.units.inginf.italiandraughts;
 
+import it.units.inginf.italiandraughts.exception.PlayerColorException;
+import it.units.inginf.italiandraughts.io.CommandLineOutputPrinter;
 import it.units.inginf.italiandraughts.io.InputReader;
 import it.units.inginf.italiandraughts.io.CommandLineInputReader;
 import it.units.inginf.italiandraughts.game.Game;
 import it.units.inginf.italiandraughts.game.Player;
 import it.units.inginf.italiandraughts.game.PlayerColor;
-import it.units.inginf.italiandraughts.exception.PlayerColorException;
+import it.units.inginf.italiandraughts.io.OutputPrinter;
+
 
 public class Main {
-    
     private final static InputReader inputReader = new CommandLineInputReader();
+    private final static OutputPrinter outputPrinter = new CommandLineOutputPrinter();
 
-    public static void main(String[] args) throws Exception {
-        new Game(
-                new Player(readName(PlayerColor.WHITE), PlayerColor.WHITE),
-                new Player(readName(PlayerColor.BLACK), PlayerColor.BLACK)
-        ).start();
+    public static void main(String[] args) {
+        try{
+            new Game(
+                    new Player(readName(PlayerColor.WHITE), PlayerColor.WHITE),
+                    new Player(readName(PlayerColor.BLACK), PlayerColor.BLACK)
+            ).start();
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
-    private static String readName(PlayerColor color) throws PlayerColorException {
+    private static String readName(PlayerColor playerColor) throws PlayerColorException {
         while(true) {
-            if(color == PlayerColor.WHITE) {
-                System.out.println("Type player one's name");
-            } else if (color == PlayerColor.BLACK) {
-                System.out.println("Type player two's name");
+            if(playerColor == PlayerColor.WHITE) {
+                outputPrinter.print("Type player one's name");
+            } else if (playerColor == PlayerColor.BLACK) {
+                outputPrinter.print("Type player two's name");
             } else {
                 throw new PlayerColorException("Main.main() does not accept this PlayerColor");
             }
@@ -31,7 +38,7 @@ public class Main {
             if((!name.equals("")) && (name.charAt(0) != ' ')) {
                 return name;
             } else {
-                System.out.println("Invalid name, please try again");
+                outputPrinter.print("Invalid name, please try again");
             }
         }
     }
