@@ -218,11 +218,7 @@ public class Game {
     }
 
     public boolean checkVictoryCondition() {
-        if(board.getWhitePieces().size() == 0 || board.getBlackPieces().size() == 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return board.getWhitePieces().size() == 0 || board.getBlackPieces().size() == 0;
     }
 
     public boolean checkDrawCondition() throws CoordinatesException, BoardException, SquareException {
