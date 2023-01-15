@@ -5,21 +5,13 @@ import it.units.inginf.italiandraughts.board.Board;
 import it.units.inginf.italiandraughts.board.Piece;
 import it.units.inginf.italiandraughts.board.Square;
 import it.units.inginf.italiandraughts.commands.CommandCapture;
-import it.units.inginf.italiandraughts.exception.BoardException;
-import it.units.inginf.italiandraughts.exception.SquareException;
-import it.units.inginf.italiandraughts.exception.SquareContentException;
-import it.units.inginf.italiandraughts.exception.CoordinatesException;
-import it.units.inginf.italiandraughts.exception.PieceException;
-import it.units.inginf.italiandraughts.exception.PieceColorException;
-
-import java.util.List;
-import java.util.ArrayList;
+import it.units.inginf.italiandraughts.exception.*;
 
 import java.util.List;
 import java.util.ArrayList;
 
 public class ObligatoryCapture {
-    
+
     public static List<CommandCapture> getObligatoryCaptureList(Game game)
             throws BoardException, SquareContentException, CoordinatesException,
             PieceColorException, SquareException, PieceException, PlayerException {
@@ -55,7 +47,8 @@ public class ObligatoryCapture {
             //first check number of captured piece
             singleCaptureList.clear();
             singleCaptureList.addAll(newSingleCaptureList);
-        } else if (newSingleCaptureList.size() == singleCaptureList.size()) {
+        } else if ((newSingleCaptureList.size() == singleCaptureList.size()) &&
+                (newSingleCaptureList.size() != 0)) {
             if((!singleCaptureList.get(0).pieceOnFromCoordinatesIsKing()) &&
                     (newSingleCaptureList.get(0).pieceOnFromCoordinatesIsKing())) {
                 //second check piece is a king
