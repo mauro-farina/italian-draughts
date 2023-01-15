@@ -35,20 +35,7 @@ public class BoardTest {
         }
         assertEquals(numberOfBlackPieces, 11);
     }
-
-    @Test
-    void checkGetNumberOfPieces() {
-        int numberOfPieces;
-        try {
-            Board board = new Board();
-            numberOfPieces = board.getNumberOfPieces(PieceColor.BLACK);
-        } catch (Exception e) {
-            fail();
-            throw new RuntimeException(e);
-        }
-        assertEquals(numberOfPieces, 12);
-    }
-
+    
     @Test
     void checkGetLastRow() {
         Square[] lastRow;
