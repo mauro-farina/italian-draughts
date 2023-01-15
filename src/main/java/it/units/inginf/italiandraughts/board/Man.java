@@ -17,9 +17,20 @@ public class Man implements Piece{
         } else {
             this.pieceColor = pieceColor;
         }
-        if(!square.getSquareColor().equals(SquareColor.BLACK)) {
-            throw new SquareException("Man.Man() does not accept this Square," +
-                    " because pieces cannot be on white squares");
+        if(square == null) {
+            if(isMan()) {
+                throw new SquareException("Man.man() does not accept this Square because it is null");
+            } else if(isKing()) {
+                throw new SquareException("King.king() does not accept this Square because it is null");
+            }
+        } else if(!square.getSquareColor().equals(SquareColor.BLACK)) {
+            if(isMan()) {
+                throw new SquareException("Man.Man() does not accept this Square," +
+                        " because pieces cannot be on white squares");
+            } else if(isKing()) {
+                throw new SquareException("King.King() does not accept this Square," +
+                        " because pieces cannot be on white squares");
+            }
         } else {
             this.square = square;
         }
@@ -37,9 +48,20 @@ public class Man implements Piece{
 
     @Override
     public void setSquare(Square newSquare) throws SquareException {
-        if(!newSquare.getSquareColor().equals(SquareColor.BLACK)) {
-            throw new SquareException("Man.setSquare() does not accept this Square," +
-                    " because pieces cannot be on white squares");
+        if(square == null) {
+            if(isMan()) {
+                throw new SquareException("Man.setSquare() does not accept this Square because it is null");
+            } else if(isKing()) {
+                throw new SquareException("King.setSquare() does not accept this Square because it is null");
+            }
+        } else if(!square.getSquareColor().equals(SquareColor.BLACK)) {
+            if(isMan()) {
+                throw new SquareException("Man.setSquare() does not accept this Square," +
+                        " because pieces cannot be on white squares");
+            } else if(isKing()) {
+                throw new SquareException("King.setSquare() does not accept this Square," +
+                        " because pieces cannot be on white squares");
+            }
         } else {
             this.square = newSquare;
         }
