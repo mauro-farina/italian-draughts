@@ -34,14 +34,20 @@ public class CommandCapture extends Command {
     }
 
     public SquareCoordinates getFromCoordinates() {
-        return fromCoordinates;
+        return this.fromCoordinates;
     }
 
     public SquareCoordinates getPieceToCaptureCoordinates() {
-        return pieceToCaptureCoordinates;
+        return this.pieceToCaptureCoordinates;
     }
 
     public SquareCoordinates getToCoordinates() {
-        return toCoordinates;
+        return this.toCoordinates;
+    }
+    
+    public boolean equals(CommandCapture commandCapture) {
+        return this.fromCoordinates.toString().equalsIgnoreCase(commandCapture.getFromCoordinates().toString()) &&
+                this.pieceToCaptureCoordinates.toString().equalsIgnoreCase(
+                        commandCapture.getPieceToCaptureCoordinates().toString());
     }
 }
