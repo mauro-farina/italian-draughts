@@ -18,21 +18,20 @@ import java.util.ArrayList;
 
 public class ObligatoryCapture {
 
-    public static List<CommandCapture> getObligatoryCaptureList(Game game)
-            throws BoardException, SquareContentException, CoordinatesException,
+    public static List<CommandCapture> getObligatoryCaptureList(Game game) throws BoardException, SquareContentException, CoordinatesException,
             PieceColorException, SquareException, PieceException, PlayerException {
         List<CommandCapture> obligatoryCaptureList = new ArrayList<>();
         List<SingleCapture> singleCaptureList = new ArrayList<>();
         List<SingleCapture> newSingleCaptureList = new ArrayList<>();
         if(game.getCurrentTurn() == game.getPlayer1()) {
             for(Piece piece: game.getBoard().getWhitePieces()) {
-                recursiveUpdateSingleCaptureList(game.getBoard(), newSingleCaptureList, piece);
+                fullSingleCaptureList(game.getBoard(), newSingleCaptureList, piece);
                 compareTwoLists(singleCaptureList, newSingleCaptureList);
                 newSingleCaptureList.clear();
             }
         } else if(game.getCurrentTurn() == game.getPlayer2()) {
             for(Piece piece: game.getBoard().getBlackPieces()) {
-                recursiveUpdateSingleCaptureList(game.getBoard(), newSingleCaptureList, piece);
+                fullSingleCaptureList(game.getBoard(), newSingleCaptureList, piece);
                 compareTwoLists(singleCaptureList, newSingleCaptureList);
                 newSingleCaptureList.clear();
             }
@@ -48,46 +47,32 @@ public class ObligatoryCapture {
         return obligatoryCaptureList;
     }
 
-    private static void compareTwoLists(List<SingleCapture> singleCaptureList,
-                                       List<SingleCapture> newSingleCaptureList)
-            throws BoardException, SquareException {
-        if(newSingleCaptureList.size() > singleCaptureList.size()) {
-            //first check number of captured piece
-            singleCaptureList.clear();
-            singleCaptureList.addAll(newSingleCaptureList);
-        } else if ((newSingleCaptureList.size() == singleCaptureList.size()) &&
-                (newSingleCaptureList.size() != 0)) {
-            if((!singleCaptureList.get(0).pieceOnFromCoordinatesIsKing()) &&
-                    (newSingleCaptureList.get(0).pieceOnFromCoordinatesIsKing())) {
-                //second check piece is a king
+    private static void compareTwoLists(List<SingleCapture> singleCaptureList, List<SingleCapture> newSingleCaptureList) throws BoardException, SquareException {
+        if(newSingleCaptureList.size() > 0) {
+            if (newSingleCaptureList.size() > singleCaptureList.size()) {
+                //first check number of captured pieces
                 singleCaptureList.clear();
                 singleCaptureList.addAll(newSingleCaptureList);
-            } else if((singleCaptureList.get(0).pieceOnFromCoordinatesIsKing()) &&
-                    (newSingleCaptureList.get(0).pieceOnFromCoordinatesIsKing())) {
-                int numberOfKingInSingleCaptureList = 0;
-                for(SingleCapture singleCapture : singleCaptureList) {
-                    if(singleCapture.pieceOnCaptureCoordinatesIsKing()) {
-                        numberOfKingInSingleCaptureList++;
-                    }
-                }
-                int numberOfKingInNewSingleCaptureList = 0;
-                for(SingleCapture singleCapture : newSingleCaptureList) {
-                    if(singleCapture.pieceOnCaptureCoordinatesIsKing()) {
-                        numberOfKingInNewSingleCaptureList++;
-                    }
-                }
-                if(numberOfKingInNewSingleCaptureList > numberOfKingInSingleCaptureList) {
-                    //third check number of captured king
+            } else if (newSingleCaptureList.size() == singleCaptureList.size()) {
+                if ((!captureWithKing(singleCaptureList.get(0))) && (captureWithKing(newSingleCaptureList.get(0)))) {
+                    //second check start piece is a king
                     singleCaptureList.clear();
                     singleCaptureList.addAll(newSingleCaptureList);
-                } else if((numberOfKingInNewSingleCaptureList == numberOfKingInSingleCaptureList)
-                        && (numberOfKingInNewSingleCaptureList > 0)) {
-                    for(int j = 0; j < singleCaptureList.size(); j++) {
-                        if((newSingleCaptureList.get(j).pieceOnToCoordinatesIsKing())
-                                && (!singleCaptureList.get(j).pieceOnToCoordinatesIsKing())) {
-                            //last check closer king
-                            singleCaptureList.clear();
-                            singleCaptureList.addAll(newSingleCaptureList);
+                } else if ((captureWithKing(singleCaptureList.get(0))) && (captureWithKing(newSingleCaptureList.get(0)))) {
+                    int numberOfKingInSingleCaptureList = getNumberOfCapturedKing(singleCaptureList);
+                    int numberOfKingInNewSingleCaptureList = getNumberOfCapturedKing(newSingleCaptureList);
+                    if (numberOfKingInNewSingleCaptureList > numberOfKingInSingleCaptureList) {
+                        //third check number of captured king
+                        singleCaptureList.clear();
+                        singleCaptureList.addAll(newSingleCaptureList);
+                    } else if ((numberOfKingInNewSingleCaptureList == numberOfKingInSingleCaptureList)
+                            && (numberOfKingInNewSingleCaptureList > 0)) {
+                        for (short i = 0; i < singleCaptureList.size(); i++) {
+                            if ((captureKing(newSingleCaptureList.get(i))) && (!captureKing(singleCaptureList.get(i)))) {
+                                //last check closer king
+                                singleCaptureList.clear();
+                                singleCaptureList.addAll(newSingleCaptureList);
+                            }
                         }
                     }
                 }
@@ -95,13 +80,10 @@ public class ObligatoryCapture {
         }
     }
 
-    private static void recursiveUpdateSingleCaptureList(Board board, List<SingleCapture> singleCaptureList,
-                                                         Piece piece)
-            throws SquareContentException, CoordinatesException, PieceColorException,
-            SquareException, BoardException, PieceException {
+    private static void fullSingleCaptureList(Board board, List<SingleCapture> singleCaptureList, Piece piece)
+            throws SquareContentException, CoordinatesException, PieceColorException, SquareException, BoardException, PieceException {
         if(piece != null) {
-            List<Square> reachableSquaresList = BoardUtils.getAllReachableSquares(board, piece.getSquare());
-            for(Square square: reachableSquaresList) {
+            for(Square square: board.getReachableSquares(piece)) {
                 SingleCapture singleCapture = new SingleCapture(board,
                         piece.getSquare().getSquareCoordinates(),
                         square.getSquareCoordinates());
@@ -110,13 +92,31 @@ public class ObligatoryCapture {
                     newSingleCaptureList.add(singleCapture);
                     singleCapture.run();
                     compareTwoLists(singleCaptureList, newSingleCaptureList);
-                    recursiveUpdateSingleCaptureList(board, singleCaptureList,
+                    fullSingleCaptureList(board, singleCaptureList,
                             BoardUtils.researchPiece(board,
                                     board.getSquare(singleCapture.getToCoordinates())));
                     singleCapture.runBack();
                 }
             }
         }
+    }
+
+    private static boolean captureWithKing(SingleCapture singleCapture) throws BoardException, SquareException {
+        return singleCapture.pieceOnFromCoordinatesIsKing();
+    }
+
+    private static boolean captureKing(SingleCapture singleCapture) throws BoardException, SquareException {
+        return singleCapture.pieceOnCaptureCoordinatesIsKing();
+    }
+
+    private static int getNumberOfCapturedKing(List<SingleCapture> singleCaptureList) throws BoardException, SquareException {
+        int numberOfCapturedKing = 0;
+        for(SingleCapture singleCapture : singleCaptureList) {
+            if(captureKing(singleCapture)) {
+                numberOfCapturedKing++;
+            }
+        }
+        return numberOfCapturedKing;
     }
 
 }
