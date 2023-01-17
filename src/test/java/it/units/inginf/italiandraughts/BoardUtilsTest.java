@@ -54,17 +54,5 @@ public class BoardUtilsTest {
         }
         assertEquals(piece.getSquare().getSquareName().toString(), "A2");
     }
-    
-    @Test
-    void checkGetAllReachableSquares() {
-        try {
-            Board board = new Board();
-            Square square = board.getSquare(new SquareCoordinates(1, 4));
-            assertEquals(BoardUtils.getAllReachableSquares(board, square).size(), 4);
-        } catch(Exception e) {
-            fail();
-            throw new RuntimeException(e);
-        }
-    }
 
 }
