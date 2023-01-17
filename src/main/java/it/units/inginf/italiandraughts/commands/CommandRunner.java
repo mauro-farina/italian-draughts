@@ -116,8 +116,10 @@ public class CommandRunner {
             }
         }
         selectedPiece.setSquare(arrivalSquare);
-        if(game.getBoard().getLastRow(selectedPiece.getColor())[0].getSquareCoordinates().getCoordinateY() == arrivalSquare.getSquareCoordinates().getCoordinateY()) {
-            BoardUtils.toCrown(this.game.getBoard(), selectedPiece);
+        if(selectedPiece.isMan()) {
+            if (game.getBoard().getLastRow(selectedPiece.getColor())[0].getSquareCoordinates().getCoordinateY() == arrivalSquare.getSquareCoordinates().getCoordinateY()) {
+                BoardUtils.toCrown(this.game.getBoard(), selectedPiece);
+            }
         }
     }
 
@@ -175,8 +177,10 @@ public class CommandRunner {
                 }
             }
             selectedPiece.setSquare(destinationSquare);
-            if (game.getBoard().getLastRow(selectedPiece.getColor())[0].getSquareCoordinates().getCoordinateY() == destinationSquare.getSquareCoordinates().getCoordinateY()) {
-                BoardUtils.toCrown(this.game.getBoard(), selectedPiece);
+            if(selectedPiece.isMan()) {
+                if (game.getBoard().getLastRow(selectedPiece.getColor())[0].getSquareCoordinates().getCoordinateY() == destinationSquare.getSquareCoordinates().getCoordinateY()) {
+                    BoardUtils.toCrown(this.game.getBoard(), selectedPiece);
+                }
             }
         } else {
             throw new CommandException("CommandRunner.runCommandCapture() does not accept the Command");
