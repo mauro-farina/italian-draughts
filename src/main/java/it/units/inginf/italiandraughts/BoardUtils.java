@@ -112,22 +112,5 @@ public class BoardUtils {
         }
         return null;
     }
-    
-     public static List<Square> getAllReachableSquares(Board board, Square square) throws CoordinatesException {
-        List<Square> squaresList = new ArrayList<>();
-        int pieceSquareX = square.getSquareCoordinates().getCoordinateX();
-        int pieceSquareY = square.getSquareCoordinates().getCoordinateY();
-        for(short i=-1; i<=1; i+=2){ // i to move on a row
-            for(short j=-1; j<=1; j+=2){ // j to move on a column
-                if(pieceSquareY+i < 0 || pieceSquareY+i >= 8) // rows -1 and 8 do not exist => continue
-                    continue;
-                if(pieceSquareX+j < 0 || pieceSquareX+j >= 8) // columns (A-1) and (H+1) do not exist => continue
-                    continue;
-                squaresList.add(board.getSquare(new SquareCoordinates(pieceSquareX + j,
-                        pieceSquareY+ i)));
-            }
-        }
-        return squaresList;
-    }
 
 }
