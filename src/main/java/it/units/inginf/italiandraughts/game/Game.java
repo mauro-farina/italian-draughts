@@ -109,14 +109,7 @@ public class Game {
                                 i--;
                             }
                             if(command.getCommandType() == CommandType.CAPTURE) {
-                                System.out.println(CommandParser.parseCommandCapture(readCommand).getFromCoordinates()
-                                        .toString());
-                                System.out.println(CommandParser.parseCommandCapture(readCommand).getPieceToCaptureCoordinates()
-                                        .toString());
-                                System.out.println(obligatoryCaptureList.get(i).getFromCoordinates().toString());
-                                System.out.println(obligatoryCaptureList.get(i).getPieceToCaptureCoordinates().toString());
-                                if(CommandParser.parseCommandCapture(readCommand)
-                                        .equals(obligatoryCaptureList.get(i))) {
+                                if(CommandParser.parseCommandCapture(readCommand).equals(obligatoryCaptureList.get(i))) {
                                     commandRunner.runCommand(command);
                                 } else {
                                     readCommand = inputReader.readInput();
