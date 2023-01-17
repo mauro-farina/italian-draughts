@@ -47,4 +47,9 @@ public class SquareCoordinates {
     public String toString() {
         return "("+column+","+row+")";
     }
+    
+    public boolean equals(SquareCoordinates otherSquareCoordinates) {
+        return this.row == otherSquareCoordinates.getRow() && this.column == otherSquareCoordinates.getColumn();
+    }
+    
 }
