@@ -45,9 +45,8 @@ public class CommandCapture extends Command {
         return this.toCoordinates;
     }
     
-    public boolean equals(CommandCapture commandCapture) {
-        return this.fromCoordinates.toString().equalsIgnoreCase(commandCapture.getFromCoordinates().toString()) &&
-                this.pieceToCaptureCoordinates.toString().equalsIgnoreCase(
-                        commandCapture.getPieceToCaptureCoordinates().toString());
+    public boolean equals(CommandCapture otherCommandCapture) {
+        return this.fromCoordinates.equals(otherCommandCapture.getFromCoordinates()) &&
+                this.pieceToCaptureCoordinates.equals(otherCommandCapture.getPieceToCaptureCoordinates());
     }
 }
