@@ -59,13 +59,13 @@ public class Game {
         initGame();
         List<CommandCapture> obligatoryCaptureList = new ArrayList<>();
         try {
-            commandRunner.runCommand(CommandParser.parseCommand( "help"));
+            commandRunner.runCommand(CommandParser.parseCommand("help"));
             outputPrinter.print("\n");
         } catch (Exception exception) {
             outputPrinter.print(exception.getMessage());
         }
         while(this.gameState == GameState.PLAYING) {
-            Command command;
+            Command command = null;
             try{
                 outputPrinter.print(board.toStringFor(getCurrentTurn().getColor()));
                 outputPrinter.print("Turn of " + getCurrentTurn().getNickname());
@@ -87,15 +87,12 @@ public class Game {
                 outputPrinter.print(exception.getMessage());
             }
             while(true) {
-                String readCommand = inputReader.readInput();
+                String readCommand;
                 try {
-                    command = CommandParser.parseCommand(readCommand);
                     if(obligatoryCaptureList.size() > 0) {
-                        outputPrinter.print("Your turn not end until you enter all obligatory capture commands.");
-                        outputPrinter.print("If you type a different capture commands than those indicated, " +
-                                "don't worry, just type the correct captures in the right order;");
-                        outputPrinter.print("the incorrect captures will not be considered");
                         for(short i = 0; i < obligatoryCaptureList.size(); i++) {
+                            readCommand = inputReader.readInput();
+                            command = CommandParser.parseCommand(readCommand);
                             if(command.getCommandType() == CommandType.HELP ||
                                     command.getCommandType() == CommandType.SURRENDER) {
                                 commandRunner.runCommand(command);
@@ -104,21 +101,22 @@ public class Game {
                             if(command.getCommandType() == CommandType.TO) {
                                 outputPrinter.print("Invalid command to, read the obligatory capture list.");
                                 outputPrinter.print("Enter a new command.");
-                                readCommand = inputReader.readInput();
-                                command = CommandParser.parseCommand(readCommand);
                                 i--;
                             }
                             if(command.getCommandType() == CommandType.CAPTURE) {
-                                if(CommandParser.parseCommandCapture(readCommand).equals(obligatoryCaptureList.get(i))) {
+                                if(CommandParser.parseCommandCapture(readCommand)
+                                        .equals(obligatoryCaptureList.get(i))) {
                                     commandRunner.runCommand(command);
+                                    outputPrinter.print("Enter next command.");
                                 } else {
-                                    readCommand = inputReader.readInput();
-                                    command = CommandParser.parseCommand(readCommand);
+                                    outputPrinter.print("Invalid command capture, read the obligatory capture list.");
+                                    outputPrinter.print("Enter a new command.");
                                     i--;
                                 }
                             }
                         }
                     } else {
+                        readCommand = inputReader.readInput();
                         command = CommandParser.parseCommand(readCommand);
                         commandRunner.runCommand(command);
                     }
