@@ -5,8 +5,8 @@ import it.units.inginf.italiandraughts.exception.PlayerNicknameException;
 
 public class Player {
 
-    private String nickname;
-    private PlayerColor playerColor;
+    private final String nickname;
+    private final PlayerColor playerColor;
 
     public Player(String nickname, PlayerColor playerColor) throws PlayerColorException, PlayerNicknameException {
         if(nickname == null) {
