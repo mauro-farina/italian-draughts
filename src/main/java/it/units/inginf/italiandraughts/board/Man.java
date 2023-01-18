@@ -2,6 +2,7 @@ package it.units.inginf.italiandraughts.board;
 
 import it.units.inginf.italiandraughts.exception.PieceColorException;
 import it.units.inginf.italiandraughts.exception.SquareException;
+import it.units.inginf.italiandraughts.exception.PieceException;
 
 public class Man implements Piece{
     protected PieceColor pieceColor; // color of the piece, either black or white
