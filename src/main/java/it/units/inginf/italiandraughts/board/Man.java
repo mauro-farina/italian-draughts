@@ -47,20 +47,22 @@ public class Man implements Piece{
     }
 
     @Override
-    public void setSquare(Square newSquare) throws SquareException {
+    public void setSquare(Square newSquare) throws SquareException, PieceException {
         if(square == null) {
             if(isMan()) {
                 throw new SquareException("Man.setSquare() does not accept this Square because it is null");
-            } else if(isKing()) {
+            } else {
                 throw new SquareException("King.setSquare() does not accept this Square because it is null");
             }
         } else if(!square.getSquareColor().equals(SquareColor.BLACK)) {
             if(isMan()) {
                 throw new SquareException("Man.setSquare() does not accept this Square," +
                         " because pieces cannot be on white squares");
-            } else if(isKing()) {
-                throw new SquareException("King.setSquare() does not accept this Square," +
+            } else if(isKing()){
+                throw new SquareException("King.setSquare()) does not accept this Square," +
                         " because pieces cannot be on white squares");
+            } else {
+                throw new PieceException("Piece.setSquare() the piece is not a man and is not a king");
             }
         } else {
             this.square = newSquare;
