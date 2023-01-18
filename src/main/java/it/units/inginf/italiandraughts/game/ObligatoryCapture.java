@@ -95,7 +95,7 @@ public class ObligatoryCapture {
                     fullSingleCaptureList(board, singleCaptureList,
                             BoardUtils.researchPiece(board,
                                     board.getSquare(singleCapture.getToCoordinates())));
-                    singleCapture.runBack();
+                    singleCapture.reset();
                 }
             }
         }
