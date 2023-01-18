@@ -42,8 +42,8 @@ public class CommandTest {
             expectedCoordinates = new SquareCoordinates(0, 0); // A1
             command = CommandParser.parseCommand("A1 to B2");
             SquareCoordinates commandStartingSquareCoordinates = ((CommandTo)command).getFromCoordinates();
-            if(expectedCoordinates.getCoordinateX() != commandStartingSquareCoordinates.getColumn()
-                    || expectedCoordinates.getRow() != commandStartingSquareCoordinates.getCoordinateY())
+            if(expectedCoordinates.getColumn()) != commandStartingSquareCoordinates.getColumn()
+                    || expectedCoordinates.getRow() != commandStartingSquareCoordinates.getRow())
                 fail();
         } catch (Exception e) {
             fail();
@@ -59,8 +59,8 @@ public class CommandTest {
             expectedCoordinates = new SquareCoordinates(1, 1); // B2
             command = CommandParser.parseCommand("A1 to B2");
             SquareCoordinates commandMoveToSquareCoordinates = ((CommandTo)command).getToCoordinates();
-            if(expectedCoordinates.getCoordinateX() != commandMoveToSquareCoordinates.getColumn()
-                    || expectedCoordinates.getRow()!= commandMoveToSquareCoordinates.getCoordinateY())
+            if(expectedCoordinates.getColumn()) != commandMoveToSquareCoordinates.getColumn()
+                    || expectedCoordinates.getRow()!= commandMoveToSquareCoordinates.getRow())
                 fail();
         } catch (Exception e) {
             fail();
