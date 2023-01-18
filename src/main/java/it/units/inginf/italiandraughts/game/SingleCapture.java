@@ -123,7 +123,7 @@ public class SingleCapture {
     }
 
     public void runBack() throws BoardException, SquareException, SquareContentException,
-            PieceColorException {
+            PieceColorException, PieceException {
         Square selectedPieceSquare = board.getSquare(fromCoordinates);
         Square capturedPieceSquare = board.getSquare(pieceToCaptureCoordinates);
         Square destinationSquare = board.getSquare(toCoordinates);
