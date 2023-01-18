@@ -117,7 +117,7 @@ public class CommandRunner {
         }
         selectedPiece.setSquare(arrivalSquare);
         if(selectedPiece.isMan()) {
-            if (game.getBoard().getLastRow(selectedPiece.getColor())[0].getSquareCoordinates().getRow() == arrivalSquare.getSquareCoordinates().getRow())) {
+            if (game.getBoard().getLastRow(selectedPiece.getColor())[0].getSquareCoordinates().getRow() == arrivalSquare.getSquareCoordinates().getRow()) {
                 BoardUtils.toCrown(this.game.getBoard(), selectedPiece);
             }
         }
