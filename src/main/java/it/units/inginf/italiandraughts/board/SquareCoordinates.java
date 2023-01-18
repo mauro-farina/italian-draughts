@@ -31,17 +31,11 @@ public class SquareCoordinates {
     public int getRow() {
         return row;
     }
-    public int getCoordinateY() {
-        return row;
-    }
 
     public int getColumn() {
         return column;
     }
 
-    public int getCoordinateX() {
-        return column;
-    }
 
     @Override
     public String toString() {
