@@ -1,5 +1,6 @@
 package it.units.inginf.italiandraughts.board;
 import it.units.inginf.italiandraughts.exception.SquareException;
+import it.units.inginf.italiandraughts.exception.PieceException;
 
 public interface Piece {
 
@@ -7,5 +8,5 @@ public interface Piece {
     Square getSquare();
     boolean isMan();
     boolean isKing();
-    void setSquare(Square square) throws SquareException;
+    void setSquare(Square square) throws SquareException, PieceException;
 }
