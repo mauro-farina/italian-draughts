@@ -31,15 +31,15 @@ public class SingleCapture {
         this.fromCoordinates = fromCoordinates;
         this.pieceToCaptureCoordinates = pieceToCaptureCoordinates;
         int toCoordinateY, toCoordinateX;
-        if(fromCoordinates.getCoordinateY() > pieceToCaptureCoordinates.getCoordinateY()){
-            toCoordinateY = pieceToCaptureCoordinates.getCoordinateY() - 1;
+        if(fromCoordinates.getRow() > pieceToCaptureCoordinates.getRow()){
+            toCoordinateY = pieceToCaptureCoordinates.getRow() - 1;
         } else {
-            toCoordinateY = pieceToCaptureCoordinates.getCoordinateY() + 1;
+            toCoordinateY = pieceToCaptureCoordinates.getRow() + 1;
         }
-        if(fromCoordinates.getCoordinateX() > pieceToCaptureCoordinates.getCoordinateX()) {
-            toCoordinateX = pieceToCaptureCoordinates.getCoordinateX() - 1;
+        if(fromCoordinates.getColumn() > pieceToCaptureCoordinates.getColumn()) {
+            toCoordinateX = pieceToCaptureCoordinates.getColumn() - 1;
         } else {
-            toCoordinateX = pieceToCaptureCoordinates.getCoordinateX() + 1;
+            toCoordinateX = pieceToCaptureCoordinates.getColumn() + 1;
         }
         if(toCoordinateY > - 1 && toCoordinateY < 8 && toCoordinateX > - 1 && toCoordinateX < 8) {
             this.toCoordinates = new SquareCoordinates(toCoordinateX, toCoordinateY);
