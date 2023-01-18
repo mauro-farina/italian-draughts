@@ -13,18 +13,16 @@ public class CommandCapture extends Command {
         super(CommandType.CAPTURE);
         this.fromCoordinates = fromCoordinates;
         this.pieceToCaptureCoordinates = pieceToCaptureCoordinates;
-        // calculate toCoordinates
-        // given fromSquareCoordinates and pieceToCaptureSquareCoordinates, find toSquareCoordinates
         int toCoordinateY, toCoordinateX;
-        if(fromCoordinates.getCoordinateY() > pieceToCaptureCoordinates.getCoordinateY()){ // *6 capture *5 (ex: C6 capture B5)
-            toCoordinateY = pieceToCaptureCoordinates.getCoordinateY() - 1; // moves to *4
+        if(fromCoordinates.getRow() > pieceToCaptureCoordinates.getRow()){ // *6 capture *5 (ex: C6 capture B5)
+            toCoordinateY = pieceToCaptureCoordinates.getRow() - 1; // moves to *4
         } else { // *3 capture *4 (ex: B3 capture C4)
-            toCoordinateY = pieceToCaptureCoordinates.getCoordinateY() + 1; // moves to *5
+            toCoordinateY = pieceToCaptureCoordinates.getRow() + 1; // moves to *5
         }
-        if(fromCoordinates.getCoordinateX() > pieceToCaptureCoordinates.getCoordinateX()) { // ex: D* capture C* (ex: D3 capture C4)
-            toCoordinateX = pieceToCaptureCoordinates.getCoordinateX() - 1; // moves to B*
+        if(fromCoordinates.getColumn() > pieceToCaptureCoordinates.getColumn()) { // ex: D* capture C* (ex: D3 capture C4)
+            toCoordinateX = pieceToCaptureCoordinates.getColumn() - 1; // moves to B*
         } else { // B* capture C* (ex: B3 capture C4)
-            toCoordinateX = pieceToCaptureCoordinates.getCoordinateX() + 1; // moves to D*
+            toCoordinateX = pieceToCaptureCoordinates.getColumn() + 1; // moves to D*
         }
         try {
             this.toCoordinates = new SquareCoordinates(toCoordinateX, toCoordinateY);
