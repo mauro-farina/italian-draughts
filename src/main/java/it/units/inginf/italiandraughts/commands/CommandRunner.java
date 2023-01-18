@@ -117,7 +117,7 @@ public class CommandRunner {
         }
         selectedPiece.setSquare(arrivalSquare);
         if(selectedPiece.isMan()) {
-            if (game.getBoard().getLastRow(selectedPiece.getColor())[0].getSquareCoordinates().getCoordinateY() == arrivalSquare.getSquareCoordinates().getCoordinateY()) {
+            if (game.getBoard().getLastRow(selectedPiece.getColor())[0].getSquareCoordinates().getRow() == arrivalSquare.getSquareCoordinates().getRow())) {
                 BoardUtils.toCrown(this.game.getBoard(), selectedPiece);
             }
         }
@@ -178,7 +178,7 @@ public class CommandRunner {
             }
             selectedPiece.setSquare(destinationSquare);
             if(selectedPiece.isMan()) {
-                if (game.getBoard().getLastRow(selectedPiece.getColor())[0].getSquareCoordinates().getCoordinateY() == destinationSquare.getSquareCoordinates().getCoordinateY()) {
+                if (game.getBoard().getLastRow(selectedPiece.getColor())[0].getSquareCoordinates().getRow() == destinationSquare.getSquareCoordinates().getRow())) {
                     BoardUtils.toCrown(this.game.getBoard(), selectedPiece);
                 }
             }
