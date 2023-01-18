@@ -37,8 +37,8 @@ public class SquareName {
         if(squareCoordinates == null) {
             throw new CoordinatesException("SquareName.squareName() -> square coordinates cannot be null");
         }
-        int x = squareCoordinates.getCoordinateX();
-        int y = squareCoordinates.getCoordinateY();
+        int x = squareCoordinates.getColumn();
+        int y = squareCoordinates.getRow();
         switch (x) {
             case 0 -> this.column = 'A';
             case 1 -> this.column = 'B';
