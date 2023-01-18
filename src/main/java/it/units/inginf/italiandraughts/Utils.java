@@ -1,6 +1,5 @@
 package it.units.inginf.italiandraughts;
 
-import it.units.inginf.italiandraughts.board.SquareName;
 import it.units.inginf.italiandraughts.exception.CoordinatesException;
 
 public class Utils {
@@ -36,7 +35,4 @@ public class Utils {
         }
     }
 
-    public static int[] convertToCoordinates(SquareName squareName) throws CoordinatesException {
-        return convertToCoordinates(squareName.toString());
-    }
 }
