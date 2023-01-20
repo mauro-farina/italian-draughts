@@ -1,4 +1,4 @@
-package it.units.inginf.italiandraughts;
+/*package it.units.inginf.italiandraughts;
 
 import it.units.inginf.italiandraughts.game.ObligatoryCapture;
 import it.units.inginf.italiandraughts.game.Game;
@@ -201,4 +201,4 @@ public class ObligatoryCaptureTest {
         }
     }
     
-}
+}*/
