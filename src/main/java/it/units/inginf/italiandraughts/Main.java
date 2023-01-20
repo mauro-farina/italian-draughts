@@ -16,11 +16,10 @@ public class Main {
 
     public static void main(String[] args) {
         try{
-            /*
             new Game(
                     new Player(readName(PlayerColor.WHITE), PlayerColor.WHITE),
-                    new Player(readName(PlayerColor.BLACK), PlayerColor.BLACK)
-            ).start();*/
+                    new Player(readName(PlayerColor.BLACK), PlayerColor.BLACK),
+                    inputReader, outputPrinter).start();
         } catch(Exception e) {
             System.out.println(e.getMessage());
         }
