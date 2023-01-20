@@ -37,7 +37,7 @@ public class BoardUtils {
                 if (board.getBlackPieces().get(i) == piece) {
                     board.getBlackPieces().remove(i);
                     break;
-                } else if(i == board.getWhitePieces().size() - 1) {
+                } else if(i == board.getBlackPieces().size() - 1) {
                     throw new PieceException("BoardUtils.removePiece() does not accept this Piece," +
                             " because it does not belong on the BlackPieces list");
                 }
