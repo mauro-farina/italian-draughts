@@ -15,8 +15,6 @@ import it.units.inginf.italiandraughts.exception.SquareNameException;
 import it.units.inginf.italiandraughts.exception.SquareContentException;
 import it.units.inginf.italiandraughts.exception.CoordinatesException;
 import it.units.inginf.italiandraughts.exception.PieceColorException;
-import it.units.inginf.italiandraughts.io.CommandLineInputReader;
-import it.units.inginf.italiandraughts.io.CommandLineOutputPrinter;
 import it.units.inginf.italiandraughts.io.InputReader;
 import it.units.inginf.italiandraughts.io.OutputPrinter;
 
@@ -36,21 +34,21 @@ public class Game {
     private GameState gameState;
     private final CommandRunner commandRunner;
 
-    public Game(Player player1, Player player2) throws PlayerException,
+    public Game(Player player1, Player player2, InputReader inputReader, OutputPrinter outputPrinter) throws PlayerException,
             SquareNameException, SquareContentException, CoordinatesException,
             PieceColorException, SquareException {
         if((player1 == null) || (player2 == null)) {
             throw new PlayerException("Game.Game() does not accept one or both players");
         } else if((player1.getColor() != PlayerColor.WHITE) || (player2.getColor() != PlayerColor.BLACK)) {
             throw new PlayerException("Game.game() does not accept one or both player's color." +
-                     "\n Player1 uses the white pieces, while player2 uses the black pieces");
+                    "\n Player1 uses the white pieces, while player2 uses the black pieces");
         } else {
             this.gameState = GameState.SETTING_UP;
             this.board = new Board();
             this.player1 = player1;
             this.player2 = player2;
-            this.inputReader = new CommandLineInputReader();
-            this.outputPrinter = new CommandLineOutputPrinter();
+            this.inputReader = inputReader;
+            this.outputPrinter = outputPrinter;
             this.commandRunner = new CommandRunner(this);
         }
     }
@@ -149,17 +147,7 @@ public class Game {
                             + this.board.getSquare(obligatoryCaptureList.get(i).getPieceToCaptureCoordinates())
                             .getSquareName()
                             .toString());
-        }/*
-        for (CommandCapture commandCapture: obligatoryCaptureList) {
-            outputPrinter.print(
-                    this.board.getSquare(commandCapture.getFromCoordinates())
-                            .getSquareName()
-                            .toString()
-                            + " capture "
-                            + this.board.getSquare(commandCapture.getPieceToCaptureCoordinates())
-                            .getSquareName()
-                            .toString());
-        }*/
+        }
     }
 
     public void initGame() {
