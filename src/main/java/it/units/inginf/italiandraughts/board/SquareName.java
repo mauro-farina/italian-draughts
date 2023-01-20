@@ -14,7 +14,7 @@ public class SquareName {
         if(row < '1' || row > '8') {
             throw new CoordinatesException("SquareName.squareName() -> row value must be in 1 to 8 range");
         }
-        this.column = column;
+        this.column = column > 'H' ? (char) (column - 32) : column;
         this.row = row;
     }
 
