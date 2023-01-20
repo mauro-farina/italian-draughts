@@ -8,7 +8,7 @@ public class SquareName {
     private final char column; // A, B, ..., H
 
     public SquareName(char column, char row) throws CoordinatesException {
-        if(column < 'A' || column > 'H') {
+        if(column < 'A' || (column > 'H' && column < 'a') || column > 'h') {
             throw new CoordinatesException("SquareName.squareName() -> column value must be in A to H range");
         }
         if(row < '1' || row > '8') {
@@ -23,8 +23,8 @@ public class SquareName {
             throw new SquareNameException("SquareName.squareName() because does not accept this value" + 
                     squareName + " of SquareName");
         }
-        this.column = squareName.charAt(0);
-        this.row = squareName.charAt(1);
+        this.column = squareName.toUpperCase().charAt(0);
+        this.row = squareName.toUpperCase().charAt(1);
         if(column < 'A' || column > 'H') {
             throw new CoordinatesException("SquareName.squareName() -> column value must be in A to H range");
         }
