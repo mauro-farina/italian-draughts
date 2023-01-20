@@ -71,8 +71,8 @@ public class BoardUtils {
         } else if(piece.getColor() == PieceColor.BLACK) {
             for(int i = 0; i < board.getBlackPieces().size(); i++) {
                 if (board.getBlackPieces().get(i) == piece) {
-                    board.getBlackPieces().add(new King(piece.getColor(), board.getWhitePieces().get(i).getSquare()));
-                    board.getBlackPieces().get(i).getSquare().setSquareContent(SquareContent.WHITE_KING);
+                    board.getBlackPieces().add(new King(piece.getColor(), board.getBlackPieces().get(i).getSquare()));
+                    board.getBlackPieces().get(i).getSquare().setSquareContent(SquareContent.BLACK_KING);
                     board.getBlackPieces().remove(i);
                     break;
                 } else if(i == board.getBlackPieces().size() - 1) {
