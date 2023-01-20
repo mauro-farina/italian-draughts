@@ -43,7 +43,7 @@ public class BoardUtils {
                 }
             }
         } else {
-            throw new PieceColorException("BoardUtils.removePiece() does not accept this piece, becuase PieceColor is not valid");
+            throw new PieceColorException("BoardUtils.removePiece() does not accept this piece, because PieceColor is not valid");
         }
     }
 
