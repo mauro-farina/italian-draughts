@@ -72,16 +72,7 @@ public class Game {
                 obligatoryCaptureList.addAll(ObligatoryCapture.getObligatoryCaptureList(this));
                 if(obligatoryCaptureList.size() > 0) {
                     outputPrinter.print("this is a obligatory capture list, make them all");
-                    for (CommandCapture commandCapture: obligatoryCaptureList) {
-                        outputPrinter.print(
-                                this.board.getSquare(commandCapture.getFromCoordinates())
-                                        .getSquareName()
-                                        .toString()
-                                        + " capture "
-                                        + this.board.getSquare(commandCapture.getPieceToCaptureCoordinates())
-                                        .getSquareName()
-                                        .toString());
-                    }
+                    printObligatoryCaptureList(obligatoryCaptureList);
                 }
             } catch (Exception exception) {
                 outputPrinter.print(exception.getMessage());
@@ -140,6 +131,19 @@ public class Game {
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
+        }
+    }
+
+    private void printObligatoryCaptureList(List<CommandCapture> obligatoryCaptureList) {
+        for (CommandCapture commandCapture: obligatoryCaptureList) {
+            outputPrinter.print(
+                    this.board.getSquare(commandCapture.getFromCoordinates())
+                            .getSquareName()
+                            .toString()
+                            + " capture "
+                            + this.board.getSquare(commandCapture.getPieceToCaptureCoordinates())
+                            .getSquareName()
+                            .toString());
         }
     }
 
