@@ -72,7 +72,7 @@ public class Game {
                 obligatoryCaptureList.addAll(ObligatoryCapture.getObligatoryCaptureList(this));
                 if(obligatoryCaptureList.size() > 0) {
                     outputPrinter.print("this is a obligatory capture list, make them all");
-                    printObligatoryCaptureList(obligatoryCaptureList);
+                    printObligatoryCaptureList(obligatoryCaptureList, 0);
                 }
             } catch (Exception exception) {
                 outputPrinter.print(exception.getMessage());
@@ -98,7 +98,11 @@ public class Game {
                                 if(CommandParser.parseCommandCapture(readCommand)
                                         .equals(obligatoryCaptureList.get(i))) {
                                     commandRunner.runCommand(command);
-                                    outputPrinter.print("Enter next command.");
+                                    if(obligatoryCaptureList.size() > 0) {
+                                        outputPrinter.print(board.toStringFor(getCurrentTurn().getColor()));
+                                        outputPrinter.print("Next obligatory captures:");
+                                        printObligatoryCaptureList(obligatoryCaptureList, i+1);
+                                    }
                                 } else {
                                     outputPrinter.print("Invalid command capture, read the obligatory capture list.");
                                     outputPrinter.print("Enter a new command.");
@@ -127,6 +131,7 @@ public class Game {
                             this.currentTurn.getNickname() + "'s pieces can move");
                 } else if(command.getCommandType() != CommandType.HELP) {
                     changeTurn();
+                    outputPrinter.print("");
                 }
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -134,7 +139,17 @@ public class Game {
         }
     }
 
-    private void printObligatoryCaptureList(List<CommandCapture> obligatoryCaptureList) {
+    private void printObligatoryCaptureList(List<CommandCapture> obligatoryCaptureList, int excludeCapturesBeforeIndex) {
+        for(int i=excludeCapturesBeforeIndex; i<obligatoryCaptureList.size(); i++) {
+            outputPrinter.print(
+                    this.board.getSquare(obligatoryCaptureList.get(i).getFromCoordinates())
+                            .getSquareName()
+                            .toString()
+                            + " capture "
+                            + this.board.getSquare(obligatoryCaptureList.get(i).getPieceToCaptureCoordinates())
+                            .getSquareName()
+                            .toString());
+        }/*
         for (CommandCapture commandCapture: obligatoryCaptureList) {
             outputPrinter.print(
                     this.board.getSquare(commandCapture.getFromCoordinates())
@@ -144,7 +159,7 @@ public class Game {
                             + this.board.getSquare(commandCapture.getPieceToCaptureCoordinates())
                             .getSquareName()
                             .toString());
-        }
+        }*/
     }
 
     public void initGame() {
