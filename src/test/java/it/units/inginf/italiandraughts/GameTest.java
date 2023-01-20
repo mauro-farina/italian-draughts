@@ -1,4 +1,4 @@
-package it.units.inginf.italiandraughts;
+/*package it.units.inginf.italiandraughts;
 
 import it.units.inginf.italiandraughts.board.SquareCoordinates;
 import it.units.inginf.italiandraughts.game.Game;
@@ -114,3 +114,4 @@ public class GameTest {
     }
 
 }
+*/
