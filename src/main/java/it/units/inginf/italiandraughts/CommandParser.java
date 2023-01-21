@@ -9,10 +9,8 @@ import it.units.inginf.italiandraughts.exception.SquareNameException;
 
 public class CommandParser {
 
-    // static ?
-    // probably a command parser should not require board
     public static Command parseCommand(String commandAsString) throws CommandException, CoordinatesException, SquareNameException {
-        String[] commandTokens = commandAsString.trim().split(" "); //with trim
+        String[] commandTokens = commandAsString.trim().split(" ");
         if(commandTokens.length == 1) {
             if(commandTokens[0].equalsIgnoreCase("help")){
                 return new CommandHelp();
