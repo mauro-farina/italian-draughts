@@ -61,6 +61,16 @@ public class Board {
         return this.boardSquares;
     }
 
+    public List<Piece> getPieces(PieceColor pieceColor) {
+        if(pieceColor == PieceColor.WHITE) {
+            return getWhitePieces();
+        } else if(pieceColor == PieceColor.BLACK) {
+            return getBlackPieces();
+        } else {
+            throw new IllegalArgumentException("PieceColor is not valid");
+        }
+    }
+
     public List<Piece> getWhitePieces() {
         return this.whitePieces;
     }
