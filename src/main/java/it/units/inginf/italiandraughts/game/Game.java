@@ -3,6 +3,7 @@ package it.units.inginf.italiandraughts.game;
 import it.units.inginf.italiandraughts.CommandParser;
 import it.units.inginf.italiandraughts.board.Board;
 import it.units.inginf.italiandraughts.board.Piece;
+import it.units.inginf.italiandraughts.board.PieceColor;
 import it.units.inginf.italiandraughts.board.Square;
 import it.units.inginf.italiandraughts.commands.*;
 import it.units.inginf.italiandraughts.exception.PlayerException;
@@ -206,31 +207,23 @@ public class Game {
     }
 
     public boolean checkDrawCondition() throws CoordinatesException, BoardException, SquareException {
-        if(this.currentTurn == this.player1) {
-            for(Piece piece: this.board.getWhitePieces()) {
-                for(Square reachableSquare: this.board.getReachableSquares(piece)) {
-                    if(reachableSquare.isFree()) {
-                        return false;
-                    } else {
-                        if(new SingleCapture(this.board,
-                                piece.getSquare().getSquareCoordinates(),
-                                reachableSquare.getSquareCoordinates()).isValid()) {
-                            return false;
-                        }
-                    }
-                }
-            }
+        PieceColor pieceColor;
+        if (this.currentTurn == this.player1) {
+            pieceColor = PieceColor.WHITE;
         } else if (this.currentTurn == this.player2) {
-            for(Piece piece: this.board.getBlackPieces()) {
-                for(Square reachableSquare: this.board.getReachableSquares(piece)) {
-                    if(reachableSquare.isFree()) {
+            pieceColor = PieceColor.WHITE;
+        } else {
+            return true;
+        }
+        for (Piece piece : this.board.getPieces(pieceColor)) {
+            for (Square reachableSquare : this.board.getReachableSquares(piece)) {
+                if (reachableSquare.isFree()) {
+                    return false;
+                } else {
+                    if (new SingleCapture(this.board,
+                            piece.getSquare().getSquareCoordinates(),
+                            reachableSquare.getSquareCoordinates()).isValid()) {
                         return false;
-                    } else {
-                        if(new SingleCapture(this.board,
-                                piece.getSquare().getSquareCoordinates(),
-                                reachableSquare.getSquareCoordinates()).isValid()) {
-                            return false;
-                        }
                     }
                 }
             }
