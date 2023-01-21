@@ -105,19 +105,7 @@ public class SingleCapture {
             selectedPieceSquare.setSquareContent(SquareContent.EMPTY);
             capturedPieceSquare.setSquareContent(SquareContent.EMPTY);
             BoardUtils.removePiece(this.board, capturedPiece);
-            if (selectedPiece.isMan()) {
-                if (selectedPiece.getColor() == PieceColor.WHITE) {
-                    destinationSquare.setSquareContent(SquareContent.WHITE_MAN);
-                } else {
-                    destinationSquare.setSquareContent(SquareContent.BLACK_MAN);
-                }
-            } else { // isKing
-                if (selectedPiece.getColor() == PieceColor.WHITE) {
-                    destinationSquare.setSquareContent(SquareContent.WHITE_KING);
-                } else {
-                    destinationSquare.setSquareContent(SquareContent.BLACK_KING);
-                }
-            }
+            updateSquareContentToMatchPiece(destinationSquare, selectedPiece);
             selectedPiece.setSquare(destinationSquare);
         }
     }
@@ -128,38 +116,27 @@ public class SingleCapture {
         Square capturedPieceSquare = board.getSquare(pieceToCaptureCoordinates);
         Square destinationSquare = board.getSquare(toCoordinates);
         Piece selectedPiece = BoardUtils.researchPiece(this.board, destinationSquare);
-        if(selectedPiece != null) {
-            destinationSquare.setSquareContent(SquareContent.EMPTY);
-            if (selectedPiece.isMan()) {
-                if (selectedPiece.getColor() == PieceColor.WHITE) {
-                    selectedPieceSquare.setSquareContent(SquareContent.WHITE_MAN);
-                } else {
-                    selectedPieceSquare.setSquareContent(SquareContent.BLACK_MAN);
-                }
-            } else { // isKing
-                if (selectedPiece.getColor() == PieceColor.WHITE) {
-                    selectedPieceSquare.setSquareContent(SquareContent.WHITE_KING);
-                } else {
-                    selectedPieceSquare.setSquareContent(SquareContent.BLACK_KING);
-                }
-            }
-            selectedPiece.setSquare(selectedPieceSquare);
-            if(capturedPieceIsKing) {
-                if(selectedPiece.getColor() == PieceColor.WHITE) {
-                    capturedPieceSquare.setSquareContent(SquareContent.BLACK_KING);
-                    this.board.getBlackPieces().add(new King(PieceColor.BLACK, capturedPieceSquare));
-                } else {
-                    capturedPieceSquare.setSquareContent(SquareContent.WHITE_KING);
-                    this.board.getWhitePieces().add(new King(PieceColor.WHITE, capturedPieceSquare));
-                }
+        if(selectedPiece == null) {
+            return;
+        }
+        destinationSquare.setSquareContent(SquareContent.EMPTY);
+        updateSquareContentToMatchPiece(selectedPieceSquare, selectedPiece);
+        selectedPiece.setSquare(selectedPieceSquare);
+        if(capturedPieceIsKing) {
+            if(selectedPiece.getColor() == PieceColor.WHITE) {
+                capturedPieceSquare.setSquareContent(SquareContent.BLACK_KING);
+                this.board.getBlackPieces().add(new King(PieceColor.BLACK, capturedPieceSquare));
             } else {
-                if(selectedPiece.getColor() == PieceColor.WHITE) {
-                    capturedPieceSquare.setSquareContent(SquareContent.BLACK_MAN);
-                    this.board.getBlackPieces().add(new Man(PieceColor.BLACK, capturedPieceSquare));
-                } else {
-                    capturedPieceSquare.setSquareContent(SquareContent.WHITE_MAN);
-                    this.board.getWhitePieces().add(new Man(PieceColor.WHITE, capturedPieceSquare));
-                }
+                capturedPieceSquare.setSquareContent(SquareContent.WHITE_KING);
+                this.board.getWhitePieces().add(new King(PieceColor.WHITE, capturedPieceSquare));
+            }
+        } else {
+            if(selectedPiece.getColor() == PieceColor.WHITE) {
+                capturedPieceSquare.setSquareContent(SquareContent.BLACK_MAN);
+                this.board.getBlackPieces().add(new Man(PieceColor.BLACK, capturedPieceSquare));
+            } else {
+                capturedPieceSquare.setSquareContent(SquareContent.WHITE_MAN);
+                this.board.getWhitePieces().add(new Man(PieceColor.WHITE, capturedPieceSquare));
             }
         }
     }
@@ -186,6 +163,22 @@ public class SingleCapture {
             return false;
         }
         return piece.isKing();
+    }
+
+    private static void updateSquareContentToMatchPiece(Square square, Piece piece) throws SquareContentException {
+        if (piece.isMan()) {
+            if (piece.getColor() == PieceColor.WHITE) {
+                square.setSquareContent(SquareContent.WHITE_MAN);
+            } else {
+                square.setSquareContent(SquareContent.BLACK_MAN);
+            }
+        } else { // isKing
+            if (piece.getColor() == PieceColor.WHITE) {
+                square.setSquareContent(SquareContent.WHITE_KING);
+            } else {
+                square.setSquareContent(SquareContent.BLACK_KING);
+            }
+        }
     }
 
 }
