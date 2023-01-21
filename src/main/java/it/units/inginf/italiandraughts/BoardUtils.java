@@ -13,6 +13,7 @@ import it.units.inginf.italiandraughts.exception.PieceColorException;
 import it.units.inginf.italiandraughts.exception.SquareException;
 import it.units.inginf.italiandraughts.exception.SquareContentException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BoardUtils {
@@ -74,16 +75,10 @@ public class BoardUtils {
             throw new SquareException("BoardUtils.researchPiece() does not accept this Square, because it is null");
         }
         if ((square.getSquareColor() == SquareColor.BLACK) || (!square.isFree())) {
-            for(int i = 0; i < board.getWhitePieces().size(); i++) {
-                if(board.getWhitePieces().get(i).getSquare() == square) {
-                    return board.getWhitePieces().get(i);
-                }
-            }
-            for(int i = 0; i < board.getBlackPieces().size(); i++) {
-                if (board.getBlackPieces().get(i).getSquare() == square) {
-                    return board.getBlackPieces().get(i);
-                }
-            }
+            List<Piece> pieces = new ArrayList<>();
+            pieces.addAll(board.getWhitePieces());
+            pieces.addAll(board.getBlackPieces());
+            return pieces.stream().filter(piece -> piece.getSquare().equals(square)).findAny().orElse(null);
         }
         return null;
     }
