@@ -27,8 +27,8 @@ public class Game {
     private Player currentTurn;
     private Player winnerPlayer;
     private int turnCounter;
-    private final InputReader inputReader; // could go in the it.units.inginf.italiandraughts.Main to separate concerns
-    private final OutputPrinter outputPrinter; // could go in the it.units.inginf.italiandraughts.Main to separate concerns
+    private final InputReader inputReader;
+    private final OutputPrinter outputPrinter;
     private GameState gameState;
     private final CommandRunner commandRunner;
 
