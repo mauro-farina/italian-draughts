@@ -3,6 +3,7 @@ package it.units.inginf.italiandraughts.game;
 import it.units.inginf.italiandraughts.BoardUtils;
 import it.units.inginf.italiandraughts.board.Board;
 import it.units.inginf.italiandraughts.board.Piece;
+import it.units.inginf.italiandraughts.board.PieceColor;
 import it.units.inginf.italiandraughts.board.Square;
 import it.units.inginf.italiandraughts.commands.CommandCapture;
 import it.units.inginf.italiandraughts.exception.BoardException;
@@ -18,26 +19,20 @@ import java.util.ArrayList;
 
 public class ObligatoryCapture {
 
-    public static List<CommandCapture> getObligatoryCaptureList(Game game) throws BoardException, SquareContentException, CoordinatesException,
+    public static List<CommandCapture> getObligatoryCaptureList(Board board, Player currentTurn) throws BoardException, SquareContentException, CoordinatesException,
             PieceColorException, SquareException, PieceException, PlayerException {
+        if(currentTurn == null || currentTurn.getColor() == null) {
+            throw new PlayerException("Invalid player");
+        }
         List<CommandCapture> obligatoryCaptureList = new ArrayList<>();
         List<SingleCapture> singleCaptureList = new ArrayList<>();
         List<SingleCapture> newSingleCaptureList = new ArrayList<>();
-        if(game.getCurrentTurn() == game.getPlayer1()) {
-            for(Piece piece: game.getBoard().getWhitePieces()) {
-                fullSingleCaptureList(game.getBoard(), newSingleCaptureList, piece);
-                compareTwoLists(singleCaptureList, newSingleCaptureList);
-                newSingleCaptureList.clear();
-            }
-        } else if(game.getCurrentTurn() == game.getPlayer2()) {
-            for(Piece piece: game.getBoard().getBlackPieces()) {
-                fullSingleCaptureList(game.getBoard(), newSingleCaptureList, piece);
-                compareTwoLists(singleCaptureList, newSingleCaptureList);
-                newSingleCaptureList.clear();
-            }
-        } else {
-            throw new PlayerException("ObligatoryCapture.getObligatoryCaptureList():" +
-                    " this method does not accept this player");
+        PieceColor piecesColor = currentTurn.getColor() == PlayerColor.WHITE ? PieceColor.WHITE : PieceColor.BLACK;
+        List<Piece> piecesList = board.getPieces(piecesColor);
+        for(Piece piece: piecesList) {
+            fullSingleCaptureList(board, newSingleCaptureList, piece);
+            compareTwoLists(singleCaptureList, newSingleCaptureList);
+            newSingleCaptureList.clear();
         }
         for(SingleCapture singleCapture : singleCaptureList) {
             obligatoryCaptureList.add(
