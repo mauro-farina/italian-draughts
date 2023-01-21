@@ -65,7 +65,7 @@ public class Game {
             try{
                 outputPrinter.print(board.toStringFor(getCurrentTurn().getColor()));
                 outputPrinter.print("Turn of " + getCurrentTurn().getNickname());
-                obligatoryCaptureList.addAll(ObligatoryCapture.getObligatoryCaptureList(this));
+                obligatoryCaptureList.addAll(ObligatoryCapture.getObligatoryCaptureList(this.getBoard(), this.currentTurn));
                 if(obligatoryCaptureList.size() > 0) {
                     outputPrinter.print("this is a obligatory capture list, make them all");
                     printObligatoryCaptureList(obligatoryCaptureList, 0);
