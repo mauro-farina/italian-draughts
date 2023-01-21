@@ -1,6 +1,6 @@
 package it.units.inginf.italiandraughts;
 
-import it.units.inginf.italiandraughts.board.SquareCoordinates;
+import it.units.inginf.italiandraughts.board.SquareContent;
 import it.units.inginf.italiandraughts.board.SquareCoordinates;
 import it.units.inginf.italiandraughts.board.Man;
 import it.units.inginf.italiandraughts.board.PieceColor;
