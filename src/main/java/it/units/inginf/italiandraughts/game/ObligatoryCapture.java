@@ -13,6 +13,8 @@ import it.units.inginf.italiandraughts.exception.PieceException;
 import it.units.inginf.italiandraughts.exception.PieceColorException;
 import it.units.inginf.italiandraughts.exception.SquareException;
 import it.units.inginf.italiandraughts.exception.SquareContentException;
+import it.units.inginf.italiandraughts.exception.PlayerColorException;
+
 
 import java.util.List;
 import java.util.ArrayList;
@@ -20,9 +22,14 @@ import java.util.ArrayList;
 public class ObligatoryCapture {
 
     public static List<CommandCapture> getObligatoryCaptureList(Board board, Player currentTurn) throws BoardException, SquareContentException, CoordinatesException,
-            PieceColorException, SquareException, PieceException, PlayerException {
-        if(currentTurn == null || currentTurn.getColor() == null) {
-            throw new PlayerException("Invalid player");
+            PieceColorException, SquareException, PieceException, PlayerException, PlayerColorException {
+        if(currentTurn == null) {
+            throw new PlayerException("ObligatoryCapture.getObligatoryCaptureList() does not accept " +
+                    "this player");
+        }
+        if(currentTurn.getColor() == null) {
+            throw new PlayerColorException("ObligatoryCapture.getObligatoryCaptureList() does not accept " +
+                    "this PlayerColor");
         }
         List<CommandCapture> obligatoryCaptureList = new ArrayList<>();
         List<SingleCapture> singleCaptureList = new ArrayList<>();
