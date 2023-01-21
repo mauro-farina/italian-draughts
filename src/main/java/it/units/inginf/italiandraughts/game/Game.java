@@ -94,7 +94,7 @@ public class Game {
                                 if(CommandParser.parseCommandCapture(readCommand)
                                         .equals(obligatoryCaptureList.get(i))) {
                                     commandRunner.runCommand(command);
-                                    if(obligatoryCaptureList.size() > 0) {
+                                    if(i < obligatoryCaptureList.size()-1) {
                                         outputPrinter.print(board.toStringFor(getCurrentTurn().getColor()));
                                         outputPrinter.print("Next obligatory captures:");
                                         printObligatoryCaptureList(obligatoryCaptureList, i+1);
