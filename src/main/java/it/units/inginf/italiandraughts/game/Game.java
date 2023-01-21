@@ -4,10 +4,7 @@ import it.units.inginf.italiandraughts.CommandParser;
 import it.units.inginf.italiandraughts.board.Board;
 import it.units.inginf.italiandraughts.board.Piece;
 import it.units.inginf.italiandraughts.board.Square;
-import it.units.inginf.italiandraughts.commands.Command;
-import it.units.inginf.italiandraughts.commands.CommandCapture;
-import it.units.inginf.italiandraughts.commands.CommandRunner;
-import it.units.inginf.italiandraughts.commands.CommandType;
+import it.units.inginf.italiandraughts.commands.*;
 import it.units.inginf.italiandraughts.exception.PlayerException;
 import it.units.inginf.italiandraughts.exception.BoardException;
 import it.units.inginf.italiandraughts.exception.SquareException;
@@ -57,8 +54,8 @@ public class Game {
         initGame();
         List<CommandCapture> obligatoryCaptureList = new ArrayList<>();
         try {
-            commandRunner.runCommand(CommandParser.parseCommand("help"));
-            outputPrinter.print("\n");
+            commandRunner.runCommand(new CommandHelp());
+            outputPrinter.print(System.lineSeparator());
         } catch (Exception exception) {
             outputPrinter.print(exception.getMessage());
         }
