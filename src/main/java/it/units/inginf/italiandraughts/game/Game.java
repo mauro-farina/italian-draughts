@@ -206,14 +206,14 @@ public class Game {
         return board.getWhitePieces().size() == 0 || board.getBlackPieces().size() == 0;
     }
 
-    public boolean checkDrawCondition() throws CoordinatesException, BoardException, SquareException {
+    public boolean checkDrawCondition() throws CoordinatesException, BoardException, SquareException, PlayerException {
         PieceColor pieceColor;
         if (this.currentTurn == this.player1) {
             pieceColor = PieceColor.WHITE;
         } else if (this.currentTurn == this.player2) {
             pieceColor = PieceColor.BLACK;
         } else {
-            return true;
+            throw new PlayerException("Invalid turn");
         }
         for (Piece piece : this.board.getPieces(pieceColor)) {
             for (Square reachableSquare : this.board.getReachableSquares(piece)) {
