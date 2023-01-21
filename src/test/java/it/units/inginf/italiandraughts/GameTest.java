@@ -116,11 +116,22 @@ public class GameTest {
                     new Player("Mauro", PlayerColor.BLACK),
                     new CommandLineInputReader(), new CommandLineOutputPrinter());
             game.initGame();
-            for(int i = 10; i >= 0; i--) {
-                BoardUtils.removePiece(game.getBoard(), game.getBoard().getBlackPieces().get(i));
+            game.getBoard().getWhitePieces().clear();
+            game.getBoard().getBlackPieces().clear();
+            for(short i = 0; i < 8; i++) {
+                for(short j = 0; j < 8; j++) {
+                    game.getBoard().getSquare(new SquareCoordinates(i, j))
+                            .setSquareContent(SquareContent.EMPTY);
+                }
             }
-            game.getBoard().getBlackPieces().get(0).setSquare(game.getBoard()
-                    .getSquare(new SquareCoordinates(0, 3)));
+            game.getBoard().getSquare(new SquareCoordinates(1, 0))
+                    .setSquareContent(SquareContent.WHITE_MAN);
+            game.getBoard().getWhitePieces().add(new Man(PieceColor.WHITE,
+                    game.getBoard().getSquare(new SquareCoordinates(1, 0))));
+            game.getBoard().getSquare(new SquareCoordinates(0, 1))
+                    .setSquareContent(SquareContent.BLACK_MAN);
+            game.getBoard().getBlackPieces().add(new Man(PieceColor.BLACK,
+                    game.getBoard().getSquare(new SquareCoordinates(0, 1))));
             game.changeTurn();
             assertTrue(game.checkDrawCondition());
         } catch (Exception e) {
