@@ -28,13 +28,14 @@ public class BoardUtils {
         if(piece.getColor() != PieceColor.BLACK && piece.getColor() != PieceColor.WHITE) {
             throw new PieceColorException("BoardUtils.removePiece() does not accept this piece, because PieceColor is not valid");
         }
-        for(int i = 0; i < board.getPieces(piece.getColor()).size(); i++) {
-            if (board.getPieces(piece.getColor()).get(i) == piece) {
-                board.getPieces(piece.getColor()).remove(i);
+        List<Piece> piecesList = board.getPieces(piece.getColor());
+        for(int i = 0; i < piecesList.size(); i++) {
+            if (piecesList.get(i) == piece) {
+                piecesList.remove(i);
                 break;
-            } else if(i == board.getPieces(piece.getColor()).size() - 1) {
+            } else if(i == piecesList.size() - 1) {
                 throw new PieceException("BoardUtils.removePiece() does not accept this Piece," +
-                        " because it does not belong on the WhitePieces list");
+                        " because it does not belong to the list of " + piece.getColor() + " pieces");
             }
         }
     }
