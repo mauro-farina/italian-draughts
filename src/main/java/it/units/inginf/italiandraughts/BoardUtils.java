@@ -22,28 +22,17 @@ public class BoardUtils {
         if(piece == null) {
             throw new PieceException("BoardUtils.removePiece() does not accept this Piece, because it is null");
         }
-        if(piece.getColor() == PieceColor.WHITE) {
-            for(int i = 0; i < board.getWhitePieces().size(); i++) {
-                if (board.getWhitePieces().get(i) == piece) {
-                    board.getWhitePieces().remove(i);
-                    break;
-                } else if(i == board.getWhitePieces().size() - 1) {
-                    throw new PieceException("BoardUtils.removePiece() does not accept this Piece," +
-                            " because it does not belong on the WhitePieces list");
-                }
-            }
-        } else if(piece.getColor() == PieceColor.BLACK) {
-            for(int i = 0; i < board.getBlackPieces().size(); i++) {
-                if (board.getBlackPieces().get(i) == piece) {
-                    board.getBlackPieces().remove(i);
-                    break;
-                } else if(i == board.getBlackPieces().size() - 1) {
-                    throw new PieceException("BoardUtils.removePiece() does not accept this Piece," +
-                            " because it does not belong on the BlackPieces list");
-                }
-            }
-        } else {
+        if(piece.getColor() != PieceColor.BLACK && piece.getColor() != PieceColor.WHITE) {
             throw new PieceColorException("BoardUtils.removePiece() does not accept this piece, because PieceColor is not valid");
+        }
+        for(int i = 0; i < board.getPieces(piece.getColor()).size(); i++) {
+            if (board.getPieces(piece.getColor()).get(i) == piece) {
+                board.getPieces(piece.getColor()).remove(i);
+                break;
+            } else if(i == board.getPieces(piece.getColor()).size() - 1) {
+                throw new PieceException("BoardUtils.removePiece() does not accept this Piece," +
+                        " because it does not belong on the WhitePieces list");
+            }
         }
     }
 
