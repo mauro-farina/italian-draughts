@@ -211,7 +211,7 @@ public class Game {
         if (this.currentTurn == this.player1) {
             pieceColor = PieceColor.WHITE;
         } else if (this.currentTurn == this.player2) {
-            pieceColor = PieceColor.WHITE;
+            pieceColor = PieceColor.BLACK;
         } else {
             return true;
         }
