@@ -43,32 +43,33 @@ public class ObligatoryCapture {
     }
 
     private static void compareTwoLists(List<SingleCapture> singleCaptureList, List<SingleCapture> newSingleCaptureList) throws BoardException, SquareException {
-        if(newSingleCaptureList.size() > 0) {
-            if (newSingleCaptureList.size() > singleCaptureList.size()) {
-                //first check number of captured pieces
+        if(newSingleCaptureList.size() == 0 || newSingleCaptureList.size() < singleCaptureList.size()) {
+            return;
+        }
+        if (newSingleCaptureList.size() > singleCaptureList.size()) {
+            //first check number of captured pieces
+            singleCaptureList.clear();
+            singleCaptureList.addAll(newSingleCaptureList);
+            return;
+        }
+        if (!captureWithKing(singleCaptureList.get(0)) && captureWithKing(newSingleCaptureList.get(0))) {
+            //second check start piece is a king
+            singleCaptureList.clear();
+            singleCaptureList.addAll(newSingleCaptureList);
+        } else if (captureWithKing(singleCaptureList.get(0)) && captureWithKing(newSingleCaptureList.get(0))) {
+            int numberOfKingInSingleCaptureList = getNumberOfCapturedKing(singleCaptureList);
+            int numberOfKingInNewSingleCaptureList = getNumberOfCapturedKing(newSingleCaptureList);
+            if (numberOfKingInNewSingleCaptureList > numberOfKingInSingleCaptureList) {
+                //third check number of captured king
                 singleCaptureList.clear();
                 singleCaptureList.addAll(newSingleCaptureList);
-            } else if (newSingleCaptureList.size() == singleCaptureList.size()) {
-                if ((!captureWithKing(singleCaptureList.get(0))) && (captureWithKing(newSingleCaptureList.get(0)))) {
-                    //second check start piece is a king
-                    singleCaptureList.clear();
-                    singleCaptureList.addAll(newSingleCaptureList);
-                } else if ((captureWithKing(singleCaptureList.get(0))) && (captureWithKing(newSingleCaptureList.get(0)))) {
-                    int numberOfKingInSingleCaptureList = getNumberOfCapturedKing(singleCaptureList);
-                    int numberOfKingInNewSingleCaptureList = getNumberOfCapturedKing(newSingleCaptureList);
-                    if (numberOfKingInNewSingleCaptureList > numberOfKingInSingleCaptureList) {
-                        //third check number of captured king
+            } else if ((numberOfKingInNewSingleCaptureList == numberOfKingInSingleCaptureList)
+                    && (numberOfKingInNewSingleCaptureList > 0)) {
+                for (short i = 0; i < singleCaptureList.size(); i++) {
+                    if ((captureKing(newSingleCaptureList.get(i))) && (!captureKing(singleCaptureList.get(i)))) {
+                        //last check closer king
                         singleCaptureList.clear();
                         singleCaptureList.addAll(newSingleCaptureList);
-                    } else if ((numberOfKingInNewSingleCaptureList == numberOfKingInSingleCaptureList)
-                            && (numberOfKingInNewSingleCaptureList > 0)) {
-                        for (short i = 0; i < singleCaptureList.size(); i++) {
-                            if ((captureKing(newSingleCaptureList.get(i))) && (!captureKing(singleCaptureList.get(i)))) {
-                                //last check closer king
-                                singleCaptureList.clear();
-                                singleCaptureList.addAll(newSingleCaptureList);
-                            }
-                        }
                     }
                 }
             }
