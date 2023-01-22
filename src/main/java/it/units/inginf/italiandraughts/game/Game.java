@@ -17,6 +17,7 @@ import it.units.inginf.italiandraughts.io.InputReader;
 import it.units.inginf.italiandraughts.io.OutputPrinter;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Game {
@@ -53,7 +54,8 @@ public class Game {
 
     public void start() {
         initGame();
-        List<CommandCapture> obligatoryCaptureList = new ArrayList<>();
+        List<List<CommandCapture>> obligatoryCaptureList = new ArrayList<>();
+        //outputPrinter.print(obligatoryCaptureList.toString());
         try {
             commandRunner.runCommand(new CommandHelp());
             outputPrinter.print(System.lineSeparator());
@@ -67,8 +69,15 @@ public class Game {
                 outputPrinter.print("Turn of " + getCurrentTurn().getNickname());
                 obligatoryCaptureList.addAll(ObligatoryCapture.getObligatoryCaptureList(this.getBoard(), this.currentTurn));
                 if(obligatoryCaptureList.size() > 0) {
-                    outputPrinter.print("this is a obligatory capture list, make them all");
-                    printObligatoryCaptureList(obligatoryCaptureList, 0);
+                    //outputPrinter.print("options: " + obligatoryCaptureList);
+                    outputPrinter.print("Mandatory captures found:");
+                    Iterator<List<CommandCapture>> captureIterator = obligatoryCaptureList.iterator();
+                    while(captureIterator.hasNext()) {
+                        printObligatoryCaptureList(captureIterator.next(), 0);
+                        if(captureIterator.hasNext()) {
+                            outputPrinter.print("or...");
+                        }
+                    }
                 }
             } catch (Exception exception) {
                 outputPrinter.print(exception.getMessage());
@@ -77,7 +86,56 @@ public class Game {
                 String readCommand;
                 try {
                     if(obligatoryCaptureList.size() > 0) {
-                        for(short i = 0; i < obligatoryCaptureList.size(); i++) {
+                        /*
+                        readCommand = inputReader.readInput();
+                        command = CommandParser.parseCommand(readCommand);
+                        if(command.getCommandType() == CommandType.HELP) {
+                            commandRunner.runCommand(command);
+                            continue;
+                        }
+                        if(command.getCommandType() == CommandType.TO) {
+                            outputPrinter.print("Invalid command, read the obligatory capture list.");
+                            outputPrinter.print("Enter a new command.");
+                        }
+                        if(command.getCommandType() == CommandType.CAPTURE) {
+                            AtomicBoolean isCommandValidOption = new AtomicBoolean(false);
+                            Command finalCommand = command;
+                            obligatoryCaptureList.forEach(captureList -> {
+                                if(captureList.get(0).equals(finalCommand)) {
+                                    isCommandValidOption.set(true);
+                                }
+                            });
+                            if(!isCommandValidOption.get()) {
+                                outputPrinter.print("Invalid command, read the obligatory capture list.");
+                                outputPrinter.print("Enter a new command.");
+                                continue;
+                            }
+                            List<CommandCapture> chosenObligatoryCaptureList = obligatoryCaptureList.get(
+                                    obligatoryCaptureList.indexOf(command)
+                            );
+                            commandRunner.runCommand(command);
+                            for(short i = 0; i < chosenObligatoryCaptureList.size(); i++) {
+                                readCommand = inputReader.readInput();
+                                command = CommandParser.parseCommand(readCommand);
+                                if(CommandParser.parseCommandCapture(readCommand)
+                                        .equals(obligatoryCaptureList.get(i))) {
+                                    commandRunner.runCommand(command);
+                                    if(i < obligatoryCaptureList.size()-1) {
+                                        outputPrinter.print(board.toStringFor(getCurrentTurn().getColor()));
+                                        outputPrinter.print("Next obligatory captures:");
+                                        //printObligatoryCaptureList(obligatoryCaptureList, i+1);
+                                    }
+                                } else {
+                                    outputPrinter.print("Invalid command capture, read the obligatory capture list.");
+                                    outputPrinter.print("Enter a new command.");
+                                    i--;
+                                }
+                            }
+                        }
+                        */
+                        /* - - - - */
+                        List<CommandCapture> chosenCapturesOption = null;
+                        for(short i = 0; i < obligatoryCaptureList.get(0).size(); i++) {
                             readCommand = inputReader.readInput();
                             command = CommandParser.parseCommand(readCommand);
                             if(command.getCommandType() == CommandType.HELP ||
@@ -90,18 +148,31 @@ public class Game {
                                 outputPrinter.print("Enter a new command.");
                                 i--;
                             }
+
                             if(command.getCommandType() == CommandType.CAPTURE) {
-                                if(CommandParser.parseCommandCapture(readCommand)
-                                        .equals(obligatoryCaptureList.get(i))) {
+                                if(i == 0) {
+                                    for(List<CommandCapture> commandCaptureList : obligatoryCaptureList) {
+                                        outputPrinter.print(commandCaptureList.toString());
+                                        if(commandCaptureList.get(0).equals(command)) {
+                                            chosenCapturesOption = commandCaptureList;
+                                        }
+                                    }
+                                    if(chosenCapturesOption == null) {
+                                        outputPrinter.print("Invalid capture, read the obligatory capture list.");
+                                        i--;
+                                        continue;
+                                    }
+                                }
+                                if(command.equals(chosenCapturesOption.get(i))) {
                                     commandRunner.runCommand(command);
-                                    if(i < obligatoryCaptureList.size()-1) {
+                                    if(i < chosenCapturesOption.size()-1) {
                                         outputPrinter.print(board.toStringFor(getCurrentTurn().getColor()));
                                         outputPrinter.print("Next obligatory captures:");
-                                        printObligatoryCaptureList(obligatoryCaptureList, i+1);
+                                        printObligatoryCaptureList(chosenCapturesOption, i+1);
                                     }
                                 } else {
-                                    outputPrinter.print("Invalid command capture, read the obligatory capture list.");
-                                    outputPrinter.print("Enter a new command.");
+                                    outputPrinter.print("Invalid command: " + command);
+                                    outputPrinter.print("Expected command: " + chosenCapturesOption.get((i)));
                                     i--;
                                 }
                             }
