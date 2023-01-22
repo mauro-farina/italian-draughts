@@ -35,19 +35,5 @@ public class CommandParser {
         throw new CommandException("CommandParser.parseCommand() does not accept this unknown command. " +
                 "\n Type HELP to see the available commands.");
     }
-    
-    public static CommandCapture parseCommandCapture(String commandCaptureAsString) throws CommandException,
-            CoordinatesException, SquareNameException {
-        String[] commandTokens = commandCaptureAsString.trim().split(" ");
-        if((commandTokens.length == 3) && (commandTokens[1].equalsIgnoreCase("capture")
-                || commandTokens[1].equalsIgnoreCase("capt")
-                || commandTokens[1].equalsIgnoreCase("cap"))) {
-            SquareCoordinates firstSquareCoordinates = new SquareCoordinates(new SquareName(commandTokens[0]));
-            SquareCoordinates secondSquareCoordinates = new SquareCoordinates(new SquareName(commandTokens[2]));
-                return new CommandCapture(firstSquareCoordinates, secondSquareCoordinates);
-        }
-        throw new CommandException("CommandParser.parseCommandCapture() does not accept this unknown command. " +
-                "\n Type HELP to see the available commands.");
-    }
 
 }
