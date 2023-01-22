@@ -158,7 +158,14 @@ public class Game {
 
     private void printObligatoryCaptureList(List<CommandCapture> obligatoryCaptureList, int excludeCapturesBeforeIndex) {
         for(int i=excludeCapturesBeforeIndex; i<obligatoryCaptureList.size(); i++) {
-            outputPrinter.print(obligatoryCaptureList.get(i).toString());
+            outputPrinter.print(
+                    this.board.getSquare(obligatoryCaptureList.get(i).getFromCoordinates())
+                            .getSquareName()
+                            .toString()
+                            + " capture "
+                            + this.board.getSquare(obligatoryCaptureList.get(i).getPieceToCaptureCoordinates())
+                            .getSquareName()
+                            .toString());
         }
     }
 
