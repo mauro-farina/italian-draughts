@@ -86,54 +86,6 @@ public class Game {
                 String readCommand;
                 try {
                     if(obligatoryCaptureList.size() > 0) {
-                        /*
-                        readCommand = inputReader.readInput();
-                        command = CommandParser.parseCommand(readCommand);
-                        if(command.getCommandType() == CommandType.HELP) {
-                            commandRunner.runCommand(command);
-                            continue;
-                        }
-                        if(command.getCommandType() == CommandType.TO) {
-                            outputPrinter.print("Invalid command, read the obligatory capture list.");
-                            outputPrinter.print("Enter a new command.");
-                        }
-                        if(command.getCommandType() == CommandType.CAPTURE) {
-                            AtomicBoolean isCommandValidOption = new AtomicBoolean(false);
-                            Command finalCommand = command;
-                            obligatoryCaptureList.forEach(captureList -> {
-                                if(captureList.get(0).equals(finalCommand)) {
-                                    isCommandValidOption.set(true);
-                                }
-                            });
-                            if(!isCommandValidOption.get()) {
-                                outputPrinter.print("Invalid command, read the obligatory capture list.");
-                                outputPrinter.print("Enter a new command.");
-                                continue;
-                            }
-                            List<CommandCapture> chosenObligatoryCaptureList = obligatoryCaptureList.get(
-                                    obligatoryCaptureList.indexOf(command)
-                            );
-                            commandRunner.runCommand(command);
-                            for(short i = 0; i < chosenObligatoryCaptureList.size(); i++) {
-                                readCommand = inputReader.readInput();
-                                command = CommandParser.parseCommand(readCommand);
-                                if(CommandParser.parseCommandCapture(readCommand)
-                                        .equals(obligatoryCaptureList.get(i))) {
-                                    commandRunner.runCommand(command);
-                                    if(i < obligatoryCaptureList.size()-1) {
-                                        outputPrinter.print(board.toStringFor(getCurrentTurn().getColor()));
-                                        outputPrinter.print("Next obligatory captures:");
-                                        //printObligatoryCaptureList(obligatoryCaptureList, i+1);
-                                    }
-                                } else {
-                                    outputPrinter.print("Invalid command capture, read the obligatory capture list.");
-                                    outputPrinter.print("Enter a new command.");
-                                    i--;
-                                }
-                            }
-                        }
-                        */
-                        /* - - - - */
                         List<CommandCapture> chosenCapturesOption = null;
                         for(short i = 0; i < obligatoryCaptureList.get(0).size(); i++) {
                             readCommand = inputReader.readInput();
