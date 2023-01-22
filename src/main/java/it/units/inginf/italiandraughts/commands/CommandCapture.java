@@ -43,10 +43,12 @@ public class CommandCapture extends Command {
     public SquareCoordinates getToCoordinates() {
         return this.toCoordinates;
     }
-    
-    public boolean equals(CommandCapture otherCommandCapture) {
-        return this.fromCoordinates.equals(otherCommandCapture.getFromCoordinates()) &&
-                this.pieceToCaptureCoordinates.equals(otherCommandCapture.getPieceToCaptureCoordinates());
+
+    @Override
+    public boolean equals(Object other) {
+        if(!(other instanceof CommandCapture)) { return false; }
+        return this.fromCoordinates.equals(((CommandCapture)other).getFromCoordinates())
+                && this.pieceToCaptureCoordinates.equals(((CommandCapture)other).getPieceToCaptureCoordinates());
     }
 
     @Override
