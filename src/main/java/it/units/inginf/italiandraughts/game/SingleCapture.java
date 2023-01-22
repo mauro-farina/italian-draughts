@@ -143,7 +143,7 @@ public class SingleCapture {
         }
     }
 
-    public boolean pieceOnFromCoordinatesIsKing() throws BoardException, SquareException {
+    public boolean isCapturingPieceKing() throws BoardException, SquareException {
         Piece piece = BoardUtils.researchPiece(this.board, this.board.getSquare(this.fromCoordinates));
         if(piece == null) {
             return false;
@@ -159,7 +159,7 @@ public class SingleCapture {
         return piece.isKing();
     }
 
-    public boolean pieceOnCaptureCoordinatesIsKing() throws BoardException, SquareException {
+    public boolean isCapturedPieceKing() throws BoardException, SquareException {
         Piece piece = BoardUtils.researchPiece(this.board, this.board.getSquare(this.pieceToCaptureCoordinates));
         if(piece == null) {
             return false;
