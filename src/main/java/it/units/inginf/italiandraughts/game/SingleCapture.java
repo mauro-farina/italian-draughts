@@ -1,14 +1,7 @@
 package it.units.inginf.italiandraughts.game;
 
 import it.units.inginf.italiandraughts.BoardUtils;
-import it.units.inginf.italiandraughts.board.Board;
-import it.units.inginf.italiandraughts.board.Square;
-import it.units.inginf.italiandraughts.board.SquareCoordinates;
-import it.units.inginf.italiandraughts.board.SquareContent;
-import it.units.inginf.italiandraughts.board.Piece;
-import it.units.inginf.italiandraughts.board.PieceColor;
-import it.units.inginf.italiandraughts.board.Man;
-import it.units.inginf.italiandraughts.board.King;
+import it.units.inginf.italiandraughts.board.*;
 import it.units.inginf.italiandraughts.exception.CoordinatesException;
 import it.units.inginf.italiandraughts.exception.BoardException;
 import it.units.inginf.italiandraughts.exception.SquareException;
@@ -47,6 +40,15 @@ public class SingleCapture {
             this.toCoordinates = null;
         }
         this.capturedPieceIsKing = false;
+    }
+
+    @Override
+    public String toString() {
+        try {
+            return new SquareName(this.getFromCoordinates()) + " CAPTURE " + new SquareName(this.getPieceToCaptureCoordinates());
+        } catch (CoordinatesException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public SquareCoordinates getFromCoordinates() {

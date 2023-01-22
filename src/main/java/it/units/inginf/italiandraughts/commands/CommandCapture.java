@@ -1,6 +1,7 @@
 package it.units.inginf.italiandraughts.commands;
 
 import it.units.inginf.italiandraughts.board.SquareCoordinates;
+import it.units.inginf.italiandraughts.board.SquareName;
 import it.units.inginf.italiandraughts.exception.CoordinatesException;
 
 public class CommandCapture extends Command {
@@ -46,5 +47,14 @@ public class CommandCapture extends Command {
     public boolean equals(CommandCapture otherCommandCapture) {
         return this.fromCoordinates.equals(otherCommandCapture.getFromCoordinates()) &&
                 this.pieceToCaptureCoordinates.equals(otherCommandCapture.getPieceToCaptureCoordinates());
+    }
+
+    @Override
+    public String toString() {
+        try {
+            return new SquareName(this.getFromCoordinates()) + " CAPTURE " + new SquareName(this.getPieceToCaptureCoordinates());
+        } catch (CoordinatesException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
