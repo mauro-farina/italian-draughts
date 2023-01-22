@@ -69,7 +69,6 @@ public class Game {
                 outputPrinter.print("Turn of " + getCurrentTurn().getNickname());
                 obligatoryCaptureList.addAll(ObligatoryCapture.getObligatoryCaptureList(this.getBoard(), this.currentTurn));
                 if(obligatoryCaptureList.size() > 0) {
-                    //outputPrinter.print("options: " + obligatoryCaptureList);
                     outputPrinter.print("Mandatory captures found:");
                     Iterator<List<CommandCapture>> captureIterator = obligatoryCaptureList.iterator();
                     while(captureIterator.hasNext()) {
@@ -104,7 +103,6 @@ public class Game {
                             if(command.getCommandType() == CommandType.CAPTURE) {
                                 if(i == 0) {
                                     for(List<CommandCapture> commandCaptureList : obligatoryCaptureList) {
-                                        outputPrinter.print(commandCaptureList.toString());
                                         if(commandCaptureList.get(0).equals(command)) {
                                             chosenCapturesOption = commandCaptureList;
                                         }
