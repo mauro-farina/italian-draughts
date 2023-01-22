@@ -15,7 +15,10 @@ import it.units.inginf.italiandraughts.exception.SquareException;
 import it.units.inginf.italiandraughts.exception.SquareContentException;
 import it.units.inginf.italiandraughts.exception.PlayerColorException;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ObligatoryCapture {
 
@@ -35,7 +38,7 @@ public class ObligatoryCapture {
         Map<List<SingleCapture>, Integer> mandatoryCapturesOptionsScores = new HashMap<>();
         for (Piece piece : piecesList) {
             List<SingleCapture> mandatoryCapturesList = new ArrayList<>();
-            fullSingleCaptureList(board, mandatoryCapturesList, piece);
+            fillSingleCaptureList(board, mandatoryCapturesList, piece);
             if(mandatoryCapturesList.isEmpty())
                 continue;
             mandatoryCapturesOptionsScores.put(mandatoryCapturesList, getCapturesListScore(mandatoryCapturesList));
@@ -118,7 +121,7 @@ public class ObligatoryCapture {
         }
     }
 
-    private static void fullSingleCaptureList(Board board, List<SingleCapture> singleCaptureList, Piece piece)
+    private static void fillSingleCaptureList(Board board, List<SingleCapture> singleCaptureList, Piece piece)
             throws SquareContentException, CoordinatesException, PieceColorException, SquareException, BoardException, PieceException {
         if(piece == null) {
             return;
@@ -134,7 +137,7 @@ public class ObligatoryCapture {
                 newSingleCaptureList.add(singleCapture);
                 singleCapture.run();
                 compareTwoLists(singleCaptureList, newSingleCaptureList);
-                fullSingleCaptureList(
+                fillSingleCaptureList(
                         board,
                         singleCaptureList,
                         BoardUtils.researchPiece(
