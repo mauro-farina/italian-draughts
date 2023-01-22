@@ -101,7 +101,7 @@ public class Game {
                             }
 
                             if(command.getCommandType() == CommandType.CAPTURE) {
-                                if(i == 0) {
+                                //if(i == 0) {
                                     for(List<CommandCapture> commandCaptureList : obligatoryCaptureList) {
                                         if(commandCaptureList.get(0).equals(command)) {
                                             chosenCapturesOption = commandCaptureList;
@@ -112,7 +112,7 @@ public class Game {
                                         i--;
                                         continue;
                                     }
-                                }
+                                //}
                                 if(command.equals(chosenCapturesOption.get(i))) {
                                     commandRunner.runCommand(command);
                                     if(i < chosenCapturesOption.size()-1) {
