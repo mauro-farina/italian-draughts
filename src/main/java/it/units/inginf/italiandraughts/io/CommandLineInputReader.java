@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class CommandLineInputReader implements InputReader {
 
-    private Scanner scanner;
+    private final Scanner scanner;
 
     public CommandLineInputReader() {
         scanner = new Scanner(System.in);
