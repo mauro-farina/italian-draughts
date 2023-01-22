@@ -72,12 +72,12 @@ public class ObligatoryCapture {
         }
         int score = 0;
         score += 1000 * singleCaptureList.size();
-        if(captureWithKing(singleCaptureList.get(0))) {
+        if(singleCaptureList.get(0).pieceOnFromCoordinatesIsKing()) {
             score += 500;
         }
         score += 100 * getNumberOfCapturedKing(singleCaptureList);
         for(SingleCapture singleCapture : singleCaptureList) {
-            if(!captureKing(singleCapture)) {
+            if(!singleCapture.pieceOnCaptureCoordinatesIsKing()) {
                 score -= 1;
             } else {
                 break;
@@ -97,11 +97,13 @@ public class ObligatoryCapture {
             return;
         }
         // newSingleCaptureList.size() == singleCaptureList.size()
-        if (!captureWithKing(singleCaptureList.get(0)) && captureWithKing(newSingleCaptureList.get(0))) {
+        if (!singleCaptureList.get(0).pieceOnFromCoordinatesIsKing()
+                    && newSingleCaptureList.get(0).pieceOnFromCoordinatesIsKing()) {
             //second check start piece is a king
             singleCaptureList.clear();
             singleCaptureList.addAll(newSingleCaptureList);
-        } else if (captureWithKing(singleCaptureList.get(0)) && captureWithKing(newSingleCaptureList.get(0))) {
+        } else if (singleCaptureList.get(0).pieceOnFromCoordinatesIsKing()
+                    && newSingleCaptureList.get(0).pieceOnFromCoordinatesIsKing()) {
             int numberOfKingInSingleCaptureList = getNumberOfCapturedKing(singleCaptureList);
             int numberOfKingInNewSingleCaptureList = getNumberOfCapturedKing(newSingleCaptureList);
             if (numberOfKingInNewSingleCaptureList > numberOfKingInSingleCaptureList) {
@@ -111,7 +113,8 @@ public class ObligatoryCapture {
             } else if ((numberOfKingInNewSingleCaptureList == numberOfKingInSingleCaptureList)
                     && (numberOfKingInNewSingleCaptureList > 0)) {
                 for (short i = 0; i < singleCaptureList.size(); i++) {
-                    if ((captureKing(newSingleCaptureList.get(i))) && (!captureKing(singleCaptureList.get(i)))) {
+                    if ((newSingleCaptureList.get(i).pieceOnCaptureCoordinatesIsKing())
+                                && (!singleCaptureList.get(i).pieceOnCaptureCoordinatesIsKing())) {
                         //last check closer king
                         singleCaptureList.clear();
                         singleCaptureList.addAll(newSingleCaptureList);
@@ -149,18 +152,10 @@ public class ObligatoryCapture {
         }
     }
 
-    private static boolean captureWithKing(SingleCapture singleCapture) throws BoardException, SquareException {
-        return singleCapture.pieceOnFromCoordinatesIsKing();
-    }
-
-    private static boolean captureKing(SingleCapture singleCapture) throws BoardException, SquareException {
-        return singleCapture.pieceOnCaptureCoordinatesIsKing();
-    }
-
     private static int getNumberOfCapturedKing(List<SingleCapture> singleCaptureList) throws BoardException, SquareException {
         int numberOfCapturedKing = 0;
         for(SingleCapture singleCapture : singleCaptureList) {
-            if(captureKing(singleCapture)) {
+            if(singleCapture.pieceOnCaptureCoordinatesIsKing()) {
                 numberOfCapturedKing++;
             }
         }
