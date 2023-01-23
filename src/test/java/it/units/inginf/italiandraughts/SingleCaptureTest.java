@@ -43,7 +43,7 @@ public class SingleCaptureTest {
             SingleCapture singleCapture = new SingleCapture(new Board(),
                     new SquareCoordinates(1, 2),
                     new SquareCoordinates(2, 3));
-            assertFalse(singleCapture.pieceOnToCoordinatesIsKing());
+            assertFalse(singleCapture.isPieceOnToCoordinatesKing());
         } catch (Exception e) {
             fail();
             throw new RuntimeException(e);
