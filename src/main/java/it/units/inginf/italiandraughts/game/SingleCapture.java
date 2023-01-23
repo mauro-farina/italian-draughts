@@ -86,7 +86,7 @@ public class SingleCapture extends CommandCapture {
         return piece.isKing();
     }
 
-    public boolean pieceOnToCoordinatesIsKing() throws BoardException, SquareException {
+    public boolean isPieceOnToCoordinatesKing() throws BoardException, SquareException {
         Piece piece = BoardUtils.researchPiece(this.board, this.board.getSquare(this.toCoordinates));
         if(piece == null) {
             return false;
