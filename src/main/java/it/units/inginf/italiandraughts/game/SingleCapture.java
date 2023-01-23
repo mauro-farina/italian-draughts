@@ -3,12 +3,7 @@ package it.units.inginf.italiandraughts.game;
 import it.units.inginf.italiandraughts.BoardUtils;
 import it.units.inginf.italiandraughts.board.*;
 import it.units.inginf.italiandraughts.commands.CommandCapture;
-import it.units.inginf.italiandraughts.exception.CoordinatesException;
-import it.units.inginf.italiandraughts.exception.BoardException;
-import it.units.inginf.italiandraughts.exception.SquareException;
-import it.units.inginf.italiandraughts.exception.SquareContentException;
-import it.units.inginf.italiandraughts.exception.PieceException;
-import it.units.inginf.italiandraughts.exception.PieceColorException;
+import it.units.inginf.italiandraughts.exception.*;
 
 public class SingleCapture extends CommandCapture {
 
@@ -28,35 +23,11 @@ public class SingleCapture extends CommandCapture {
     }
 
     public boolean isValid() throws SquareException, BoardException {
-        if(this.fromCoordinates == null || this.pieceToCaptureCoordinates == null || this.toCoordinates == null) {
+        try {
+            return this.isValid(board);
+        } catch (CommandException e) {
             return false;
         }
-        Piece selectedPiece = BoardUtils.researchPiece(this.board, this.board.getSquare(this.fromCoordinates));
-        Piece capturedPiece = BoardUtils.researchPiece(this.board, this.board.getSquare(this.pieceToCaptureCoordinates));
-        if(selectedPiece == null || capturedPiece == null) {
-            return false;
-        }
-        if(selectedPiece.getColor() == capturedPiece.getColor()) {
-            return false;
-        }
-        if(selectedPiece.isMan() && capturedPiece.isKing()) {
-            return false;
-        }
-        if(!this.board.getSquare(toCoordinates).isFree()) {
-            return false;
-        }
-        if((this.fromCoordinates.getRow() != this.pieceToCaptureCoordinates.getRow() + 1
-                && this.fromCoordinates.getRow() != this.pieceToCaptureCoordinates.getRow() - 1)
-                || (this.fromCoordinates.getColumn() != this.pieceToCaptureCoordinates.getColumn() + 1
-                && this.fromCoordinates.getColumn() != this.pieceToCaptureCoordinates.getColumn() - 1)) {
-            return false;
-        }
-        for(Square square: this.board.getReachableSquares(selectedPiece)) {
-            if(square.getSquareCoordinates() == this.pieceToCaptureCoordinates) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public void run() throws BoardException, SquareException, SquareContentException,
