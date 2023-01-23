@@ -89,8 +89,11 @@ public class Game {
                         for(short i = 0; i < obligatoryCaptureList.get(0).size(); i++) {
                             readCommand = inputReader.readInput();
                             command = CommandParser.parseCommand(readCommand);
-                            if(command.getCommandType() == CommandType.HELP ||
-                                    command.getCommandType() == CommandType.SURRENDER) {
+                            if(command.getCommandType() == CommandType.HELP) {
+                                commandRunner.runCommand(command);
+                                i--;
+                            }
+                            if(command.getCommandType() == CommandType.SURRENDER) {
                                 commandRunner.runCommand(command);
                                 break;
                             }
@@ -105,6 +108,7 @@ public class Game {
                                     for(List<CommandCapture> commandCaptureList : obligatoryCaptureList) {
                                         if(commandCaptureList.get(0).equals(command)) {
                                             chosenCapturesOption = commandCaptureList;
+                                            break;
                                         }
                                     }
                                     if(chosenCapturesOption == null) {
