@@ -144,6 +144,7 @@ public class Game {
                     outputPrinter.print("The winner is " + this.currentTurn.getNickname());
                 } else if(checkDrawCondition()) {
                     this.gameState = GameState.OVER;
+                    changeTurn();
                     outputPrinter.print("The game ends in a draw: none of " +
                             this.currentTurn.getNickname() + "'s pieces can move");
                 } else if(command.getCommandType() != CommandType.HELP) {
@@ -223,9 +224,9 @@ public class Game {
     public boolean checkDrawCondition() throws CoordinatesException, BoardException, SquareException, PlayerException {
         PieceColor pieceColor;
         if (this.currentTurn == this.player1) {
-            pieceColor = PieceColor.WHITE;
-        } else if (this.currentTurn == this.player2) {
             pieceColor = PieceColor.BLACK;
+        } else if (this.currentTurn == this.player2) {
+            pieceColor = PieceColor.WHITE;
         } else {
             throw new PlayerException("Invalid turn");
         }
