@@ -95,7 +95,7 @@ public class GameTest {
         assertFalse(game.checkVictoryCondition());
     }
 
-    /*@Test
+    @Test
     void checkWinnerPlayer() {
         Game game;
         try {
@@ -140,6 +140,6 @@ public class GameTest {
             fail();
             throw new RuntimeException(e);
         }
-    }*/
+    }
 
 }
