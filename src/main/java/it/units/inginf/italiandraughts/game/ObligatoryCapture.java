@@ -125,16 +125,22 @@ public class ObligatoryCapture {
     }
 
     private static void fillSingleCaptureList(Board board, List<SingleCapture> singleCaptureList, Piece piece)
-            throws SquareContentException, CoordinatesException, PieceColorException, SquareException, BoardException, PieceException {
+            throws SquareContentException, PieceColorException, SquareException, BoardException, PieceException {
         if(piece == null) {
             return;
         }
         for(Square square: board.getReachableSquares(piece)) {
-            SingleCapture singleCapture = new SingleCapture(
-                    board,
-                    piece.getSquare().getSquareCoordinates(),
-                    square.getSquareCoordinates()
-            );
+            SingleCapture singleCapture;
+            try {
+                singleCapture = new SingleCapture(
+                        board,
+                        piece.getSquare().getSquareCoordinates(),
+                        square.getSquareCoordinates()
+                );
+            } catch(CoordinatesException e) {
+                continue;
+            }
+
             List<SingleCapture> newSingleCaptureList = new ArrayList<>(singleCaptureList);
             if (singleCapture.isValid()) {
                 newSingleCaptureList.add(singleCapture);
