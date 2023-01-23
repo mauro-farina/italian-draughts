@@ -8,7 +8,6 @@ import it.units.inginf.italiandraughts.board.SquareContent;
 import it.units.inginf.italiandraughts.board.Piece;
 import it.units.inginf.italiandraughts.board.PieceColor;
 import it.units.inginf.italiandraughts.game.Game;
-import it.units.inginf.italiandraughts.game.PlayerColor;
 import it.units.inginf.italiandraughts.io.CommandLineOutputPrinter;
 import it.units.inginf.italiandraughts.io.OutputPrinter;
 import it.units.inginf.italiandraughts.exception.CommandException;
@@ -16,7 +15,6 @@ import it.units.inginf.italiandraughts.exception.PlayerException;
 import it.units.inginf.italiandraughts.exception.PieceException;
 import it.units.inginf.italiandraughts.exception.PieceColorException;
 import it.units.inginf.italiandraughts.exception.SquareException;
-import it.units.inginf.italiandraughts.exception.CoordinatesException;
 import it.units.inginf.italiandraughts.exception.SquareContentException;
 import it.units.inginf.italiandraughts.exception.BoardException;
 
@@ -32,7 +30,7 @@ public class CommandRunner {
         this.outputPrinter = new CommandLineOutputPrinter();
     }
 
-    public void runCommand(Command command) throws PlayerException, CommandException, CoordinatesException, BoardException, PieceException, PieceColorException, SquareException, SquareContentException {
+    public void runCommand(Command command) throws PlayerException, CommandException, BoardException, PieceException, PieceColorException, SquareException, SquareContentException {
         if(command == null) {
             throw new CommandException("Command cannot be null");
         }
@@ -123,67 +121,58 @@ public class CommandRunner {
         }
     }
 
-    private void runCommandCapture(SquareCoordinates coordinatesSelectedPieceSquare, SquareCoordinates coordinatesCapturedPieceSquare, SquareCoordinates coordinatesDestinationSquare) throws CommandException, CoordinatesException, BoardException, PieceException, PieceColorException, SquareException, SquareContentException {
+    private void runCommandCapture(SquareCoordinates coordinatesSelectedPieceSquare, SquareCoordinates coordinatesCapturedPieceSquare, SquareCoordinates coordinatesDestinationSquare) throws CommandException, BoardException, PieceException, PieceColorException, SquareException, SquareContentException {
         Board board = game.getBoard();
-        PieceColor selectedPieceColor;
-        Piece selectedPiece;
-        Piece capturedPiece;
         Square selectedPieceSquare = board.getSquare(coordinatesSelectedPieceSquare);
         Square capturedPieceSquare = board.getSquare(coordinatesCapturedPieceSquare);
         Square destinationSquare = board.getSquare(coordinatesDestinationSquare);
-        if (game.getCurrentTurn().getColor() == PlayerColor.WHITE) {
-            selectedPieceColor = PieceColor.WHITE;
-        } else if (game.getCurrentTurn().getColor() == PlayerColor.BLACK) {
-            selectedPieceColor = PieceColor.BLACK;
-        } else {
-            throw new PieceColorException("CommandRunner.runCommandCapture() -> invalid turn");
+        Piece selectedPiece = BoardUtils.researchPiece(board, selectedPieceSquare);
+        Piece capturedPiece = BoardUtils.researchPiece(board, capturedPieceSquare);
+
+        if(selectedPiece == null) {
+            throw new CommandException("There are no pieces on " + selectedPieceSquare.getSquareName());
         }
-        selectedPiece = BoardUtils.researchPiece(this.game.getBoard(), selectedPieceSquare);
-        capturedPiece = BoardUtils.researchPiece(this.game.getBoard(), capturedPieceSquare);
-        if (selectedPiece != null && capturedPiece != null) {
-            if ((selectedPiece.getColor() != selectedPieceColor) && (capturedPiece.getColor() == selectedPieceColor)
-                    && (capturedPieceSquare.isFree()) && (!destinationSquare.isFree())) {
-                throw new CoordinatesException("CommandRunner.runCommandCapture() does not accept the coordinates " +
-                        "of capturedPieceSquare and destinationSquare");
+        if(capturedPiece == null) {
+            throw new CommandException("There are no pieces on " + capturedPieceSquare.getSquareName());
+        }
+        if(!selectedPiece.getColor().toString().equals(game.getCurrentTurn().getColor().toString())) {
+            throw new PieceException("Cannot move opponent pieces");
+        }
+        if(selectedPiece.isMan() && capturedPiece.isKing()) {
+            throw  new CommandException("CommandRunner.runCommandCapture(), a man does not capture a king");
+        }
+        List<Square> listReachableSquaresOfSelectedPiece = board.getReachableSquares(selectedPiece);
+        int pieceIndex = -1;
+        for (int i = 0; i < listReachableSquaresOfSelectedPiece.size(); i++) {
+            if (capturedPieceSquare == listReachableSquaresOfSelectedPiece.get(i)) {
+                pieceIndex = i;
+                break;
             }
-            if(selectedPiece.isMan() && capturedPiece.isKing()) {
-                throw  new CommandException("CommandRunner.runCommandCapture(), a man does not capture a king");
-            }
-            List<Square> listReachableSquaresOfSelectedPiece = board.getReachableSquares(selectedPiece);
-            int pieceIndex = -1;
-            for (int i = 0; i < listReachableSquaresOfSelectedPiece.size(); i++) {
-                if (capturedPieceSquare == listReachableSquaresOfSelectedPiece.get(i)) {
-                    pieceIndex = i;
-                    break;
-                }
-            }
-            if (pieceIndex == -1) {
-                throw new CommandException("CommandRunner.runCommandCapture() does not accept the Command");
-            }
-            selectedPieceSquare.setSquareContent(SquareContent.EMPTY);
-            capturedPieceSquare.setSquareContent(SquareContent.EMPTY);
-            BoardUtils.removePiece(this.game.getBoard(), capturedPiece);
-            if (selectedPiece.isMan()) {
-                if (selectedPiece.getColor() == PieceColor.WHITE) {
-                    destinationSquare.setSquareContent(SquareContent.WHITE_MAN);
-                } else {
-                    destinationSquare.setSquareContent(SquareContent.BLACK_MAN);
-                }
-            } else { // isKing
-                if (selectedPiece.getColor() == PieceColor.WHITE) {
-                    destinationSquare.setSquareContent(SquareContent.WHITE_KING);
-                } else {
-                    destinationSquare.setSquareContent(SquareContent.BLACK_KING);
-                }
-            }
-            selectedPiece.setSquare(destinationSquare);
-            if(selectedPiece.isMan()) {
-                if (game.getBoard().getLastRow(selectedPiece.getColor())[0].getSquareCoordinates().getRow() == destinationSquare.getSquareCoordinates().getRow()) {
-                    BoardUtils.toCrown(this.game.getBoard(), selectedPiece);
-                }
-            }
-        } else {
+        }
+        if (pieceIndex == -1) {
             throw new CommandException("CommandRunner.runCommandCapture() does not accept the Command");
+        }
+        selectedPieceSquare.setSquareContent(SquareContent.EMPTY);
+        capturedPieceSquare.setSquareContent(SquareContent.EMPTY);
+        BoardUtils.removePiece(board, capturedPiece);
+        if (selectedPiece.isMan()) {
+            if (selectedPiece.getColor() == PieceColor.WHITE) {
+                destinationSquare.setSquareContent(SquareContent.WHITE_MAN);
+            } else {
+                destinationSquare.setSquareContent(SquareContent.BLACK_MAN);
+            }
+        } else { // isKing
+            if (selectedPiece.getColor() == PieceColor.WHITE) {
+                destinationSquare.setSquareContent(SquareContent.WHITE_KING);
+            } else {
+                destinationSquare.setSquareContent(SquareContent.BLACK_KING);
+            }
+        }
+        selectedPiece.setSquare(destinationSquare);
+        if(selectedPiece.isMan()) {
+            if (board.getLastRow(selectedPiece.getColor())[0].getSquareCoordinates().getRow() == destinationSquare.getSquareCoordinates().getRow()) {
+                BoardUtils.toCrown(board, selectedPiece);
+            }
         }
     }
     
