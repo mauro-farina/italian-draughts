@@ -227,7 +227,7 @@ public class Game {
         return board.getWhitePieces().size() == 0 || board.getBlackPieces().size() == 0;
     }
 
-    public boolean checkDrawCondition() throws CoordinatesException, BoardException, SquareException, PlayerException {
+    public boolean checkDrawCondition() throws BoardException, SquareException, PlayerException {
         PieceColor pieceColor;
         if (this.currentTurn == this.player1) {
             pieceColor = PieceColor.BLACK;
@@ -241,10 +241,14 @@ public class Game {
                 if (reachableSquare.isFree()) {
                     return false;
                 } else {
-                    if (new SingleCapture(this.board,
-                            piece.getSquare().getSquareCoordinates(),
-                            reachableSquare.getSquareCoordinates()).isValid()) {
-                        return false;
+                    try {
+                        if (new SingleCapture(this.board,
+                                piece.getSquare().getSquareCoordinates(),
+                                reachableSquare.getSquareCoordinates()).isValid()) {
+                            return false;
+                        }
+                    } catch(CoordinatesException e) {
+                        // piece is on the edge -> capture command returns CoordinatesException
                     }
                 }
             }
