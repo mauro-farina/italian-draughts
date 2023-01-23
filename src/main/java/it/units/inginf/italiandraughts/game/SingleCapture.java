@@ -2,6 +2,7 @@ package it.units.inginf.italiandraughts.game;
 
 import it.units.inginf.italiandraughts.BoardUtils;
 import it.units.inginf.italiandraughts.board.*;
+import it.units.inginf.italiandraughts.commands.CommandCapture;
 import it.units.inginf.italiandraughts.exception.CoordinatesException;
 import it.units.inginf.italiandraughts.exception.BoardException;
 import it.units.inginf.italiandraughts.exception.SquareException;
@@ -9,58 +10,21 @@ import it.units.inginf.italiandraughts.exception.SquareContentException;
 import it.units.inginf.italiandraughts.exception.PieceException;
 import it.units.inginf.italiandraughts.exception.PieceColorException;
 
-public class SingleCapture {
+public class SingleCapture extends CommandCapture {
 
     private final Board board;
     private final SquareCoordinates fromCoordinates;
     private final SquareCoordinates pieceToCaptureCoordinates;
     private final SquareCoordinates toCoordinates;
-
     private boolean capturedPieceIsKing;
 
     public SingleCapture(Board board, SquareCoordinates fromCoordinates,
                          SquareCoordinates pieceToCaptureCoordinates) throws CoordinatesException {
+        super(fromCoordinates, pieceToCaptureCoordinates);
         this.board = board;
-        this.fromCoordinates = fromCoordinates;
-        this.pieceToCaptureCoordinates = pieceToCaptureCoordinates;
-        int toCoordinateY, toCoordinateX;
-        if(fromCoordinates.getRow() > pieceToCaptureCoordinates.getRow()){
-            toCoordinateY = pieceToCaptureCoordinates.getRow() - 1;
-        } else {
-            toCoordinateY = pieceToCaptureCoordinates.getRow() + 1;
-        }
-        if(fromCoordinates.getColumn() > pieceToCaptureCoordinates.getColumn()) {
-            toCoordinateX = pieceToCaptureCoordinates.getColumn() - 1;
-        } else {
-            toCoordinateX = pieceToCaptureCoordinates.getColumn() + 1;
-        }
-        if(toCoordinateY > - 1 && toCoordinateY < 8 && toCoordinateX > - 1 && toCoordinateX < 8) {
-            this.toCoordinates = new SquareCoordinates(toCoordinateX, toCoordinateY);
-        } else {
-            this.toCoordinates = null;
-        }
-        this.capturedPieceIsKing = false;
-    }
-
-    @Override
-    public String toString() {
-        try {
-            return new SquareName(this.getFromCoordinates()) + " CAPTURE " + new SquareName(this.getPieceToCaptureCoordinates());
-        } catch (CoordinatesException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public SquareCoordinates getFromCoordinates() {
-        return this.fromCoordinates;
-    }
-
-    public SquareCoordinates getPieceToCaptureCoordinates() {
-        return this.pieceToCaptureCoordinates;
-    }
-
-    public SquareCoordinates getToCoordinates() {
-        return this.toCoordinates;
+        this.fromCoordinates = getFromCoordinates();
+        this.toCoordinates = getToCoordinates();
+        this.pieceToCaptureCoordinates = getPieceToCaptureCoordinates();
     }
 
     public boolean isValid() throws SquareException, BoardException {
