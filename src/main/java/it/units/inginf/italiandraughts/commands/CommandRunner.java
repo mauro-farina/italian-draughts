@@ -44,11 +44,7 @@ public class CommandRunner {
                     ((CommandTo) command).getToCoordinates()
             );
         } else if(command.getCommandType().equals(CommandType.CAPTURE)) {
-            this.runCommandCapture(
-                    ((CommandCapture) command).getFromCoordinates(),
-                    ((CommandCapture) command).getPieceToCaptureCoordinates(),
-                    ((CommandCapture) command).getToCoordinates()
-            );
+            this.runCommandCapture((CommandCapture) command);
         }
     }
 
@@ -121,36 +117,19 @@ public class CommandRunner {
         }
     }
 
-    private void runCommandCapture(SquareCoordinates coordinatesSelectedPieceSquare, SquareCoordinates coordinatesCapturedPieceSquare, SquareCoordinates coordinatesDestinationSquare) throws CommandException, BoardException, PieceException, PieceColorException, SquareException, SquareContentException {
+    private void runCommandCapture(CommandCapture commandCapture) throws BoardException, PieceException, PieceColorException, SquareException, SquareContentException, CommandException {
         Board board = game.getBoard();
-        Square selectedPieceSquare = board.getSquare(coordinatesSelectedPieceSquare);
-        Square capturedPieceSquare = board.getSquare(coordinatesCapturedPieceSquare);
-        Square destinationSquare = board.getSquare(coordinatesDestinationSquare);
+        if(!commandCapture.isValid(board)) {
+            return;
+        }
+        Square selectedPieceSquare = board.getSquare(commandCapture.getFromCoordinates());
+        Square capturedPieceSquare = board.getSquare(commandCapture.getPieceToCaptureCoordinates());
+        Square destinationSquare = board.getSquare(commandCapture.getToCoordinates());
         Piece selectedPiece = BoardUtils.researchPiece(board, selectedPieceSquare);
         Piece capturedPiece = BoardUtils.researchPiece(board, capturedPieceSquare);
-
-        if(selectedPiece == null) {
-            throw new CommandException("There are no pieces on " + selectedPieceSquare.getSquareName());
-        }
-        if(capturedPiece == null) {
-            throw new CommandException("There are no pieces on " + capturedPieceSquare.getSquareName());
-        }
+        assert selectedPiece != null; // command is valid -> pieces are not null
         if(!selectedPiece.getColor().toString().equals(game.getCurrentTurn().getColor().toString())) {
-            throw new PieceException("Cannot move opponent pieces");
-        }
-        if(selectedPiece.isMan() && capturedPiece.isKing()) {
-            throw  new CommandException("CommandRunner.runCommandCapture(), a man does not capture a king");
-        }
-        List<Square> listReachableSquaresOfSelectedPiece = board.getReachableSquares(selectedPiece);
-        int pieceIndex = -1;
-        for (int i = 0; i < listReachableSquaresOfSelectedPiece.size(); i++) {
-            if (capturedPieceSquare == listReachableSquaresOfSelectedPiece.get(i)) {
-                pieceIndex = i;
-                break;
-            }
-        }
-        if (pieceIndex == -1) {
-            throw new CommandException("CommandRunner.runCommandCapture() does not accept the Command");
+            throw new CommandException("Cannot move opponent pieces");
         }
         selectedPieceSquare.setSquareContent(SquareContent.EMPTY);
         capturedPieceSquare.setSquareContent(SquareContent.EMPTY);
