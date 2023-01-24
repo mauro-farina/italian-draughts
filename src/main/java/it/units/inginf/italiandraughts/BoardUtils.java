@@ -4,14 +4,12 @@ import it.units.inginf.italiandraughts.board.Board;
 import it.units.inginf.italiandraughts.board.Piece;
 import it.units.inginf.italiandraughts.board.PieceColor;
 import it.units.inginf.italiandraughts.board.Square;
-import it.units.inginf.italiandraughts.board.SquareContent;
 import it.units.inginf.italiandraughts.board.SquareColor;
 import it.units.inginf.italiandraughts.board.King;
 import it.units.inginf.italiandraughts.exception.BoardException;
 import it.units.inginf.italiandraughts.exception.PieceException;
 import it.units.inginf.italiandraughts.exception.PieceColorException;
 import it.units.inginf.italiandraughts.exception.SquareException;
-import it.units.inginf.italiandraughts.exception.SquareContentException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +38,7 @@ public class BoardUtils {
         }
     }
 
-    public static void toCrown(Board board, Piece piece) throws BoardException, PieceException, PieceColorException, SquareException, SquareContentException {
+    public static void toCrown(Board board, Piece piece) throws BoardException, PieceException, PieceColorException, SquareException {
         if(board == null) {
             throw new BoardException("BoardUtils.toCrown() does not accept this Board, because it is null");
         }
@@ -55,10 +53,9 @@ public class BoardUtils {
         List<Piece> piecesList = board.getPieces(piece.getColor());
         for(int i = 0; i < piecesList.size(); i++) {
             if (piecesList.get(i) == piece) {
-                piecesList.add(new King(piece.getColor(), piecesList.get(i).getSquare()));
-                piecesList.get(i).getSquare().setSquareContent(
-                        piece.getColor() == PieceColor.WHITE ? SquareContent.WHITE_KING : SquareContent.BLACK_KING
-                );
+                King king = new King(piece.getColor(), piece.getSquare());
+                piecesList.add(king);
+                piece.getSquare().setSquareContent(king);
                 piecesList.remove(i);
                 break;
             } else if(i == piecesList.size() - 1) {
