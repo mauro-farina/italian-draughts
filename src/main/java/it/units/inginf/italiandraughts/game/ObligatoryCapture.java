@@ -6,6 +6,7 @@ import it.units.inginf.italiandraughts.board.Piece;
 import it.units.inginf.italiandraughts.board.PieceColor;
 import it.units.inginf.italiandraughts.board.Square;
 import it.units.inginf.italiandraughts.commands.CommandCapture;
+import it.units.inginf.italiandraughts.commands.ExecutableCommandCapture;
 import it.units.inginf.italiandraughts.exception.BoardException;
 import it.units.inginf.italiandraughts.exception.CoordinatesException;
 import it.units.inginf.italiandraughts.exception.PlayerException;

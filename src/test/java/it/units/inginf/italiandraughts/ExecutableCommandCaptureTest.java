@@ -1,6 +1,6 @@
 package it.units.inginf.italiandraughts;
 
-import it.units.inginf.italiandraughts.game.ExecutableCommandCapture;
+import it.units.inginf.italiandraughts.commands.ExecutableCommandCapture;
 import it.units.inginf.italiandraughts.board.Board;
 import it.units.inginf.italiandraughts.board.SquareContent;
 import it.units.inginf.italiandraughts.board.SquareCoordinates;
