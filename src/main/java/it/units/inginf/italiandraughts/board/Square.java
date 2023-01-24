@@ -1,6 +1,7 @@
 package it.units.inginf.italiandraughts.board;
 
 import it.units.inginf.italiandraughts.exception.CoordinatesException;
+import it.units.inginf.italiandraughts.exception.PieceException;
 import it.units.inginf.italiandraughts.exception.SquareNameException;
 import it.units.inginf.italiandraughts.exception.SquareContentException;
 
@@ -54,6 +55,25 @@ public class Square {
             throw new SquareContentException("Square.setSquareContent() because SquareContent cannot be null");
         } else {
             this.squareContent = newSquareContent;
+        }
+    }
+
+    public void setSquareContent(Piece newPieceOnSquare) throws PieceException {
+        if (newPieceOnSquare == null){
+            throw new PieceException("Square.setSquareContent() because piece cannot be null");
+        }
+        if (newPieceOnSquare.isMan()) {
+            if (newPieceOnSquare.getColor() == PieceColor.WHITE) {
+                this.squareContent = SquareContent.WHITE_MAN;
+            } else {
+                this.squareContent = SquareContent.BLACK_MAN;
+            }
+        } else { // isKing
+            if (newPieceOnSquare.getColor() == PieceColor.WHITE) {
+                this.squareContent = SquareContent.WHITE_KING;
+            } else {
+                this.squareContent = SquareContent.BLACK_KING;
+            }
         }
     }
 
