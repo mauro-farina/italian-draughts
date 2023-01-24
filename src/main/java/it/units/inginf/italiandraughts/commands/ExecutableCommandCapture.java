@@ -1,8 +1,7 @@
-package it.units.inginf.italiandraughts.game;
+package it.units.inginf.italiandraughts.commands;
 
 import it.units.inginf.italiandraughts.BoardUtils;
 import it.units.inginf.italiandraughts.board.*;
-import it.units.inginf.italiandraughts.commands.CommandCapture;
 import it.units.inginf.italiandraughts.exception.*;
 
 public class ExecutableCommandCapture extends CommandCapture {
