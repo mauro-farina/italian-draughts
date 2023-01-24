@@ -2,7 +2,6 @@ package it.units.inginf.italiandraughts.board;
 
 import it.units.inginf.italiandraughts.exception.CoordinatesException;
 import it.units.inginf.italiandraughts.exception.PieceException;
-import it.units.inginf.italiandraughts.exception.SquareNameException;
 import it.units.inginf.italiandraughts.exception.SquareContentException;
 
 public class Square {
@@ -13,7 +12,7 @@ public class Square {
     private final SquareCoordinates squareCoordinates;
     private final SquareName squareName;
 
-    public Square(int x, int y) throws SquareNameException, CoordinatesException {
+    public Square(int x, int y) throws CoordinatesException {
         this.squareCoordinates = new SquareCoordinates(x,y);
         this.squareName = new SquareName(squareCoordinates);
 
