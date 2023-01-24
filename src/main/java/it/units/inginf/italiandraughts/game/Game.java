@@ -49,7 +49,6 @@ public class Game {
     public void start() {
         initGame();
         List<List<CommandCapture>> obligatoryCaptureList = new ArrayList<>();
-        //outputPrinter.print(obligatoryCaptureList.toString());
         try {
             commandRunner.runCommand(new CommandHelp());
             outputPrinter.print(System.lineSeparator());
