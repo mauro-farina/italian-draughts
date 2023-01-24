@@ -5,7 +5,7 @@ import it.units.inginf.italiandraughts.board.*;
 import it.units.inginf.italiandraughts.commands.CommandCapture;
 import it.units.inginf.italiandraughts.exception.*;
 
-public class SingleCapture extends CommandCapture {
+public class ExecutableCommandCapture extends CommandCapture {
 
     private final Board board;
     private final SquareCoordinates fromCoordinates;
@@ -13,8 +13,8 @@ public class SingleCapture extends CommandCapture {
     private final SquareCoordinates toCoordinates;
     private boolean capturedPieceIsKing;
 
-    public SingleCapture(Board board, SquareCoordinates fromCoordinates,
-                         SquareCoordinates pieceToCaptureCoordinates) throws CoordinatesException {
+    public ExecutableCommandCapture(Board board, SquareCoordinates fromCoordinates,
+                                    SquareCoordinates pieceToCaptureCoordinates) throws CoordinatesException {
         super(fromCoordinates, pieceToCaptureCoordinates);
         this.board = board;
         this.fromCoordinates = getFromCoordinates();
