@@ -22,7 +22,7 @@ import java.util.Map;
 
 public class ObligatoryCapture {
 
-    public static List<List<CommandCapture>> getObligatoryCaptureList(Board board, Player currentTurn) throws BoardException, SquareContentException, CoordinatesException,
+    public static List<List<CommandCapture>> getObligatoryCaptureList(Board board, Player currentTurn) throws BoardException, SquareContentException,
             PieceColorException, SquareException, PieceException, PlayerException, PlayerColorException {
         if (currentTurn == null) {
             throw new PlayerException("ObligatoryCapture.getObligatoryCaptureList() does not accept " +
@@ -32,51 +32,60 @@ public class ObligatoryCapture {
             throw new PlayerColorException("ObligatoryCapture.getObligatoryCaptureList() does not accept " +
                     "this PlayerColor");
         }
-        List<List<CommandCapture>> obligatoryCaptureOptionsList = new ArrayList<>();
         PieceColor piecesColor = currentTurn.getColor() == PlayerColor.WHITE ? PieceColor.WHITE : PieceColor.BLACK;
         List<Piece> piecesList = board.getPieces(piecesColor);
-        Map<List<ExecutableCommandCapture>, Integer> mandatoryCapturesOptionsScores = new HashMap<>();
+        // `score` is used to determine the mandatory list of captures that a player must perform
+        // e.g. "the first and foremost rule to obey is to capture the greatest quantity of pieces"
+        Map<List<ExecutableCommandCapture>, Integer> capturesListScore = new HashMap<>();
+
         for (Piece piece : piecesList) {
-            List<ExecutableCommandCapture> mandatoryCapturesList = new ArrayList<>();
-            fillSingleCaptureList(board, mandatoryCapturesList, piece);
-            if(mandatoryCapturesList.isEmpty())
-                continue;
-            mandatoryCapturesOptionsScores.put(mandatoryCapturesList, getCapturesListScore(mandatoryCapturesList));
+            List<ExecutableCommandCapture> capturesList = new ArrayList<>();
+
+            // fill capturesList with the sequence of possible captures using the given piece
+            fillSingleCaptureList(board, capturesList, piece);
+
+            if (capturesList.isEmpty())
+                continue; // ignore capturesList for pieces that cannot capture anything
+
+            // store for each capturesList its score
+            capturesListScore.put(capturesList, getCapturesListScore(capturesList));
         }
-        int maxScore = mandatoryCapturesOptionsScores.values().stream().max(Integer::compare).orElse(0);
+        // capturesList(s) with the highest score is the mandatory sequence of captures a player must perform
+        int maxScore = capturesListScore.values().stream().max(Integer::compare).orElse(0);
 
         // keep only capture options with the highest score (same number of captures, numb. kings captured, ...)
-        List<List<ExecutableCommandCapture>> mandatorySingleCapturesLists = mandatoryCapturesOptionsScores
+        List<List<ExecutableCommandCapture>> obligatoryCaptureOptionsList = capturesListScore
                 .entrySet()
                 .stream()
                 .filter(entry -> entry.getValue() == maxScore)
                 .map(Map.Entry::getKey)
                 .toList();
-        for(List<ExecutableCommandCapture> mandatoryCaptureList : mandatorySingleCapturesLists) {
-            List<CommandCapture> mandatoryCaptures = new ArrayList<>();
-            for (ExecutableCommandCapture singleCapture : mandatoryCaptureList) {
-                mandatoryCaptures.add(
-                        new CommandCapture(
-                                singleCapture.getFromCoordinates(),
-                                singleCapture.getPieceToCaptureCoordinates()
-                        ));
-            }
-            obligatoryCaptureOptionsList.add(mandatoryCaptures);
-        }
-        return obligatoryCaptureOptionsList;
+
+        // cast List<List<ExecutableCommandCapture>> to List<List<CommandCapture>> and return
+        return obligatoryCaptureOptionsList
+                .stream()
+                .map(optionsList -> optionsList
+                        .stream()
+                        .map(capture -> (CommandCapture) capture)
+                        .toList())
+                .toList();
     }
 
-    private static int getCapturesListScore(List<ExecutableCommandCapture> singleCaptureList) throws SquareException, BoardException {
-        if(singleCaptureList.isEmpty()) {
+    private static int getCapturesListScore(List<ExecutableCommandCapture> capturesList) throws SquareException, BoardException {
+        if(capturesList.isEmpty()) {
             return 0;
         }
-        int score = 0;
-        score += 1000 * singleCaptureList.size();
-        if(singleCaptureList.get(0).isCapturingPieceKing()) {
+        // the first and foremost rule to obey is to capture the greatest quantity of pieces.
+        int score = 1000 * capturesList.size();
+        // If a player may capture an equal number of pieces with either a man or king, they must do so with the king
+        if(capturesList.get(0).isCapturingPieceKing()) {
             score += 500;
         }
-        score += 100 * getNumberOfCapturedKing(singleCaptureList);
-        for(ExecutableCommandCapture singleCapture : singleCaptureList) {
+        // If a player may capture an equal number of pieces with a king, they must capture the greatest number of kings possible.
+        score += 100 * getNumberOfCapturedKing(capturesList);
+        // If a player may capture an equal number of pieces (each series containing a king) with a king,
+        // they must capture wherever the king occurs first
+        for(ExecutableCommandCapture singleCapture : capturesList) {
             if(!singleCapture.isCapturedPieceKing()) {
                 score -= 1;
             } else {
