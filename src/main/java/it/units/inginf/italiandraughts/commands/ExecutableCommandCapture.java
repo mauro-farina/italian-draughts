@@ -41,7 +41,7 @@ public class ExecutableCommandCapture extends CommandCapture {
             selectedPieceSquare.setSquareContent(SquareContent.EMPTY);
             capturedPieceSquare.setSquareContent(SquareContent.EMPTY);
             BoardUtils.removePiece(this.board, capturedPiece);
-            updateSquareContentToMatchPiece(destinationSquare, selectedPiece);
+            destinationSquare.setSquareContent(selectedPiece);
             selectedPiece.setSquare(destinationSquare);
         }
     }
@@ -56,7 +56,7 @@ public class ExecutableCommandCapture extends CommandCapture {
             return;
         }
         destinationSquare.setSquareContent(SquareContent.EMPTY);
-        updateSquareContentToMatchPiece(selectedPieceSquare, selectedPiece);
+        selectedPieceSquare.setSquareContent(selectedPiece);
         selectedPiece.setSquare(selectedPieceSquare);
         if(capturedPieceIsKing) {
             if(selectedPiece.getColor() == PieceColor.WHITE) {
@@ -99,22 +99,6 @@ public class ExecutableCommandCapture extends CommandCapture {
             return false;
         }
         return piece.isKing();
-    }
-
-    private static void updateSquareContentToMatchPiece(Square square, Piece piece) throws SquareContentException {
-        if (piece.isMan()) {
-            if (piece.getColor() == PieceColor.WHITE) {
-                square.setSquareContent(SquareContent.WHITE_MAN);
-            } else {
-                square.setSquareContent(SquareContent.BLACK_MAN);
-            }
-        } else { // isKing
-            if (piece.getColor() == PieceColor.WHITE) {
-                square.setSquareContent(SquareContent.WHITE_KING);
-            } else {
-                square.setSquareContent(SquareContent.BLACK_KING);
-            }
-        }
     }
 
 }
