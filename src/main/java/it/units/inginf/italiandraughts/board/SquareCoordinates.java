@@ -51,30 +51,44 @@ public class SquareCoordinates {
         if(squareName.toString().length() != 2) {
             throw new CoordinatesException("Invalid square " + squareName);
         } else {
-            switch(squareName.getColumn()) {
-                case 'A' -> coordinates[0] = 0;
-                case 'B' -> coordinates[0] = 1;
-                case 'C' -> coordinates[0] = 2;
-                case 'D' -> coordinates[0] = 3;
-                case 'E' -> coordinates[0] = 4;
-                case 'F' -> coordinates[0] = 5;
-                case 'G' -> coordinates[0] = 6;
-                case 'H' -> coordinates[0] = 7;
-                default -> throw new CoordinatesException("Invalid square " + squareName);
+            if(squareName.getColumn() != 'A') {
+                coordinates[0] = getColumnCoordinates(squareName.getColumn());
             }
-            switch(squareName.getRow()) {
-                case '1' -> coordinates[1] = 0;
-                case '2' -> coordinates[1] = 1;
-                case '3' -> coordinates[1] = 2;
-                case '4' -> coordinates[1] = 3;
-                case '5' -> coordinates[1] = 4;
-                case '6' -> coordinates[1] = 5;
-                case '7' -> coordinates[1] = 6;
-                case '8' -> coordinates[1] = 7;
-                default -> throw new CoordinatesException("Invalid square " + squareName);
+            if(squareName.getRow() != '1') {
+                coordinates[1] = getRowCoordinates(squareName.getRow());
             }
             return coordinates;
         }
+    }
+
+    private int getColumnCoordinates(char column) throws CoordinatesException{
+        int columnCoordinate;
+        switch(column) {
+            case 'B' -> columnCoordinate = 1;
+            case 'C' -> columnCoordinate = 2;
+            case 'D' -> columnCoordinate = 3;
+            case 'E' -> columnCoordinate = 4;
+            case 'F' -> columnCoordinate = 5;
+            case 'G' -> columnCoordinate = 6;
+            case 'H' -> columnCoordinate = 7;
+            default -> throw new CoordinatesException("SquareCoordinates.getColumnCoordinates() does not accept this coordinate " + column);
+        }
+        return columnCoordinate;
+    }
+
+    private int getRowCoordinates(char row) throws CoordinatesException {
+        int rowCoordinate;
+        switch(row) {
+            case '2' -> rowCoordinate = 1;
+            case '3' -> rowCoordinate = 2;
+            case '4' -> rowCoordinate = 3;
+            case '5' -> rowCoordinate = 4;
+            case '6' -> rowCoordinate = 5;
+            case '7' -> rowCoordinate = 6;
+            case '8' -> rowCoordinate = 7;
+            default -> throw new CoordinatesException("SquareCoordinates.getColumnCoordinates() does not accept this coordinate " + row);
+        }
+        return rowCoordinate;
     }
     
 }
