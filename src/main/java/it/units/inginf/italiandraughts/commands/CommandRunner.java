@@ -6,7 +6,6 @@ import it.units.inginf.italiandraughts.board.SquareCoordinates;
 import it.units.inginf.italiandraughts.board.Square;
 import it.units.inginf.italiandraughts.board.SquareContent;
 import it.units.inginf.italiandraughts.board.Piece;
-import it.units.inginf.italiandraughts.board.PieceColor;
 import it.units.inginf.italiandraughts.game.Game;
 import it.units.inginf.italiandraughts.io.CommandLineOutputPrinter;
 import it.units.inginf.italiandraughts.io.OutputPrinter;
@@ -96,19 +95,7 @@ public class CommandRunner {
                     arrivalSquare.getSquareName().toString() + " from " + startingSquare.getSquareName().toString());
         }
         startingSquare.setSquareContent(SquareContent.EMPTY);
-        if(selectedPiece.isMan()) {
-            if(selectedPiece.getColor() == PieceColor.WHITE) {
-                arrivalSquare.setSquareContent(SquareContent.WHITE_MAN);
-            } else {
-                arrivalSquare.setSquareContent(SquareContent.BLACK_MAN);
-            }
-        } else { // isKing
-            if(selectedPiece.getColor() == PieceColor.WHITE) {
-                arrivalSquare.setSquareContent(SquareContent.WHITE_KING);
-            } else {
-                arrivalSquare.setSquareContent(SquareContent.BLACK_KING);
-            }
-        }
+        arrivalSquare.setSquareContent(selectedPiece);
         selectedPiece.setSquare(arrivalSquare);
         if(selectedPiece.isMan()) {
             if (game.getBoard().getLastRow(selectedPiece.getColor())[0].getSquareCoordinates().getRow() == arrivalSquare.getSquareCoordinates().getRow()) {
@@ -133,20 +120,8 @@ public class CommandRunner {
         }
         selectedPieceSquare.setSquareContent(SquareContent.EMPTY);
         capturedPieceSquare.setSquareContent(SquareContent.EMPTY);
+        destinationSquare.setSquareContent(selectedPiece);
         BoardUtils.removePiece(board, capturedPiece);
-        if (selectedPiece.isMan()) {
-            if (selectedPiece.getColor() == PieceColor.WHITE) {
-                destinationSquare.setSquareContent(SquareContent.WHITE_MAN);
-            } else {
-                destinationSquare.setSquareContent(SquareContent.BLACK_MAN);
-            }
-        } else { // isKing
-            if (selectedPiece.getColor() == PieceColor.WHITE) {
-                destinationSquare.setSquareContent(SquareContent.WHITE_KING);
-            } else {
-                destinationSquare.setSquareContent(SquareContent.BLACK_KING);
-            }
-        }
         selectedPiece.setSquare(destinationSquare);
         if(selectedPiece.isMan()) {
             if (board.getLastRow(selectedPiece.getColor())[0].getSquareCoordinates().getRow() == destinationSquare.getSquareCoordinates().getRow()) {
