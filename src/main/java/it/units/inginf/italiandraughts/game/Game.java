@@ -242,7 +242,7 @@ public class Game {
                     return false;
                 } else {
                     try {
-                        if (new SingleCapture(this.board,
+                        if (new ExecutableCommandCapture(this.board,
                                 piece.getSquare().getSquareCoordinates(),
                                 reachableSquare.getSquareCoordinates()).isValid()) {
                             return false;
