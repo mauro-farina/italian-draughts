@@ -1,7 +1,11 @@
 package it.units.inginf.italiandraughts.commands;
 
 import it.units.inginf.italiandraughts.BoardUtils;
-import it.units.inginf.italiandraughts.board.*;
+import it.units.inginf.italiandraughts.board.Board;
+import it.units.inginf.italiandraughts.board.Square;
+import it.units.inginf.italiandraughts.board.SquareCoordinates;
+import it.units.inginf.italiandraughts.board.SquareName;
+import it.units.inginf.italiandraughts.board.Piece;
 import it.units.inginf.italiandraughts.exception.BoardException;
 import it.units.inginf.italiandraughts.exception.CommandException;
 import it.units.inginf.italiandraughts.exception.CoordinatesException;
