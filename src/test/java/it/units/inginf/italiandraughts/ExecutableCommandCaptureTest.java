@@ -1,19 +1,19 @@
 package it.units.inginf.italiandraughts;
 
-import it.units.inginf.italiandraughts.game.SingleCapture;
+import it.units.inginf.italiandraughts.game.ExecutableCommandCapture;
 import it.units.inginf.italiandraughts.board.Board;
 import it.units.inginf.italiandraughts.board.SquareContent;
 import it.units.inginf.italiandraughts.board.SquareCoordinates;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-public class SingleCaptureTest {
+public class ExecutableCommandCaptureTest {
 
     @Test
     void checkIsValid() {
-        SingleCapture singleCapture;
+        ExecutableCommandCapture singleCapture;
         try {
-            singleCapture = new SingleCapture(new Board(),
+            singleCapture = new ExecutableCommandCapture(new Board(),
                     new SquareCoordinates(1, 2),
                     new SquareCoordinates(2, 3));
             assertFalse(singleCapture.isValid());
@@ -25,9 +25,9 @@ public class SingleCaptureTest {
 
     @Test
     void checkPieceOnFromCoordinatesIsKing() {
-        SingleCapture singleCapture;
+        ExecutableCommandCapture singleCapture;
         try {
-            singleCapture = new SingleCapture(new Board(),
+            singleCapture = new ExecutableCommandCapture(new Board(),
                     new SquareCoordinates(1, 2),
                     new SquareCoordinates(2, 3));
             assertFalse(singleCapture.isCapturingPieceKing());
@@ -40,7 +40,7 @@ public class SingleCaptureTest {
     @Test
     void checkPieceOnToCoordinatesIsKing() {
         try {
-            SingleCapture singleCapture = new SingleCapture(new Board(),
+            ExecutableCommandCapture singleCapture = new ExecutableCommandCapture(new Board(),
                     new SquareCoordinates(1, 2),
                     new SquareCoordinates(2, 3));
             assertFalse(singleCapture.isPieceOnToCoordinatesKing());
@@ -58,7 +58,7 @@ public class SingleCaptureTest {
             board.getBlackPieces().clear();
             board.getSquare(new SquareCoordinates(0, 3)).setSquareContent(SquareContent.WHITE_MAN);
             board.getSquare(new SquareCoordinates(1, 4)).setSquareContent(SquareContent.BLACK_KING);
-            assertFalse(new SingleCapture(board,
+            assertFalse(new ExecutableCommandCapture(board,
                     new SquareCoordinates(0, 3),
                     new SquareCoordinates(1, 4)).isValid());
         } catch (Exception e) {
