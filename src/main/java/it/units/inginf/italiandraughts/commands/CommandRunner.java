@@ -99,7 +99,7 @@ public class CommandRunner {
         selectedPiece.setSquare(arrivalSquare);
         if(selectedPiece.isMan()) {
             if (game.getBoard().getLastRow(selectedPiece.getColor())[0].getSquareCoordinates().getRow() == arrivalSquare.getSquareCoordinates().getRow()) {
-                BoardUtils.toCrown(this.game.getBoard(), selectedPiece);
+                BoardUtils.crownPiece(this.game.getBoard(), selectedPiece);
             }
         }
     }
@@ -125,7 +125,7 @@ public class CommandRunner {
         selectedPiece.setSquare(destinationSquare);
         if(selectedPiece.isMan()) {
             if (board.getLastRow(selectedPiece.getColor())[0].getSquareCoordinates().getRow() == destinationSquare.getSquareCoordinates().getRow()) {
-                BoardUtils.toCrown(board, selectedPiece);
+                BoardUtils.crownPiece(board, selectedPiece);
             }
         }
     }

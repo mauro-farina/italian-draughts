@@ -30,7 +30,7 @@ public class BoardUtilsTest {
         try {
             board = new Board();
             Piece piece = board.getWhitePieces().get(0);
-            BoardUtils.toCrown(board, piece);
+            BoardUtils.crownPiece(board, piece);
         } catch(Exception e) {
             fail();
             throw new RuntimeException(e);

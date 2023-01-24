@@ -38,7 +38,7 @@ public class BoardUtils {
         }
     }
 
-    public static void toCrown(Board board, Piece piece) throws BoardException, PieceException, PieceColorException, SquareException {
+    public static void crownPiece(Board board, Piece piece) throws BoardException, PieceException, PieceColorException, SquareException {
         if(board == null) {
             throw new BoardException("BoardUtils.toCrown() does not accept this Board, because it is null");
         }
