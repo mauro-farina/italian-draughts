@@ -6,13 +6,7 @@ import it.units.inginf.italiandraughts.board.Piece;
 import it.units.inginf.italiandraughts.board.PieceColor;
 import it.units.inginf.italiandraughts.board.Square;
 import it.units.inginf.italiandraughts.commands.*;
-import it.units.inginf.italiandraughts.exception.PlayerException;
-import it.units.inginf.italiandraughts.exception.BoardException;
-import it.units.inginf.italiandraughts.exception.SquareException;
-import it.units.inginf.italiandraughts.exception.SquareNameException;
-import it.units.inginf.italiandraughts.exception.SquareContentException;
-import it.units.inginf.italiandraughts.exception.CoordinatesException;
-import it.units.inginf.italiandraughts.exception.PieceColorException;
+import it.units.inginf.italiandraughts.exception.*;
 import it.units.inginf.italiandraughts.io.InputReader;
 import it.units.inginf.italiandraughts.io.OutputPrinter;
 
@@ -242,13 +236,15 @@ public class Game {
                     return false;
                 } else {
                     try {
-                        if (new ExecutableCommandCapture(this.board,
+                        if (new CommandCapture(
                                 piece.getSquare().getSquareCoordinates(),
-                                reachableSquare.getSquareCoordinates()).isValid()) {
+                                reachableSquare.getSquareCoordinates()).isValid(this.board)) {
                             return false;
                         }
                     } catch(CoordinatesException e) {
                         // piece is on the edge -> capture command returns CoordinatesException
+                    } catch (CommandException e) {
+                        // capture is not valid -> isValid returns CommandException
                     }
                 }
             }
