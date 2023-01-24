@@ -35,9 +35,9 @@ public class ObligatoryCapture {
         List<List<CommandCapture>> obligatoryCaptureOptionsList = new ArrayList<>();
         PieceColor piecesColor = currentTurn.getColor() == PlayerColor.WHITE ? PieceColor.WHITE : PieceColor.BLACK;
         List<Piece> piecesList = board.getPieces(piecesColor);
-        Map<List<SingleCapture>, Integer> mandatoryCapturesOptionsScores = new HashMap<>();
+        Map<List<ExecutableCommandCapture>, Integer> mandatoryCapturesOptionsScores = new HashMap<>();
         for (Piece piece : piecesList) {
-            List<SingleCapture> mandatoryCapturesList = new ArrayList<>();
+            List<ExecutableCommandCapture> mandatoryCapturesList = new ArrayList<>();
             fillSingleCaptureList(board, mandatoryCapturesList, piece);
             if(mandatoryCapturesList.isEmpty())
                 continue;
@@ -46,15 +46,15 @@ public class ObligatoryCapture {
         int maxScore = mandatoryCapturesOptionsScores.values().stream().max(Integer::compare).orElse(0);
 
         // keep only capture options with the highest score (same number of captures, numb. kings captured, ...)
-        List<List<SingleCapture>> mandatorySingleCapturesLists = mandatoryCapturesOptionsScores
+        List<List<ExecutableCommandCapture>> mandatorySingleCapturesLists = mandatoryCapturesOptionsScores
                 .entrySet()
                 .stream()
                 .filter(entry -> entry.getValue() == maxScore)
                 .map(Map.Entry::getKey)
                 .toList();
-        for(List<SingleCapture> mandatoryCaptureList : mandatorySingleCapturesLists) {
+        for(List<ExecutableCommandCapture> mandatoryCaptureList : mandatorySingleCapturesLists) {
             List<CommandCapture> mandatoryCaptures = new ArrayList<>();
-            for (SingleCapture singleCapture : mandatoryCaptureList) {
+            for (ExecutableCommandCapture singleCapture : mandatoryCaptureList) {
                 mandatoryCaptures.add(
                         new CommandCapture(
                                 singleCapture.getFromCoordinates(),
@@ -66,7 +66,7 @@ public class ObligatoryCapture {
         return obligatoryCaptureOptionsList;
     }
 
-    private static int getCapturesListScore(List<SingleCapture> singleCaptureList) throws SquareException, BoardException {
+    private static int getCapturesListScore(List<ExecutableCommandCapture> singleCaptureList) throws SquareException, BoardException {
         if(singleCaptureList.isEmpty()) {
             return 0;
         }
@@ -76,7 +76,7 @@ public class ObligatoryCapture {
             score += 500;
         }
         score += 100 * getNumberOfCapturedKing(singleCaptureList);
-        for(SingleCapture singleCapture : singleCaptureList) {
+        for(ExecutableCommandCapture singleCapture : singleCaptureList) {
             if(!singleCapture.isCapturedPieceKing()) {
                 score -= 1;
             } else {
@@ -86,7 +86,7 @@ public class ObligatoryCapture {
         return score;
     }
 
-    private static void compareTwoLists(List<SingleCapture> singleCaptureList, List<SingleCapture> newSingleCaptureList) throws BoardException, SquareException {
+    private static void compareTwoLists(List<ExecutableCommandCapture> singleCaptureList, List<ExecutableCommandCapture> newSingleCaptureList) throws BoardException, SquareException {
         if(newSingleCaptureList.size() == 0 || newSingleCaptureList.size() < singleCaptureList.size()) {
             return;
         }
@@ -124,15 +124,15 @@ public class ObligatoryCapture {
         }
     }
 
-    private static void fillSingleCaptureList(Board board, List<SingleCapture> singleCaptureList, Piece piece)
+    private static void fillSingleCaptureList(Board board, List<ExecutableCommandCapture> singleCaptureList, Piece piece)
             throws SquareContentException, PieceColorException, SquareException, BoardException, PieceException {
         if(piece == null) {
             return;
         }
         for(Square square: board.getReachableSquares(piece)) {
-            SingleCapture singleCapture;
+            ExecutableCommandCapture singleCapture;
             try {
-                singleCapture = new SingleCapture(
+                singleCapture = new ExecutableCommandCapture(
                         board,
                         piece.getSquare().getSquareCoordinates(),
                         square.getSquareCoordinates()
@@ -141,7 +141,7 @@ public class ObligatoryCapture {
                 continue;
             }
 
-            List<SingleCapture> newSingleCaptureList = new ArrayList<>(singleCaptureList);
+            List<ExecutableCommandCapture> newSingleCaptureList = new ArrayList<>(singleCaptureList);
             if (singleCapture.isValid()) {
                 newSingleCaptureList.add(singleCapture);
                 singleCapture.run();
@@ -158,9 +158,9 @@ public class ObligatoryCapture {
         }
     }
 
-    private static int getNumberOfCapturedKing(List<SingleCapture> singleCaptureList) throws BoardException, SquareException {
+    private static int getNumberOfCapturedKing(List<ExecutableCommandCapture> singleCaptureList) throws BoardException, SquareException {
         int numberOfCapturedKing = 0;
-        for(SingleCapture singleCapture : singleCaptureList) {
+        for(ExecutableCommandCapture singleCapture : singleCaptureList) {
             if(singleCapture.isCapturedPieceKing()) {
                 numberOfCapturedKing++;
             }
