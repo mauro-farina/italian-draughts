@@ -2,7 +2,6 @@ package it.units.inginf.italiandraughts.commands;
 
 import it.units.inginf.italiandraughts.BoardUtils;
 import it.units.inginf.italiandraughts.board.Board;
-import it.units.inginf.italiandraughts.board.SquareCoordinates;
 import it.units.inginf.italiandraughts.board.Square;
 import it.units.inginf.italiandraughts.board.SquareContent;
 import it.units.inginf.italiandraughts.board.Piece;
@@ -17,7 +16,6 @@ import it.units.inginf.italiandraughts.exception.SquareException;
 import it.units.inginf.italiandraughts.exception.SquareContentException;
 import it.units.inginf.italiandraughts.exception.BoardException;
 
-import java.util.List;
 
 public class CommandRunner {
 
@@ -38,10 +36,7 @@ public class CommandRunner {
         } else if(command.getCommandType().equals(CommandType.HELP)) {
             this.runCommandHelp();
         } else if(command.getCommandType().equals(CommandType.TO)) {
-            this.runCommandTo(
-                    ((CommandTo) command).getFromCoordinates(),
-                    ((CommandTo) command).getToCoordinates()
-            );
+            this.runCommandTo((CommandTo) command);
         } else if(command.getCommandType().equals(CommandType.CAPTURE)) {
             this.runCommandCapture((CommandCapture) command);
         }
@@ -67,33 +62,19 @@ public class CommandRunner {
         outputPrinter.print("You can shorten 'capture' with 'capt' or 'cap'");
     }
 
-    private void runCommandTo(SquareCoordinates coordinatesStartingSquare, SquareCoordinates coordinatesArrivalSquare) throws  BoardException, PieceException, PieceColorException, SquareException, SquareContentException {
-        Square startingSquare = game.getBoard().getSquare(coordinatesStartingSquare);
-        Square arrivalSquare = game.getBoard().getSquare(coordinatesArrivalSquare);
+    private void runCommandTo(CommandTo commandTo) throws BoardException, PieceException, PieceColorException, SquareException, SquareContentException, CommandException {
+        if(!commandTo.isValid(this.game.getBoard())) {
+            return;
+        }
+        Square startingSquare = game.getBoard().getSquare(commandTo.getFromCoordinates());
+        Square arrivalSquare = game.getBoard().getSquare(commandTo.getToCoordinates());
         Piece selectedPiece = BoardUtils.researchPiece(this.game.getBoard(), startingSquare);
-        if(selectedPiece == null) {
-            throw new PieceException("CommandRunner.runCommandTo()," +
-                    "\n no piece located on " + startingSquare.getSquareName().toString());
-        }
+
+        assert selectedPiece != null; // if command is valid => selectedPiece cannot be null
         if(!selectedPiece.getColor().toString().equalsIgnoreCase(game.getCurrentTurn().getColor().toString())) {
-            throw new PieceException("CommandRunner.runCommandTo() -> cannot move opponent pieces");
+            throw new CommandException("you cannot move opponent pieces");
         }
-        if(!arrivalSquare.isFree()) {
-            throw new SquareException("CommandRunner.runCommandTo(), " +
-                    "\n there already is a piece on " + arrivalSquare.getSquareName().toString());
-        }
-        List<Square> listReachableSquares = game.getBoard().getReachableSquares(selectedPiece);
-        for(int i = 0; i < listReachableSquares.size(); i++) {
-            if(arrivalSquare == listReachableSquares.get(i)) {
-                break;
-            } else if (i == listReachableSquares.size() - 1) { // ???
-                throw new SquareException("CommandRunner.runCommandTo() does not accept arrivalSquare");
-            }
-        }
-        if(!listReachableSquares.contains(arrivalSquare)) {
-            throw new SquareException("CommandRunner.runCommandTo() -> cannot reach " +
-                    arrivalSquare.getSquareName().toString() + " from " + startingSquare.getSquareName().toString());
-        }
+
         startingSquare.setSquareContent(SquareContent.EMPTY);
         arrivalSquare.setSquareContent(selectedPiece);
         selectedPiece.setSquare(arrivalSquare);
