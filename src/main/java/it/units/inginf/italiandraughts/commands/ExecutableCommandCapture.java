@@ -98,14 +98,6 @@ public class ExecutableCommandCapture extends CommandCapture {
         return piece.isKing();
     }
 
-    public boolean isPieceOnToCoordinatesKing() throws BoardException, SquareException {
-        Piece piece = BoardUtils.researchPiece(this.board, this.board.getSquare(this.toCoordinates));
-        if(piece == null) {
-            return false;
-        }
-        return piece.isKing();
-    }
-
     public boolean isCapturedPieceKing() throws BoardException, SquareException {
         Piece piece = BoardUtils.researchPiece(this.board, this.board.getSquare(this.pieceToCaptureCoordinates));
         if(piece == null) {
