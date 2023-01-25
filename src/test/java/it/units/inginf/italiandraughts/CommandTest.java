@@ -1,14 +1,11 @@
 package it.units.inginf.italiandraughts;
 
-import it.units.inginf.italiandraughts.board.Board;
-import it.units.inginf.italiandraughts.board.SquareCoordinates;
+import it.units.inginf.italiandraughts.board.*;
 import it.units.inginf.italiandraughts.commands.Command;
 import it.units.inginf.italiandraughts.commands.CommandCapture;
 import it.units.inginf.italiandraughts.commands.CommandTo;
 import it.units.inginf.italiandraughts.commands.CommandType;
-import it.units.inginf.italiandraughts.exception.BoardException;
-import it.units.inginf.italiandraughts.exception.CommandException;
-import it.units.inginf.italiandraughts.exception.SquareException;
+import it.units.inginf.italiandraughts.exception.*;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -88,6 +85,31 @@ public class CommandTest {
                 fail();
             }
 
+        } catch (Exception e) {
+            fail();
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    void checkIsValidWhenTrue() {
+        CommandCapture commandCapture;
+        try {
+            Board board = new Board();
+            commandCapture = new CommandCapture( // A6 CAPTURE B5
+                    new SquareCoordinates(0, 5),
+                    new SquareCoordinates(1, 4));
+            board.getWhitePieces().add(
+                    new Man(
+                        PieceColor.WHITE,
+                        board.getSquare(new SquareCoordinates(1, 4))) // B5
+            );
+            board.getSquare(new SquareCoordinates(1, 4)).setSquareContent(SquareContent.WHITE_MAN);
+            try {
+                assertTrue(commandCapture.isValid(board));
+            } catch (CommandException | BoardException | SquareException e) {
+                fail();
+            }
         } catch (Exception e) {
             fail();
             throw new RuntimeException(e);
