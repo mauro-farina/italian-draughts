@@ -50,7 +50,7 @@ public class SquareCoordinates {
         int[] coordinates = new int[2];
         if(squareName.toString().length() != 2) {
             throw new CoordinatesException(throw new CoordinatesException("SquareCoordinates.convertSquareNameToIntegerCoordinates() does not accept" + 
-                                                                          "this SquareName: " + squareName););
+                                                                          "this SquareName: " + squareName.toString()););
         } else {
             if(squareName.getColumn() != 'A') {
                 coordinates[0] = getColumnCoordinates(squareName.getColumn());
