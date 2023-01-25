@@ -43,7 +43,7 @@ public class CommandCapture extends Command {
 
     public boolean isValid(Board board) throws SquareException, BoardException, CommandException {
         if(board == null) {
-            throw new BoardException("Invalid command: board is null");
+            throw new BoardException("CommandCapture.isValid() does not accept this command, because board is null");
         }
         if(this.fromCoordinates == null || this.pieceToCaptureCoordinates == null || this.toCoordinates == null) {
             return false;
@@ -54,19 +54,19 @@ public class CommandCapture extends Command {
         Piece capturedPiece = BoardUtils.researchPiece(board, capturedPieceSquare);
 
         if(selectedPiece == null) {
-            throw new CommandException("There are no pieces on " + selectedPieceSquare.getSquareName());
+            throw new CommandException("CommandCapture.isValid(): there are no pieces on " + selectedPieceSquare.getSquareName());
         }
         if(capturedPiece == null) {
-            throw new CommandException("There are no pieces on " + selectedPieceSquare.getSquareName());
+            throw new CommandException("CommandCapture.isValid() : there are no pieces on " + selectedPieceSquare.getSquareName());
         }
         if(selectedPiece.getColor() == capturedPiece.getColor()) {
-            throw new CommandException("You cannot capture your own pieces");
+            throw new CommandException("CommandCapture.isValid() does not accept this PieceColor because you cannot capture your own pieces");
         }
         if(selectedPiece.isMan() && capturedPiece.isKing()) {
-            throw new CommandException("A man cannot capture a king");
+            throw new CommandException("CommandCapture.isValid() does not accept this pieces because a man cannot capture a king");
         }
         if(!board.getSquare(toCoordinates).isFree()) {
-            throw new CommandException("Cannot capture piece on " + capturedPieceSquare.getSquareName()
+            throw new CommandException("CommandCapture.isValid(): cannot capture piece on " + capturedPieceSquare.getSquareName()
                     + ": there is a piece on " + board.getSquare(this.toCoordinates).getSquareName());
         }
         List<Square> reachableSquaresFromSelectedPiece = board.getReachableSquares(selectedPiece);
