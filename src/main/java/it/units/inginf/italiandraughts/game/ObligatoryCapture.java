@@ -65,9 +65,9 @@ public class ObligatoryCapture {
 
     private static List<List<TemporaryCapture>> capturesListOptionsWorker(Board board, Piece piece, List<TemporaryCapture> capturesList, List<List<TemporaryCapture>> capturesListOptions) throws SquareException, BoardException, SquareContentException, PieceColorException, PieceException {
         for(Square square: board.getReachableSquares(piece)) {
-            TemporaryCapture singleCapture;
+            TemporaryCapture temporaryCapture;
             try {
-                singleCapture = new TemporaryCapture(
+                temporaryCapture = new TemporaryCapture(
                         board,
                         new CommandCapture(
                                 piece.getSquare().getSquareCoordinates(),
@@ -77,16 +77,16 @@ public class ObligatoryCapture {
                 // reachable square is on the edge -> impossible to capture
                 continue;
             }
-            if (singleCapture.isValid()) {
-                singleCapture.run(); // execute capture
+            if (temporaryCapture.isValid()) {
+                temporaryCapture.run(); // execute capture
                 // new updatedCapturesList = capturesList
                 List<TemporaryCapture> updatedCapturesList = new ArrayList<>(capturesList);
                 // add capture just executed to updateCapturesList
-                updatedCapturesList.add(singleCapture);
+                updatedCapturesList.add(temporaryCapture);
                 // recursion on the updatedCapturesList (allows to explore all capture options from a given piece)
                 capturesListOptionsWorker(board, piece, updatedCapturesList, capturesListOptions);
                 // undo the capture
-                singleCapture.reset();
+                temporaryCapture.reset();
             }
         }
         if(!capturesList.isEmpty())
@@ -108,8 +108,8 @@ public class ObligatoryCapture {
         score += 100 * getNumberOfCapturedKing(capturesList);
         // If a player may capture an equal number of pieces (each series containing a king) with a king,
         // they must capture wherever the king occurs first
-        for(TemporaryCapture singleCapture : capturesList) {
-            if(!singleCapture.isCapturedPieceKing()) {
+        for(TemporaryCapture temporaryCapture : capturesList) {
+            if(!temporaryCapture.isCapturedPieceKing()) {
                 score -= 1;
             } else {
                 break;
@@ -121,8 +121,8 @@ public class ObligatoryCapture {
 
     private static int getNumberOfCapturedKing(List<TemporaryCapture> singleCaptureList) throws BoardException, SquareException {
         int numberOfCapturedKing = 0;
-        for(TemporaryCapture singleCapture : singleCaptureList) {
-            if(singleCapture.isCapturedPieceKing()) {
+        for(TemporaryCapture temporaryCapture : singleCaptureList) {
+            if(temporaryCapture.isCapturedPieceKing()) {
                 numberOfCapturedKing++;
             }
         }
