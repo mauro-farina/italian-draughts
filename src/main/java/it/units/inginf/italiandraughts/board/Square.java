@@ -58,21 +58,20 @@ public class Square {
     }
 
     public void setSquareContent(Piece newPieceOnSquare) throws PieceException {
-        if (newPieceOnSquare == null){
-            throw new PieceException("Square.setSquareContent() because piece cannot be null");
-        }
-        if (newPieceOnSquare.isMan()) {
+         if (newPieceOnSquare.isMan()) {
             if (newPieceOnSquare.getColor() == PieceColor.WHITE) {
                 this.squareContent = SquareContent.WHITE_MAN;
             } else {
                 this.squareContent = SquareContent.BLACK_MAN;
             }
-        } else { // isKing
+        } else if(newPieceOnSquare.isKing()) {
             if (newPieceOnSquare.getColor() == PieceColor.WHITE) {
                 this.squareContent = SquareContent.WHITE_KING;
             } else {
                 this.squareContent = SquareContent.BLACK_KING;
             }
+        } else {
+            throw new PieceException("Square.setSquareContent() does not accept this piece because piece is not a man and not even a king ");
         }
     }
 
