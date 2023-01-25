@@ -25,7 +25,7 @@ public class BoardUtilsTest {
     }
 
     @Test
-    void checkToCrown() {
+    void checkCrownPiece() {
         Board board;
         try {
             board = new Board();
