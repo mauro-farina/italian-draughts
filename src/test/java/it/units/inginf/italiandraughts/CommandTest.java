@@ -71,7 +71,7 @@ public class CommandTest {
     }
 
     @Test
-    void checkIsValidWhenIsNot() {
+    void checkIsValidWhenFalse() {
         CommandCapture commandCapture;
         try {
             commandCapture = new CommandCapture(
