@@ -71,7 +71,7 @@ public class Game {
             try{
                 outputPrinter.print(board.toStringFor(getCurrentTurn().getColor()));
                 outputPrinter.print("Turn of " + getCurrentTurn().getNickname());
-                obligatoryCaptureList.addAll(ObligatoryCapture.getObligatoryCaptureList(this.getBoard(), this.currentTurn));
+                obligatoryCaptureList.addAll(ObligatoryCapture.getObligatoryCaptureList(this.board, this.currentTurn));
                 if(obligatoryCaptureList.size() > 0) {
                     outputPrinter.print("Mandatory captures found:");
                     Iterator<List<CommandCapture>> captureIterator = obligatoryCaptureList.iterator();
