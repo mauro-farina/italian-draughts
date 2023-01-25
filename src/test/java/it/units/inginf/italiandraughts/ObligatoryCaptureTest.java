@@ -1,4 +1,5 @@
 package it.units.inginf.italiandraughts;
+
 import it.units.inginf.italiandraughts.game.ObligatoryCapture;
 import it.units.inginf.italiandraughts.game.Game;
 import it.units.inginf.italiandraughts.game.PlayerColor;
@@ -13,9 +14,14 @@ import it.units.inginf.italiandraughts.board.SquareCoordinates;
 import it.units.inginf.italiandraughts.commands.CommandCapture;
 import it.units.inginf.italiandraughts.io.CommandLineInputReader;
 import it.units.inginf.italiandraughts.io.CommandLineOutputPrinter;
+
 import org.junit.jupiter.api.Test;
 import java.util.List;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 public class ObligatoryCaptureTest {
     @Test
     void checkKingCaptureMan() {
