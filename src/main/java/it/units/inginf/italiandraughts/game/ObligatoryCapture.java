@@ -1,19 +1,9 @@
 package it.units.inginf.italiandraughts.game;
 
-import it.units.inginf.italiandraughts.board.Board;
-import it.units.inginf.italiandraughts.board.Piece;
-import it.units.inginf.italiandraughts.board.PieceColor;
-import it.units.inginf.italiandraughts.board.Square;
+import it.units.inginf.italiandraughts.BoardUtils;
+import it.units.inginf.italiandraughts.board.*;
 import it.units.inginf.italiandraughts.commands.CommandCapture;
-import it.units.inginf.italiandraughts.commands.ExecutableCommandCapture;
-import it.units.inginf.italiandraughts.exception.BoardException;
-import it.units.inginf.italiandraughts.exception.CoordinatesException;
-import it.units.inginf.italiandraughts.exception.PlayerException;
-import it.units.inginf.italiandraughts.exception.PieceException;
-import it.units.inginf.italiandraughts.exception.PieceColorException;
-import it.units.inginf.italiandraughts.exception.SquareException;
-import it.units.inginf.italiandraughts.exception.SquareContentException;
-import it.units.inginf.italiandraughts.exception.PlayerColorException;
+import it.units.inginf.italiandraughts.exception.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,10 +26,10 @@ public class ObligatoryCapture {
         List<Piece> piecesList = board.getPieces(piecesColor);
         // `score` is used to determine the mandatory list of captures that a player must perform
         // e.g. "the first and foremost rule to obey is to capture the greatest quantity of pieces"
-        Map<List<ExecutableCommandCapture>, Integer> capturesListScore = new HashMap<>();
+        Map<List<TemporaryCapture>, Integer> capturesListScore = new HashMap<>();
 
         for (Piece piece : piecesList) {
-            for(List<ExecutableCommandCapture> capturesList : getCapturesListOptionsForPiece(board, piece)) {
+            for(List<TemporaryCapture> capturesList : getCapturesListOptionsForPiece(board, piece)) {
                 if (capturesList.isEmpty())
                     continue;
                 capturesListScore.put(capturesList, getCapturesListScore(capturesList));
@@ -50,7 +40,7 @@ public class ObligatoryCapture {
         int maxScore = capturesListScore.values().stream().max(Integer::compare).orElse(0);
 
         // keep only capture options with the highest score (same number of captures, numb. kings captured, ...)
-        List<List<ExecutableCommandCapture>> obligatoryCaptureOptionsList = capturesListScore
+        List<List<TemporaryCapture>> obligatoryCaptureOptionsList = capturesListScore
                 .entrySet()
                 .stream()
                 .filter(entry -> entry.getValue() == maxScore)
@@ -62,25 +52,26 @@ public class ObligatoryCapture {
                 .stream()
                 .map(optionsList -> optionsList
                         .stream()
-                        .map(capture -> (CommandCapture) capture)
+                        .map(TemporaryCapture::getCommandCapture)
                         .toList())
                 .toList();
     }
 
-    private static List<List<ExecutableCommandCapture>> getCapturesListOptionsForPiece(Board board, Piece piece)
+    private static List<List<TemporaryCapture>> getCapturesListOptionsForPiece(Board board, Piece piece)
             throws SquareContentException, PieceColorException, SquareException, BoardException, PieceException {
         if(piece == null) return null;
         return capturesListOptionsWorker(board, piece, new ArrayList<>(), new ArrayList<>());
     }
 
-    private static List<List<ExecutableCommandCapture>> capturesListOptionsWorker(Board board, Piece piece, List<ExecutableCommandCapture> capturesList, List<List<ExecutableCommandCapture>> capturesListOptions) throws SquareException, BoardException, SquareContentException, PieceColorException, PieceException {
+    private static List<List<TemporaryCapture>> capturesListOptionsWorker(Board board, Piece piece, List<TemporaryCapture> capturesList, List<List<TemporaryCapture>> capturesListOptions) throws SquareException, BoardException, SquareContentException, PieceColorException, PieceException {
         for(Square square: board.getReachableSquares(piece)) {
-            ExecutableCommandCapture singleCapture;
+            TemporaryCapture singleCapture;
             try {
-                singleCapture = new ExecutableCommandCapture(
+                singleCapture = new TemporaryCapture(
                         board,
-                        piece.getSquare().getSquareCoordinates(),
-                        square.getSquareCoordinates()
+                        new CommandCapture(
+                                piece.getSquare().getSquareCoordinates(),
+                                square.getSquareCoordinates())
                 );
             } catch(CoordinatesException e) {
                 // reachable square is on the edge -> impossible to capture
@@ -89,7 +80,7 @@ public class ObligatoryCapture {
             if (singleCapture.isValid()) {
                 singleCapture.run(); // execute capture
                 // new updatedCapturesList = capturesList
-                List<ExecutableCommandCapture> updatedCapturesList = new ArrayList<>(capturesList);
+                List<TemporaryCapture> updatedCapturesList = new ArrayList<>(capturesList);
                 // add capture just executed to updateCapturesList
                 updatedCapturesList.add(singleCapture);
                 // recursion on the updatedCapturesList (allows to explore all capture options from a given piece)
@@ -103,7 +94,7 @@ public class ObligatoryCapture {
         return capturesListOptions;
     }
 
-    private static int getCapturesListScore(List<ExecutableCommandCapture> capturesList) throws SquareException, BoardException {
+    private static int getCapturesListScore(List<TemporaryCapture> capturesList) throws SquareException, BoardException {
         if(capturesList.isEmpty()) {
             return 0;
         }
@@ -117,7 +108,7 @@ public class ObligatoryCapture {
         score += 100 * getNumberOfCapturedKing(capturesList);
         // If a player may capture an equal number of pieces (each series containing a king) with a king,
         // they must capture wherever the king occurs first
-        for(ExecutableCommandCapture singleCapture : capturesList) {
+        for(TemporaryCapture singleCapture : capturesList) {
             if(!singleCapture.isCapturedPieceKing()) {
                 score -= 1;
             } else {
@@ -126,88 +117,111 @@ public class ObligatoryCapture {
         }
         return score;
     }
-/*
-    private static void compareTwoLists(List<ExecutableCommandCapture> singleCaptureList, List<ExecutableCommandCapture> newSingleCaptureList) throws BoardException, SquareException {
-        if(newSingleCaptureList.size() == 0 || newSingleCaptureList.size() < singleCaptureList.size()) {
-            return;
-        }
-        if (newSingleCaptureList.size() > singleCaptureList.size()) {
-            //first check number of captured pieces
-            singleCaptureList.clear();
-            singleCaptureList.addAll(newSingleCaptureList);
-            return;
-        }
-        // newSingleCaptureList.size() == singleCaptureList.size()
-        if (!singleCaptureList.get(0).isCapturingPieceKing()
-                    && newSingleCaptureList.get(0).isCapturingPieceKing()) {
-            //second check start piece is a king
-            singleCaptureList.clear();
-            singleCaptureList.addAll(newSingleCaptureList);
-        } else if (singleCaptureList.get(0).isCapturingPieceKing()
-                    && newSingleCaptureList.get(0).isCapturingPieceKing()) {
-            int numberOfKingInSingleCaptureList = getNumberOfCapturedKing(singleCaptureList);
-            int numberOfKingInNewSingleCaptureList = getNumberOfCapturedKing(newSingleCaptureList);
-            if (numberOfKingInNewSingleCaptureList > numberOfKingInSingleCaptureList) {
-                //third check number of captured king
-                singleCaptureList.clear();
-                singleCaptureList.addAll(newSingleCaptureList);
-            } else if ((numberOfKingInNewSingleCaptureList == numberOfKingInSingleCaptureList)
-                    && (numberOfKingInNewSingleCaptureList > 0)) {
-                for (short i = 0; i < singleCaptureList.size(); i++) {
-                    if ((newSingleCaptureList.get(i).isCapturedPieceKing())
-                                && (!singleCaptureList.get(i).isCapturedPieceKing())) {
-                        //last check closer king
-                        singleCaptureList.clear();
-                        singleCaptureList.addAll(newSingleCaptureList);
-                    }
-                }
-            }
-        }
-    }
 
-    private static void fillSingleCaptureList(Board board, List<ExecutableCommandCapture> singleCaptureList, Piece piece)
-            throws SquareContentException, PieceColorException, SquareException, BoardException, PieceException {
-        if(piece == null) {
-            return;
-        }
-        for(Square square: board.getReachableSquares(piece)) {
-            ExecutableCommandCapture singleCapture;
-            try {
-                singleCapture = new ExecutableCommandCapture(
-                        board,
-                        piece.getSquare().getSquareCoordinates(),
-                        square.getSquareCoordinates()
-                );
-            } catch(CoordinatesException e) {
-                continue;
-            }
 
-            List<ExecutableCommandCapture> newSingleCaptureList = new ArrayList<>(singleCaptureList);
-            if (singleCapture.isValid()) {
-                newSingleCaptureList.add(singleCapture);
-                singleCapture.run();
-                compareTwoLists(singleCaptureList, newSingleCaptureList);
-                fillSingleCaptureList(
-                        board,
-                        singleCaptureList,
-                        BoardUtils.researchPiece(
-                                board,
-                                board.getSquare(singleCapture.getToCoordinates())
-                        ));
-                singleCapture.reset();
-            }
-        }
-    }
-*/
-
-    private static int getNumberOfCapturedKing(List<ExecutableCommandCapture> singleCaptureList) throws BoardException, SquareException {
+    private static int getNumberOfCapturedKing(List<TemporaryCapture> singleCaptureList) throws BoardException, SquareException {
         int numberOfCapturedKing = 0;
-        for(ExecutableCommandCapture singleCapture : singleCaptureList) {
+        for(TemporaryCapture singleCapture : singleCaptureList) {
             if(singleCapture.isCapturedPieceKing()) {
                 numberOfCapturedKing++;
             }
         }
         return numberOfCapturedKing;
+    }
+
+}
+
+class TemporaryCapture {
+
+    private final Board board;
+    private final SquareCoordinates fromCoordinates;
+    private final SquareCoordinates pieceToCaptureCoordinates;
+    private final SquareCoordinates toCoordinates;
+    private final CommandCapture commandCapture;
+    private boolean capturedPieceIsKing;
+
+    public TemporaryCapture(Board board, CommandCapture commandCapture) throws CoordinatesException {
+        this.board = board;
+        this.commandCapture = commandCapture;
+        this.fromCoordinates = commandCapture.getFromCoordinates();
+        this.toCoordinates = commandCapture.getToCoordinates();
+        this.pieceToCaptureCoordinates = commandCapture.getPieceToCaptureCoordinates();
+    }
+
+    public CommandCapture getCommandCapture() {
+        return this.commandCapture;
+    }
+
+    public boolean isValid() throws SquareException, BoardException {
+        try {
+            return commandCapture.isValid(board);
+        } catch (CommandException e) {
+            return false;
+        }
+    }
+
+    public void run() throws BoardException, SquareException, SquareContentException,
+            PieceColorException, PieceException {
+        Square selectedPieceSquare = board.getSquare(this.fromCoordinates);
+        Square capturedPieceSquare = board.getSquare(this.pieceToCaptureCoordinates);
+        Square destinationSquare = board.getSquare(this.toCoordinates);
+        Piece selectedPiece = BoardUtils.researchPiece(this.board, selectedPieceSquare);
+        Piece capturedPiece = BoardUtils.researchPiece(this.board, capturedPieceSquare);
+        if(selectedPiece != null && capturedPiece != null) {
+            this.capturedPieceIsKing = capturedPiece.isKing();
+            selectedPieceSquare.setSquareContent(SquareContent.EMPTY);
+            capturedPieceSquare.setSquareContent(SquareContent.EMPTY);
+            BoardUtils.removePiece(this.board, capturedPiece);
+            destinationSquare.setSquareContent(selectedPiece);
+            selectedPiece.setSquare(destinationSquare);
+        }
+    }
+
+    public void reset() throws BoardException, SquareException, SquareContentException,
+            PieceColorException, PieceException {
+        Square selectedPieceSquare = board.getSquare(fromCoordinates);
+        Square capturedPieceSquare = board.getSquare(pieceToCaptureCoordinates);
+        Square destinationSquare = board.getSquare(toCoordinates);
+        Piece selectedPiece = BoardUtils.researchPiece(this.board, destinationSquare);
+        if(selectedPiece == null) {
+            return;
+        }
+        destinationSquare.setSquareContent(SquareContent.EMPTY);
+        selectedPieceSquare.setSquareContent(selectedPiece);
+        selectedPiece.setSquare(selectedPieceSquare);
+        if(capturedPieceIsKing) {
+            if(selectedPiece.getColor() == PieceColor.WHITE) {
+                capturedPieceSquare.setSquareContent(SquareContent.BLACK_KING);
+                this.board.getBlackPieces().add(new King(PieceColor.BLACK, capturedPieceSquare));
+            } else {
+                capturedPieceSquare.setSquareContent(SquareContent.WHITE_KING);
+                this.board.getWhitePieces().add(new King(PieceColor.WHITE, capturedPieceSquare));
+            }
+        } else {
+            if(selectedPiece.getColor() == PieceColor.WHITE) {
+                capturedPieceSquare.setSquareContent(SquareContent.BLACK_MAN);
+                this.board.getBlackPieces().add(new Man(PieceColor.BLACK, capturedPieceSquare));
+            } else {
+                capturedPieceSquare.setSquareContent(SquareContent.WHITE_MAN);
+                this.board.getWhitePieces().add(new Man(PieceColor.WHITE, capturedPieceSquare));
+            }
+        }
+    }
+
+    public boolean isCapturingPieceKing() throws BoardException, SquareException {
+        Piece piece = BoardUtils.researchPiece(this.board, this.board.getSquare(this.fromCoordinates));
+        if(piece == null) {
+            return false;
+        }
+        return piece.isKing();
+    }
+
+    public boolean isCapturedPieceKing() throws BoardException, SquareException {
+        Piece piece = BoardUtils.researchPiece(this.board, this.board.getSquare(this.pieceToCaptureCoordinates));
+        if(piece == null) {
+            return false;
+        }
+        return piece.isKing();
     }
 
 }
