@@ -1,9 +1,14 @@
 package it.units.inginf.italiandraughts;
 
+import it.units.inginf.italiandraughts.board.Board;
 import it.units.inginf.italiandraughts.board.SquareCoordinates;
 import it.units.inginf.italiandraughts.commands.Command;
+import it.units.inginf.italiandraughts.commands.CommandCapture;
 import it.units.inginf.italiandraughts.commands.CommandTo;
 import it.units.inginf.italiandraughts.commands.CommandType;
+import it.units.inginf.italiandraughts.exception.BoardException;
+import it.units.inginf.italiandraughts.exception.CommandException;
+import it.units.inginf.italiandraughts.exception.SquareException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -62,6 +67,27 @@ public class CommandTest {
             if(expectedCoordinates.getColumn() != commandMoveToSquareCoordinates.getColumn()
                     || expectedCoordinates.getRow() != commandMoveToSquareCoordinates.getRow())
                 fail();
+        } catch (Exception e) {
+            fail();
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    void checkIsValidWhenIsNot() {
+        CommandCapture commandCapture;
+        try {
+            commandCapture = new CommandCapture(
+                    new SquareCoordinates(1, 2),
+                    new SquareCoordinates(2, 3));
+            try {
+                assertFalse(commandCapture.isValid(new Board()));
+            } catch (CommandException e) {
+                assertTrue(true);
+            } catch(BoardException | SquareException e) {
+                fail();
+            }
+
         } catch (Exception e) {
             fail();
             throw new RuntimeException(e);
