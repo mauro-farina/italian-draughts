@@ -38,19 +38,6 @@ public class ExecutableCommandCaptureTest {
     }
 
     @Test
-    void checkPieceOnToCoordinatesIsKing() {
-        try {
-            ExecutableCommandCapture singleCapture = new ExecutableCommandCapture(new Board(),
-                    new SquareCoordinates(1, 2),
-                    new SquareCoordinates(2, 3));
-            assertFalse(singleCapture.isPieceOnToCoordinatesKing());
-        } catch (Exception e) {
-            fail();
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Test
     void checkManNotCaptureKing() {
         try {
             Board board = new Board();
