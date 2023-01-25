@@ -1,11 +1,18 @@
 package it.units.inginf.italiandraughts;
 
-import it.units.inginf.italiandraughts.board.*;
+import it.units.inginf.italiandraughts.board.Board;
+import it.units.inginf.italiandraughts.board.SquareCoordinates;
+import it.units.inginf.italiandraughts.board.SquareContent;
+import it.units.inginf.italiandraughts.board.Man;
+import it.units.inginf.italiandraughts.board.PieceColor;
 import it.units.inginf.italiandraughts.commands.Command;
 import it.units.inginf.italiandraughts.commands.CommandCapture;
 import it.units.inginf.italiandraughts.commands.CommandTo;
 import it.units.inginf.italiandraughts.commands.CommandType;
-import it.units.inginf.italiandraughts.exception.*;
+import it.units.inginf.italiandraughts.exception.BoardException;
+import it.units.inginf.italiandraughts.exception.CommandException;
+import it.units.inginf.italiandraughts.exception.SquareException;
+
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
