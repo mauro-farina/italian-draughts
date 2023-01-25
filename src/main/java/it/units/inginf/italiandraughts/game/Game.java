@@ -238,7 +238,7 @@ public class Game {
         } else if (this.currentTurn == this.player2) {
             pieceColor = PieceColor.WHITE;
         } else {
-            throw new PlayerException("Invalid turn");
+            throw new PlayerException("Game.checkDrawCondition() does not accept this player");
         }
         for (Piece piece : this.board.getPieces(pieceColor)) {
             for (Square reachableSquare : this.board.getReachableSquares(piece)) {
