@@ -1,6 +1,5 @@
 package it.units.inginf.italiandraughts.game;
 
-import it.units.inginf.italiandraughts.BoardUtils;
 import it.units.inginf.italiandraughts.board.Board;
 import it.units.inginf.italiandraughts.board.Piece;
 import it.units.inginf.italiandraughts.board.PieceColor;
@@ -40,18 +39,14 @@ public class ObligatoryCapture {
         Map<List<ExecutableCommandCapture>, Integer> capturesListScore = new HashMap<>();
 
         for (Piece piece : piecesList) {
-            List<ExecutableCommandCapture> capturesList = new ArrayList<>();
-
-            // fill capturesList with the sequence of possible captures using the given piece
-            fillSingleCaptureList(board, capturesList, piece);
-
-            if (capturesList.isEmpty())
-                continue; // ignore capturesList for pieces that cannot capture anything
-
-            // store for each capturesList its score
-            capturesListScore.put(capturesList, getCapturesListScore(capturesList));
+            for(List<ExecutableCommandCapture> capturesList : getCapturesListOptionsForPiece(board, piece)) {
+                if (capturesList.isEmpty())
+                    continue;
+                capturesListScore.put(capturesList, getCapturesListScore(capturesList));
+            }
         }
-        // capturesList(s) with the highest score is the mandatory sequence of captures a player must perform
+
+        // capturesList(s) with the highest score is(are) the mandatory sequence of captures a player must perform
         int maxScore = capturesListScore.values().stream().max(Integer::compare).orElse(0);
 
         // keep only capture options with the highest score (same number of captures, numb. kings captured, ...)
@@ -70,6 +65,42 @@ public class ObligatoryCapture {
                         .map(capture -> (CommandCapture) capture)
                         .toList())
                 .toList();
+    }
+
+    private static List<List<ExecutableCommandCapture>> getCapturesListOptionsForPiece(Board board, Piece piece)
+            throws SquareContentException, PieceColorException, SquareException, BoardException, PieceException {
+        if(piece == null) return null;
+        return capturesListOptionsWorker(board, piece, new ArrayList<>(), new ArrayList<>());
+    }
+
+    private static List<List<ExecutableCommandCapture>> capturesListOptionsWorker(Board board, Piece piece, List<ExecutableCommandCapture> capturesList, List<List<ExecutableCommandCapture>> capturesListOptions) throws SquareException, BoardException, SquareContentException, PieceColorException, PieceException {
+        for(Square square: board.getReachableSquares(piece)) {
+            ExecutableCommandCapture singleCapture;
+            try {
+                singleCapture = new ExecutableCommandCapture(
+                        board,
+                        piece.getSquare().getSquareCoordinates(),
+                        square.getSquareCoordinates()
+                );
+            } catch(CoordinatesException e) {
+                // reachable square is on the edge -> impossible to capture
+                continue;
+            }
+            if (singleCapture.isValid()) {
+                singleCapture.run(); // execute capture
+                // new updatedCapturesList = capturesList
+                List<ExecutableCommandCapture> updatedCapturesList = new ArrayList<>(capturesList);
+                // add capture just executed to updateCapturesList
+                updatedCapturesList.add(singleCapture);
+                // recursion on the updatedCapturesList (allows to explore all capture options from a given piece)
+                capturesListOptionsWorker(board, piece, updatedCapturesList, capturesListOptions);
+                // undo the capture
+                singleCapture.reset();
+            }
+        }
+        if(!capturesList.isEmpty())
+            capturesListOptions.add(capturesList); // add sequence of captures to the captures options of the given piece
+        return capturesListOptions;
     }
 
     private static int getCapturesListScore(List<ExecutableCommandCapture> capturesList) throws SquareException, BoardException {
@@ -95,7 +126,7 @@ public class ObligatoryCapture {
         }
         return score;
     }
-
+/*
     private static void compareTwoLists(List<ExecutableCommandCapture> singleCaptureList, List<ExecutableCommandCapture> newSingleCaptureList) throws BoardException, SquareException {
         if(newSingleCaptureList.size() == 0 || newSingleCaptureList.size() < singleCaptureList.size()) {
             return;
@@ -167,6 +198,7 @@ public class ObligatoryCapture {
             }
         }
     }
+*/
 
     private static int getNumberOfCapturedKing(List<ExecutableCommandCapture> singleCaptureList) throws BoardException, SquareException {
         int numberOfCapturedKing = 0;
