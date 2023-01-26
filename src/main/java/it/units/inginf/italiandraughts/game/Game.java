@@ -80,26 +80,20 @@ public class Game {
                             outputPrinter.print("or...");
                         }
                     }
-                }
-            } catch (Exception exception) {
-                outputPrinter.print(exception.getMessage());
-            }
-
-            if(obligatoryCaptureList.size() > 0) {
-                handleObligatoryCaptures(obligatoryCaptureList);
-                obligatoryCaptureList.clear();
-            } else {
-                try {
+                    handleObligatoryCaptures(obligatoryCaptureList);
+                    obligatoryCaptureList.clear();
+                } else {
                     Command command;
                     do {
                         String readCommand = inputReader.readInput();
                         command = CommandParser.parseCommand(readCommand);
                         commandRunner.runCommand(command);
                     } while (command.getCommandType() == CommandType.HELP);
-                } catch (Exception e) {
-                    outputPrinter.print(e.getMessage());
                 }
+            } catch (Exception exception) {
+                outputPrinter.print(exception.getMessage());
             }
+
             try {
                 if(checkVictoryCondition()) {
                     setWinnerPlayer(this.currentTurn);
