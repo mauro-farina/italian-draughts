@@ -6,7 +6,6 @@ import it.units.inginf.italiandraughts.board.Square;
 import it.units.inginf.italiandraughts.board.SquareContent;
 import it.units.inginf.italiandraughts.board.Piece;
 import it.units.inginf.italiandraughts.game.Game;
-import it.units.inginf.italiandraughts.io.CommandLineOutputPrinter;
 import it.units.inginf.italiandraughts.io.OutputPrinter;
 import it.units.inginf.italiandraughts.exception.CommandException;
 import it.units.inginf.italiandraughts.exception.PlayerException;
@@ -24,7 +23,7 @@ public class CommandRunner {
 
     public CommandRunner(Game game) {
         this.game = game;
-        this.outputPrinter = new CommandLineOutputPrinter();
+        this.outputPrinter = game.getOutputPrinter();
     }
 
     public void runCommand(Command command) throws PlayerException, CommandException, BoardException, PieceException, PieceColorException, SquareException, SquareContentException {
