@@ -184,8 +184,8 @@ public class Game {
     }
 
     private void printObligatoryCaptureList(List<CommandCapture> obligatoryCaptureList) {
-        for(int i=0; i<obligatoryCaptureList.size(); i++) {
-            outputPrinter.print(obligatoryCaptureList.get(i).toString());
+        for (CommandCapture commandCapture : obligatoryCaptureList) {
+            outputPrinter.print(commandCapture.toString());
         }
     }
 
