@@ -106,5 +106,23 @@ public class BoardTest {
             fail(e.getMessage());
         }
     }
+    @Test
+    void testToStringRepresentation() {
+        try {
+            Board board = new Board();
+            String expectedBoard = "8\t[b]\t[ ]\t[b]\t[ ]\t[b]\t[ ]\t[b]\t[ ]\t" + System.lineSeparator() +
+                    "7\t[ ]\t[b]\t[ ]\t[b]\t[ ]\t[b]\t[ ]\t[b]\t" + System.lineSeparator() +
+                    "6\t[b]\t[ ]\t[b]\t[ ]\t[b]\t[ ]\t[b]\t[ ]\t" + System.lineSeparator() +
+                    "5\t[ ]\t[ ]\t[ ]\t[ ]\t[ ]\t[ ]\t[ ]\t[ ]\t" + System.lineSeparator() +
+                    "4\t[ ]\t[ ]\t[ ]\t[ ]\t[ ]\t[ ]\t[ ]\t[ ]\t" + System.lineSeparator() +
+                    "3\t[ ]\t[w]\t[ ]\t[w]\t[ ]\t[w]\t[ ]\t[w]\t" + System.lineSeparator() +
+                    "2\t[w]\t[ ]\t[w]\t[ ]\t[w]\t[ ]\t[w]\t[ ]\t" + System.lineSeparator() +
+                    "1\t[ ]\t[w]\t[ ]\t[w]\t[ ]\t[w]\t[ ]\t[w]\t" + System.lineSeparator() +
+                    "\t A \t B \t C \t D \t E \t F \t G \t H";
+            assertEquals(expectedBoard, board.toString());
+        } catch (Exception e) {
+            fail();
+        }
+    }
 
 }
