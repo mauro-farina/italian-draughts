@@ -32,22 +32,22 @@ public class CommandTo extends Command {
 
     public boolean isValid(Board board) throws SquareException, BoardException, CommandException {
         if (board == null) {
-            throw new BoardException("board is null");
+            throw new BoardException("CommandTo.isValid() does not accept this board because it is null");
         }
         Square startingSquare = board.getSquare(fromCoordinates);
         Square arrivalSquare = board.getSquare(toCoordinates);
         Piece selectedPiece = BoardUtils.researchPiece(board, startingSquare);
         if (selectedPiece == null) {
-            throw new CommandException("there is no piece located on " + startingSquare.getSquareName().toString());
+            throw new CommandException("CommandTo.isValid(): there is no piece located on " + startingSquare.getSquareName().toString());
         }
         if (!arrivalSquare.isFree()) {
-            throw new SquareException("there already is a piece on " + arrivalSquare.getSquareName().toString());
+            throw new SquareException("CommandTo.isValid(): there already is a piece on " + arrivalSquare.getSquareName().toString());
         }
         List<Square> listReachableSquares = board.getReachableSquares(selectedPiece);
         if (listReachableSquares.contains(arrivalSquare)) {
             return true;
         } else {
-            throw new CommandException("cannot reach " + arrivalSquare.getSquareName().toString()
+            throw new CommandException("CommandTo.isValid(): cannot reach " + arrivalSquare.getSquareName().toString()
                     + " from " + startingSquare.getSquareName().toString());
         }
     }
