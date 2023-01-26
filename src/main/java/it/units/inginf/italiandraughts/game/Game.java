@@ -112,10 +112,8 @@ public class Game {
                                 for(List<CommandCapture> commandCaptureList : obligatoryCaptureList) {
                                     if(commandCaptureList.get(i).equals(command)) {
                                         chosenCapturesOptions.add(commandCaptureList);
-                                        outputPrinter.print(command + " is in " + commandCaptureList);
                                     } else {
                                         chosenCapturesOptions.remove(commandCaptureList);
-                                        outputPrinter.print(command + " is NOT in " + commandCaptureList);
                                     }
                                 }
                                 if(chosenCapturesOptions.isEmpty()) {
@@ -125,9 +123,7 @@ public class Game {
                                 }
 
                                 for(List<CommandCapture> validOption : chosenCapturesOptions) {
-                                    outputPrinter.print("eval list " + validOption);
                                     if(command.equals(validOption.get(i))) {
-                                        outputPrinter.print(command + " equals " + validOption.get(i));
                                         commandRunner.runCommand(command);
                                         if (i < validOption.size() - 1) {
                                             outputPrinter.print(board.toStringFor(getCurrentTurn().getColor()));
@@ -145,8 +141,6 @@ public class Game {
                                         }
                                         break;
                                     }
-
-                                    outputPrinter.print(command + " NOT equals " + validOption.get(i));
 
                                     outputPrinter.print("Invalid command: " + command);
                                     outputPrinter.print("Expected command: " + chosenCapturesOptions);
