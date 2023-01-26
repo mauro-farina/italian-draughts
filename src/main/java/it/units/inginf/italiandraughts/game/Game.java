@@ -90,11 +90,11 @@ public class Game {
                         commandRunner.runCommand(command);
                     } while (command.getCommandType() == CommandType.HELP);
                 }
-            } catch (Exception exception) {
+            /*} catch (Exception exception) {
                 outputPrinter.print(exception.getMessage());
             }
 
-            try {
+            try {*/
                 if(checkVictoryCondition()) {
                     setWinnerPlayer(this.currentTurn);
                     outputPrinter.print("The winner is " + this.currentTurn.getNickname());
@@ -106,7 +106,8 @@ public class Game {
                 }
                 changeTurn();
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                //throw new RuntimeException(e);
+                outputPrinter.print(e.getMessage());
             }
         }
     }
