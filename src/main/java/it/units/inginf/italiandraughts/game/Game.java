@@ -68,8 +68,8 @@ public class Game {
         }
         while(this.gameState == GameState.PLAYING) {
             try{
-                outputPrinter.print(board.toStringFor(getCurrentTurn().getColor()));
-                outputPrinter.print("Turn of " + getCurrentTurn().getNickname());
+                outputPrinter.print(board.toStringFor(this.currentTurn.getColor()));
+                outputPrinter.print("Turn of " + this.currentTurn.getNickname());
                 obligatoryCaptureList.addAll(ObligatoryCapture.getObligatoryCaptureList(this.board, this.currentTurn));
                 if(obligatoryCaptureList.size() > 0) {
                     outputPrinter.print("Mandatory captures found:");
@@ -150,7 +150,7 @@ public class Game {
                         if (command.equals(validOption.get(i))) {
                             commandRunner.runCommand(command);
                             if (i < validOption.size() - 1) {
-                                outputPrinter.print(board.toStringFor(getCurrentTurn().getColor()));
+                                outputPrinter.print(board.toStringFor(this.currentTurn.getColor()));
                                 outputPrinter.print("Next obligatory captures:");
                                 StringBuilder nextCapturesOptions = new StringBuilder();
                                 for (List<CommandCapture> _validOption : chosenCapturesOptions) {
