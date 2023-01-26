@@ -7,6 +7,7 @@ import it.units.inginf.italiandraughts.board.Piece;
 import it.units.inginf.italiandraughts.board.Man;
 import it.units.inginf.italiandraughts.board.King;
 import it.units.inginf.italiandraughts.board.PieceColor;
+import it.units.inginf.italiandraughts.game.PlayerColor;
 
 import org.junit.jupiter.api.Test;
 
@@ -119,7 +120,7 @@ public class BoardTest {
                     "2\t[w]\t[ ]\t[w]\t[ ]\t[w]\t[ ]\t[w]\t[ ]\t" + System.lineSeparator() +
                     "1\t[ ]\t[w]\t[ ]\t[w]\t[ ]\t[w]\t[ ]\t[w]\t" + System.lineSeparator() +
                     "\t A \t B \t C \t D \t E \t F \t G \t H";
-            assertEquals(expectedBoard, board.toString());
+            assertEquals(expectedBoard, board.toStringFor(PlayerColor.WHITE));
         } catch (Exception e) {
             fail();
         }
