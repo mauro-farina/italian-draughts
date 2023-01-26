@@ -89,7 +89,7 @@ public class Game {
                 String readCommand;
                 try {
                     if(obligatoryCaptureList.size() > 0) {
-                        List<CommandCapture> chosenCapturesOption = null;
+                        List<List<CommandCapture>> chosenCapturesOptions = new ArrayList<>();
                         for(short i = 0; i < obligatoryCaptureList.get(0).size(); i++) {
                             readCommand = inputReader.readInput();
                             command = CommandParser.parseCommand(readCommand);
@@ -108,31 +108,48 @@ public class Game {
                             }
 
                             if(command.getCommandType() == CommandType.CAPTURE) {
-                                if(i == 0) {
-                                    for(List<CommandCapture> commandCaptureList : obligatoryCaptureList) {
-                                        if(commandCaptureList.get(0).equals(command)) {
-                                            chosenCapturesOption = commandCaptureList;
-                                            break;
-                                        }
-                                    }
-                                    if(chosenCapturesOption == null) {
-                                        outputPrinter.print("Invalid capture, read the obligatory capture list.");
-                                        i--;
-                                        continue;
+
+                                for(List<CommandCapture> commandCaptureList : obligatoryCaptureList) {
+                                    if(commandCaptureList.get(i).equals(command)) {
+                                        chosenCapturesOptions.add(commandCaptureList);
+                                        outputPrinter.print(command + " is in " + commandCaptureList);
+                                    } else {
+                                        chosenCapturesOptions.remove(commandCaptureList);
+                                        outputPrinter.print(command + " is NOT in " + commandCaptureList);
                                     }
                                 }
-                                //program does not reach here until chosenCapturesOption is valued
-                                assert chosenCapturesOption != null;
-                                if(command.equals(chosenCapturesOption.get(i))) {
-                                    commandRunner.runCommand(command);
-                                    if(i < chosenCapturesOption.size()-1) {
-                                        outputPrinter.print(board.toStringFor(getCurrentTurn().getColor()));
-                                        outputPrinter.print("Next obligatory captures:");
-                                        printObligatoryCaptureList(chosenCapturesOption, i+1);
+                                if(chosenCapturesOptions.isEmpty()) {
+                                    outputPrinter.print("Invalid capture, read the obligatory capture list.");
+                                    i--;
+                                    continue;
+                                }
+
+                                for(List<CommandCapture> validOption : chosenCapturesOptions) {
+                                    outputPrinter.print("eval list " + validOption);
+                                    if(command.equals(validOption.get(i))) {
+                                        outputPrinter.print(command + " equals " + validOption.get(i));
+                                        commandRunner.runCommand(command);
+                                        if (i < validOption.size() - 1) {
+                                            outputPrinter.print(board.toStringFor(getCurrentTurn().getColor()));
+                                            outputPrinter.print("Next obligatory captures:");
+                                            StringBuilder nextCapturesOptions = new StringBuilder();
+                                            for(List<CommandCapture> _validOption : chosenCapturesOptions) {
+                                                if(command.equals(validOption.get(i))) {
+                                                    nextCapturesOptions.append(capturesListToString(_validOption, i+1));
+                                                    nextCapturesOptions.append("or...");
+                                                    nextCapturesOptions.append(System.lineSeparator());
+                                                }
+                                            }
+                                            nextCapturesOptions.delete(nextCapturesOptions.length()-8, nextCapturesOptions.length());
+                                            outputPrinter.print(nextCapturesOptions.toString());
+                                        }
+                                        break;
                                     }
-                                } else {
+
+                                    outputPrinter.print(command + " NOT equals " + validOption.get(i));
+
                                     outputPrinter.print("Invalid command: " + command);
-                                    outputPrinter.print("Expected command: " + chosenCapturesOption.get((i)));
+                                    outputPrinter.print("Expected command: " + chosenCapturesOptions);
                                     i--;
                                 }
                             }
@@ -171,6 +188,15 @@ public class Game {
         for(int i=excludeCapturesBeforeIndex; i<obligatoryCaptureList.size(); i++) {
             outputPrinter.print(obligatoryCaptureList.get(i).toString());
         }
+    }
+
+    private static String capturesListToString(List<CommandCapture> obligatoryCaptureList, int excludeCapturesBeforeIndex) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for(int i=excludeCapturesBeforeIndex; i<obligatoryCaptureList.size(); i++) {
+            stringBuilder.append(obligatoryCaptureList.get(i).toString());
+            stringBuilder.append(System.lineSeparator());
+        }
+        return stringBuilder.toString();
     }
 
     public void initGame() {
