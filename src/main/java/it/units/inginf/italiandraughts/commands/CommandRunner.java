@@ -28,7 +28,7 @@ public class CommandRunner {
 
     public void runCommand(Command command) throws PlayerException, CommandException, BoardException, PieceException, PieceColorException, SquareException, SquareContentException {
         if(command == null) {
-            throw new CommandException("Command cannot be null");
+            throw new CommandException("CommandRunner.runCommand() does not accept thi command because it is null");
         }
         if(command.getCommandType().equals(CommandType.SURRENDER)) {
             this.runCommandSurrender();
@@ -71,7 +71,7 @@ public class CommandRunner {
 
         assert selectedPiece != null; // if command is valid => selectedPiece cannot be null
         if(!selectedPiece.getColor().toString().equalsIgnoreCase(game.getCurrentTurn().getColor().toString())) {
-            throw new CommandException("you cannot move opponent pieces");
+            throw new CommandException("CommandCapture.runCommandTo() does not accept this command because you cannot move opponent pieces");
         }
 
         startingSquare.setSquareContent(SquareContent.EMPTY);
@@ -96,7 +96,7 @@ public class CommandRunner {
         Piece capturedPiece = BoardUtils.researchPiece(board, capturedPieceSquare);
         assert selectedPiece != null; // command is valid -> pieces are not null
         if(!selectedPiece.getColor().toString().equals(game.getCurrentTurn().getColor().toString())) {
-            throw new CommandException("Cannot move opponent pieces");
+            throw new CommandException("CommandCapture.runCommandTo() does not accept this command because you cannot move opponent pieces");
         }
         selectedPieceSquare.setSquareContent(SquareContent.EMPTY);
         capturedPieceSquare.setSquareContent(SquareContent.EMPTY);
