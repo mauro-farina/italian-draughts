@@ -104,10 +104,10 @@ public class Board {
         return this.boardSquares[squareCoordinates.getColumn()][squareCoordinates.getRow()];
     }
 
-    @Override
+    /*@Override
     public String toString() {
         return toStringForWhitePlayer();
-    }
+    }*/
 
     public String toStringFor(PlayerColor playerColor) throws PlayerColorException {
         if(playerColor.equals(PlayerColor.WHITE)) {
