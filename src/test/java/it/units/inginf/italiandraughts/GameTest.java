@@ -76,6 +76,65 @@ public class GameTest {
     }
 
     @Test
+    void doubleMandatoryCaptureTest() {
+        String[] input = {
+                "b3 to c4",
+                "a6 to b5",
+                "c4 cap b5",
+                "c6 to d5",
+                "c2 to b3",
+                "b7 to c6",
+                "d1 to c2",
+                "d5 to e4",
+                "f3 cap e4",
+                "d5 cap c6",
+                "a8 cap b7",
+                "surrender" // White surrenders -> Black wins
+        };
+
+        final int[] i = {-1};
+        List<String> output = new ArrayList<>();
+        try {
+            Game game = new Game(
+                    new Player("White", PlayerColor.WHITE),
+                    new Player("Black", PlayerColor.BLACK),
+                    () -> {
+                        i[0]+=1;
+                        return input[i[0]];
+                    },
+                    outputMsg -> {
+                        if(outputMsg.contains("CAPTURE") || outputMsg.contains("winner")) {
+                            output.add(outputMsg);
+                        }
+                    }
+            );
+
+            List<String> expectedOutput = new ArrayList<>();
+            expectedOutput.add(new CommandCapture(
+                    new SquareCoordinates(2, 3),
+                    new SquareCoordinates(1, 4)).toString()); //C4 CAPTURE B5
+            expectedOutput.add(new CommandCapture(
+                    new SquareCoordinates(5, 2),
+                    new SquareCoordinates(4, 3)).toString()); //F3 CAPTURE E4
+            expectedOutput.add(new CommandCapture(
+                    new SquareCoordinates(3, 4),
+                    new SquareCoordinates(2, 5)).toString()); //D5 CAPTURE C6
+            expectedOutput.add(new CommandCapture(
+                    new SquareCoordinates(0, 7),
+                    new SquareCoordinates(1, 6)).toString()); //A8 CAPTURE B7
+            expectedOutput.add("The winner is Black"); //must be adjusted if winner message changes in Game.start()
+
+            game.start();
+
+            for(String expectedOutputMessage : expectedOutput) {
+                assertTrue(output.contains(expectedOutputMessage));
+            }
+        } catch (Exception e) {
+            fail();
+        }
+    }
+
+    @Test
     void checkPlayer1() {
         Game game;
         try {
