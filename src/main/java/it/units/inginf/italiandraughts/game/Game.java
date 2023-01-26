@@ -262,4 +262,8 @@ public class Game {
         return true;
     }
 
+    public OutputPrinter getOutputPrinter() {
+        return this.outputPrinter;
+    }
+
 }
