@@ -4,6 +4,7 @@ import it.units.inginf.italiandraughts.board.SquareContent;
 import it.units.inginf.italiandraughts.board.SquareCoordinates;
 import it.units.inginf.italiandraughts.board.Man;
 import it.units.inginf.italiandraughts.board.PieceColor;
+import it.units.inginf.italiandraughts.commands.CommandCapture;
 import it.units.inginf.italiandraughts.game.Game;
 import it.units.inginf.italiandraughts.game.Player;
 import it.units.inginf.italiandraughts.game.PlayerColor;
@@ -12,12 +13,67 @@ import it.units.inginf.italiandraughts.io.CommandLineOutputPrinter;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class GameTest {
+
+    @Test
+    void simpleMandatoryCapturesTest() {
+        String[] input = {
+                "b3 to c4",
+                "g6 to h5",
+                "c4 to b5",
+                "a6 cap b5",
+                "d3 cap c4",
+                "c6 cap b5",
+                "surrender" // White surrenders -> Black wins
+        };
+
+        final int[] i = {-1};
+        List<String> output = new ArrayList<>();
+        try {
+            Game game = new Game(
+                    new Player("White", PlayerColor.WHITE),
+                    new Player("Black", PlayerColor.BLACK),
+                    () -> {
+                        i[0]+=1;
+                        return input[i[0]];
+                    },
+                    outputMsg -> {
+                        if(outputMsg.contains("CAPTURE") || outputMsg.contains("winner")) {
+                            output.add(outputMsg);
+                        }
+                    }
+            );
+
+            List<String> expectedOutput = new ArrayList<>();
+            expectedOutput.add(new CommandCapture(
+                    new SquareCoordinates(0, 5),
+                    new SquareCoordinates(1, 4)).toString()); //A6 CAPTURE B5
+            expectedOutput.add(new CommandCapture(
+                    new SquareCoordinates(2, 5),
+                    new SquareCoordinates(1, 4)).toString()); //C6 CAPTURE B5
+            expectedOutput.add(new CommandCapture(
+                    new SquareCoordinates(3, 2),
+                    new SquareCoordinates(2, 3)).toString()); //D3 CAPTURE C4
+
+            expectedOutput.add("The winner is Black"); //must be adjusted if winner message changes in Game.start()
+
+            game.start();
+
+            for(String expectedOutputMessage : expectedOutput) {
+                assertTrue(output.contains(expectedOutputMessage));
+            }
+        } catch (Exception e) {
+            fail();
+        }
+    }
 
     @Test
     void checkPlayer1() {
