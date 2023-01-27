@@ -111,69 +111,67 @@ public class Game {
         }
     }
 
-    private void handleObligatoryCaptures(List<List<CommandCapture>> obligatoryCaptureList) {
-        try {
-            List<List<CommandCapture>> chosenCapturesOptions = new ArrayList<>();
-            for (short i = 0; i < obligatoryCaptureList.get(0).size(); i++) {
-                String readCommand = inputReader.readInput();
-                Command command = CommandParser.parseCommand(readCommand);
-                if (command.getCommandType() == CommandType.HELP) {
-                    commandRunner.runCommand(command);
-                    i--;
-                }
-                if (command.getCommandType() == CommandType.SURRENDER) {
-                    commandRunner.runCommand(command);
-                    break;
-                }
-                if (command.getCommandType() == CommandType.TO) {
-                    outputPrinter.print("Invalid command to, read the obligatory capture list.");
-                    outputPrinter.print("Enter a new command.");
-                    i--;
-                }
+    private void handleObligatoryCaptures(List<List<CommandCapture>> obligatoryCaptureList)
+            throws SquareNameException, CoordinatesException, CommandException, PlayerException, SquareContentException,
+            PieceColorException, SquareException, BoardException, PieceException, PlayerColorException {
+        List<List<CommandCapture>> chosenCapturesOptions = new ArrayList<>();
+        for (short i = 0; i < obligatoryCaptureList.get(0).size(); i++) {
+            String readCommand = inputReader.readInput();
+            Command command = CommandParser.parseCommand(readCommand);
+            if (command.getCommandType() == CommandType.HELP) {
+                commandRunner.runCommand(command);
+                i--;
+            }
+            if (command.getCommandType() == CommandType.SURRENDER) {
+                commandRunner.runCommand(command);
+                break;
+            }
+            if (command.getCommandType() == CommandType.TO) {
+                outputPrinter.print("Invalid command to, read the obligatory capture list.");
+                outputPrinter.print("Enter a new command.");
+                i--;
+            }
 
-                if (command.getCommandType() == CommandType.CAPTURE) {
+            if (command.getCommandType() == CommandType.CAPTURE) {
 
-                    for (List<CommandCapture> commandCaptureList : obligatoryCaptureList) {
-                        if (commandCaptureList.get(i).equals(command)) {
-                            chosenCapturesOptions.add(commandCaptureList);
-                        } else {
-                            chosenCapturesOptions.remove(commandCaptureList);
-                        }
+                for (List<CommandCapture> commandCaptureList : obligatoryCaptureList) {
+                    if (commandCaptureList.get(i).equals(command)) {
+                        chosenCapturesOptions.add(commandCaptureList);
+                    } else {
+                        chosenCapturesOptions.remove(commandCaptureList);
                     }
-                    if (chosenCapturesOptions.isEmpty()) {
-                        outputPrinter.print("Invalid capture, read the obligatory capture list.");
-                        i--;
-                        continue;
-                    }
+                }
+                if (chosenCapturesOptions.isEmpty()) {
+                    outputPrinter.print("Invalid capture, read the obligatory capture list.");
+                    i--;
+                    continue;
+                }
 
-                    for (List<CommandCapture> validOption : chosenCapturesOptions) {
-                        if (command.equals(validOption.get(i))) {
-                            commandRunner.runCommand(command);
-                            if (i < validOption.size() - 1) {
-                                outputPrinter.print(board.toStringFor(this.currentTurn.getColor()));
-                                outputPrinter.print("Next obligatory captures:");
-                                StringBuilder nextCapturesOptions = new StringBuilder();
-                                for (List<CommandCapture> _validOption : chosenCapturesOptions) {
-                                    if (command.equals(validOption.get(i))) {
-                                        nextCapturesOptions.append(capturesListToString(_validOption, i + 1));
-                                        nextCapturesOptions.append("or...");
-                                        nextCapturesOptions.append(System.lineSeparator());
-                                    }
+                for (List<CommandCapture> validOption : chosenCapturesOptions) {
+                    if (command.equals(validOption.get(i))) {
+                        commandRunner.runCommand(command);
+                        if (i < validOption.size() - 1) {
+                            outputPrinter.print(board.toStringFor(this.currentTurn.getColor()));
+                            outputPrinter.print("Next obligatory captures:");
+                            StringBuilder nextCapturesOptions = new StringBuilder();
+                            for (List<CommandCapture> _validOption : chosenCapturesOptions) {
+                                if (command.equals(validOption.get(i))) {
+                                    nextCapturesOptions.append(capturesListToString(_validOption, i + 1));
+                                    nextCapturesOptions.append("or...");
+                                    nextCapturesOptions.append(System.lineSeparator());
                                 }
-                                nextCapturesOptions.delete(nextCapturesOptions.length() - 8, nextCapturesOptions.length());
-                                outputPrinter.print(nextCapturesOptions.toString());
                             }
-                            break;
+                            nextCapturesOptions.delete(nextCapturesOptions.length() - 8, nextCapturesOptions.length());
+                            outputPrinter.print(nextCapturesOptions.toString());
                         }
-
-                        outputPrinter.print("Invalid command: " + command);
-                        outputPrinter.print("Expected command: " + chosenCapturesOptions);
-                        i--;
+                        break;
                     }
+
+                    outputPrinter.print("Invalid command: " + command);
+                    outputPrinter.print("Expected command: " + chosenCapturesOptions);
+                    i--;
                 }
             }
-        } catch (Exception e) {
-            outputPrinter.print(e.getMessage());
         }
     }
 
