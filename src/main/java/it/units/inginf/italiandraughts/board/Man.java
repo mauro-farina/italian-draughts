@@ -59,11 +59,9 @@ public class Man implements Piece{
             if(isMan()) {
                 throw new SquareException("Man.setSquare() does not accept this Square," +
                         " because pieces cannot be on white squares");
-            } else if(isKing()){
+            } else {
                 throw new SquareException("King.setSquare()) does not accept this Square," +
                         " because pieces cannot be on white squares");
-            } else {
-                throw new PieceException("Piece.setSquare() the piece is not a man and is not a king");
             }
         } else {
             this.square = newSquare;
