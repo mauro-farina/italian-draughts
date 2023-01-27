@@ -6,6 +6,7 @@ import it.units.inginf.italiandraughts.board.Man;
 import it.units.inginf.italiandraughts.board.PieceColor;
 import it.units.inginf.italiandraughts.commands.CommandCapture;
 import it.units.inginf.italiandraughts.game.Game;
+import it.units.inginf.italiandraughts.game.GameState;
 import it.units.inginf.italiandraughts.game.Player;
 import it.units.inginf.italiandraughts.game.PlayerColor;
 import it.units.inginf.italiandraughts.io.CommandLineInputReader;
@@ -135,19 +136,19 @@ public class GameTest {
     }
 
     @Test
-    void checkTurnCounterAfterGameEnds() {
+    void checkGameStateAfterGameEnds() {
         String[] input = {
-                "a4 to b5",     // invalid cmd && turnCounter = 1
-                "b3 to c4",     // turn++
-                "c4 to b3",     // invalid cmd && turnCounter = 2
-                "g6 to h5",     // turn++
-                "b3 to a4",     // invalid cmd && turnCounter = 3
-                "c4 to b5",     // turn++
-                "a6 cap b5",    // turn++
-                "h3 to g4",     // invalid cmd && turnCounter = 5
-                "d3 cap c4",    // turn++
-                "c6 cap b5",    // turn++
-                "surrender"     // White surrenders && turnCounter = 7 && turn++
+                "a4 to b5",     
+                "b3 to c4",     
+                "c4 to b3",     
+                "g6 to h5",     
+                "b3 to a4",     
+                "c4 to b5",     
+                "a6 cap b5",    
+                "h3 to g4",     
+                "d3 cap c4",   
+                "c6 cap b5",    
+                "surrender"     
         };
 
         final int[] i = {-1};
@@ -163,7 +164,7 @@ public class GameTest {
             );
 
             game.start();
-            assertEquals(8, game.getTurnCounter());
+            assertEquals(GameState.OVER, game.getGameState());
         } catch (Exception e) {
             fail();
         }
