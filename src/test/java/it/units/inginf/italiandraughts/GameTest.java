@@ -135,6 +135,41 @@ public class GameTest {
     }
 
     @Test
+    void checkTurnCounterAfterGameEnds() {
+        String[] input = {
+                "a4 to b5",     // invalid cmd && turnCounter = 1
+                "b3 to c4",     // turn++
+                "c4 to b3",     // invalid cmd && turnCounter = 2
+                "g6 to h5",     // turn++
+                "b3 to a4",     // invalid cmd && turnCounter = 3
+                "c4 to b5",     // turn++
+                "a6 cap b5",    // turn++
+                "h3 to g4",     // invalid cmd && turnCounter = 5
+                "d3 cap c4",    // turn++
+                "c6 cap b5",    // turn++
+                "surrender"     // White surrenders && turnCounter = 7 && turn++
+        };
+
+        final int[] i = {-1};
+        try {
+            Game game = new Game(
+                    new Player("White", PlayerColor.WHITE),
+                    new Player("Black", PlayerColor.BLACK),
+                    () -> {
+                        i[0]+=1;
+                        return input[i[0]];
+                    },
+                    outputMsg -> {}
+            );
+
+            game.start();
+            assertEquals(8, game.getTurnCounter());
+        } catch (Exception e) {
+            fail();
+        }
+    }
+
+    @Test
     void checkPlayer1() {
         Game game;
         try {
