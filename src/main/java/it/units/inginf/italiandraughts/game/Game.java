@@ -88,7 +88,7 @@ public class Game {
                 continue;
             } catch (PlayerException | BoardException | PieceException | PieceColorException
                      | SquareContentException | PlayerColorException exception) {
-                outputPrinter.print("An error occurred, game cannot be resumed.");
+                outputPrinter.print("An error occurred, game cannot be resumed.", true);
                 this.gameState = GameState.OVER;
                 break;
             }
@@ -104,7 +104,7 @@ public class Game {
                 }
                 changeTurn();
             } catch (PlayerException | BoardException | SquareException e) {
-                outputPrinter.print("An error occurred, game cannot be resumed.");
+                outputPrinter.print("An error occurred, game cannot be resumed.", true);
                 this.gameState = GameState.OVER;
                 break;
             }
