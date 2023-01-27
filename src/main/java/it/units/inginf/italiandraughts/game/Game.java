@@ -124,11 +124,10 @@ public class Game {
             }
             if (command.getCommandType() == CommandType.SURRENDER) {
                 commandRunner.runCommand(command);
-                break;
+                return;
             }
             if (command.getCommandType() == CommandType.TO) {
-                outputPrinter.print("Invalid command to, read the obligatory capture list.");
-                outputPrinter.print("Enter a new command.");
+                outputPrinter.print("Invalid command, read the obligatory capture list.");
                 i--;
             }
 
