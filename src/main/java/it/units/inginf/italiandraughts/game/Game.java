@@ -10,14 +10,7 @@ import it.units.inginf.italiandraughts.commands.CommandRunner;
 import it.units.inginf.italiandraughts.commands.CommandHelp;
 import it.units.inginf.italiandraughts.commands.CommandType;
 import it.units.inginf.italiandraughts.commands.Command;
-import it.units.inginf.italiandraughts.exception.PlayerException;
-import it.units.inginf.italiandraughts.exception.CommandException;
-import it.units.inginf.italiandraughts.exception.BoardException;
-import it.units.inginf.italiandraughts.exception.SquareException;
-import it.units.inginf.italiandraughts.exception.SquareNameException;
-import it.units.inginf.italiandraughts.exception.SquareContentException;
-import it.units.inginf.italiandraughts.exception.CoordinatesException;
-import it.units.inginf.italiandraughts.exception.PieceColorException;
+import it.units.inginf.italiandraughts.exception.*;
 import it.units.inginf.italiandraughts.io.InputReader;
 import it.units.inginf.italiandraughts.io.OutputPrinter;
 
@@ -90,11 +83,11 @@ public class Game {
                         commandRunner.runCommand(command);
                     } while (command.getCommandType() == CommandType.HELP);
                 }
-            /*} catch (Exception exception) {
+            } catch (Exception exception) {
                 outputPrinter.print(exception.getMessage());
+                continue;
             }
-
-            try {*/
+            try {
                 if(checkVictoryCondition()) {
                     setWinnerPlayer(this.currentTurn);
                     outputPrinter.print("The winner is " + this.currentTurn.getNickname());
