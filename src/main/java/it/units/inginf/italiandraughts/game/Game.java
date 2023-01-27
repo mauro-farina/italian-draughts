@@ -242,6 +242,10 @@ public class Game {
     public void incrementTurnCounter() {
         this.turnCounter++;
     }
+    
+    public GameState getGameState() {
+        return this.gameState;
+    }
 
     public void changeTurn() throws PlayerException {
         if(this.currentTurn == player1) {
