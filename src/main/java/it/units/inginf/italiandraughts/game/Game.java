@@ -83,9 +83,14 @@ public class Game {
                         commandRunner.runCommand(command);
                     } while (command.getCommandType() == CommandType.HELP);
                 }
-            } catch (Exception exception) {
+            } catch (CommandException | CoordinatesException | SquareNameException | SquareException exception) {
                 outputPrinter.print(exception.getMessage());
                 continue;
+            } catch (PlayerException | BoardException | PieceException | PieceColorException
+                     | SquareContentException | PlayerColorException exception) {
+                outputPrinter.print("An error occurred, game cannot be resumed.");
+                this.gameState = GameState.OVER;
+                break;
             }
             try {
                 if(checkVictoryCondition()) {
@@ -98,9 +103,10 @@ public class Game {
                             this.currentTurn.getNickname() + "'s pieces can move");
                 }
                 changeTurn();
-            } catch (Exception e) {
-                //throw new RuntimeException(e);
-                outputPrinter.print(e.getMessage());
+            } catch (PlayerException | BoardException | SquareException e) {
+                outputPrinter.print("An error occurred, game cannot be resumed.");
+                this.gameState = GameState.OVER;
+                break;
             }
         }
     }
