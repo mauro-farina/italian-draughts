@@ -52,11 +52,8 @@ public class CommandRunner {
 
     private void runCommandHelp() {
         outputPrinter.print("Type 'help' to get command instructions");
-        outputPrinter.print(System.lineSeparator());
         outputPrinter.print("Type 'sur' or 'surrender' to surrender");
-        outputPrinter.print(System.lineSeparator());
         outputPrinter.print("To move a piece from its square B3 to a free square A4, type 'B3 to A4'");
-        outputPrinter.print(System.lineSeparator());
         outputPrinter.print("To capture a piece located on square C4 with your piece in B3 type 'B3 capture C4'.");
         outputPrinter.print("You can shorten 'capture' with 'capt' or 'cap'");
     }
