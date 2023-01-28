@@ -248,18 +248,16 @@ public class Game {
             for (Square reachableSquare : this.board.getReachableSquares(piece)) {
                 if (reachableSquare.isFree()) {
                     return false;
-                } else {
-                    try {
-                        if (new CommandCapture(
-                                piece.getSquare().getSquareCoordinates(),
-                                reachableSquare.getSquareCoordinates()).isValid(this.board)) {
-                            return false;
-                        }
-                    } catch(CoordinatesException e) {
-                        // piece is on the edge -> capture command returns CoordinatesException
-                    } catch (CommandException e) {
-                        // capture is not valid -> isValid returns CommandException
+                }
+                try {
+                    if (new CommandCapture(
+                            piece.getSquare().getSquareCoordinates(),
+                            reachableSquare.getSquareCoordinates()).isValid(this.board)) {
+                        return false;
                     }
+                } catch(CoordinatesException | CommandException e) {
+                    // piece is on the edge -> capture command returns CoordinatesException
+                    // capture is not valid -> isValid returns CommandException
                 }
             }
         }
