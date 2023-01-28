@@ -123,12 +123,14 @@ public class Game {
             throws SquareNameException, CoordinatesException, CommandException, PlayerException, SquareContentException,
             PieceColorException, SquareException, BoardException, PieceException, PlayerColorException {
         List<CommandCaptureList> chosenCapturesOptions = new ArrayList<>();
-        for (short i = 0; i < obligatoryCaptureList.get(0).size(); i++) {
+        short executedCommandsCounter = 0;
+        while(executedCommandsCounter < obligatoryCaptureList.get(0).size()) {
             String readCommand = inputReader.readInput();
             Command command = CommandParser.parseCommand(readCommand);
+
             if (command.getCommandType() == CommandType.HELP) {
                 commandRunner.runCommand(command);
-                i--;
+                continue;
             }
             if (command.getCommandType() == CommandType.SURRENDER) {
                 commandRunner.runCommand(command);
@@ -136,13 +138,13 @@ public class Game {
             }
             if (command.getCommandType() == CommandType.TO) {
                 outputPrinter.print("Invalid command, read the obligatory capture list.");
-                i--;
+                continue;
             }
 
             if (command.getCommandType() == CommandType.CAPTURE) {
 
                 for (CommandCaptureList commandCaptureList : obligatoryCaptureList) {
-                    if (commandCaptureList.get(i).equals(command)) {
+                    if (commandCaptureList.get(executedCommandsCounter).equals(command)) {
                         chosenCapturesOptions.add(commandCaptureList);
                     } else {
                         chosenCapturesOptions.remove(commandCaptureList);
@@ -150,34 +152,33 @@ public class Game {
                 }
                 if (chosenCapturesOptions.isEmpty()) {
                     outputPrinter.print("Invalid capture, read the obligatory capture list.");
-                    i--;
                     continue;
                 }
 
                 for (CommandCaptureList validOption : chosenCapturesOptions) {
-                    if (command.equals(validOption.get(i))) {
+                    if (command.equals(validOption.get(executedCommandsCounter))) {
                         commandRunner.runCommand(command);
-                        if (i < validOption.size() - 1) {
+                        executedCommandsCounter++;
+                        if (executedCommandsCounter < validOption.size() - 1) {
                             outputPrinter.print(board.toStringFor(this.currentTurn.getColor()));
                             outputPrinter.print("Next obligatory captures:");
-                            outputPrinter.print(getNextCapturesOptions(chosenCapturesOptions, i, command));
+                            outputPrinter.print(getNextCapturesOptions(chosenCapturesOptions, executedCommandsCounter, command));
                         }
                         break;
                     }
 
                     outputPrinter.print("Invalid command: " + command);
                     outputPrinter.print("Expected command: " + chosenCapturesOptions);
-                    i--;
                 }
             }
         }
     }
 
-    private static String getNextCapturesOptions(List<CommandCaptureList> chosenCapturesOptions, short i, Command command) {
+    private static String getNextCapturesOptions(List<CommandCaptureList> chosenCapturesOptions, short currentCmdIndex, Command command) {
         StringBuilder nextCapturesOptions = new StringBuilder();
         for (CommandCaptureList _validOption : chosenCapturesOptions) {
-            if (command.equals(_validOption.get(i))) {
-                nextCapturesOptions.append(_validOption.subList(i +1, _validOption.size()));
+            if (command.equals(_validOption.get(currentCmdIndex))) {
+                nextCapturesOptions.append(_validOption.subList(currentCmdIndex+1, _validOption.size()));
                 nextCapturesOptions.append(System.lineSeparator());
                 nextCapturesOptions.append("or...");
                 nextCapturesOptions.append(System.lineSeparator());
