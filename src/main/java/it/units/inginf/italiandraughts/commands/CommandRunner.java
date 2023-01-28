@@ -5,8 +5,6 @@ import it.units.inginf.italiandraughts.board.Board;
 import it.units.inginf.italiandraughts.board.Square;
 import it.units.inginf.italiandraughts.board.SquareContent;
 import it.units.inginf.italiandraughts.board.Piece;
-import it.units.inginf.italiandraughts.game.Game;
-import it.units.inginf.italiandraughts.io.OutputPrinter;
 import it.units.inginf.italiandraughts.exception.CommandException;
 import it.units.inginf.italiandraughts.exception.PlayerException;
 import it.units.inginf.italiandraughts.exception.PieceException;
@@ -14,6 +12,9 @@ import it.units.inginf.italiandraughts.exception.PieceColorException;
 import it.units.inginf.italiandraughts.exception.SquareException;
 import it.units.inginf.italiandraughts.exception.SquareContentException;
 import it.units.inginf.italiandraughts.exception.BoardException;
+import it.units.inginf.italiandraughts.exception.CoordinatesException;
+import it.units.inginf.italiandraughts.game.Game;
+import it.units.inginf.italiandraughts.io.OutputPrinter;
 
 
 public class CommandRunner {
@@ -26,7 +27,7 @@ public class CommandRunner {
         this.outputPrinter = game.getOutputPrinter();
     }
 
-    public void runCommand(Command command) throws PlayerException, CommandException, BoardException, PieceException, PieceColorException, SquareException, SquareContentException {
+    public void runCommand(Command command) throws PlayerException, CommandException, BoardException, PieceException, PieceColorException, SquareException, SquareContentException, CoordinatesException {
         if(command == null) {
             throw new CommandException("CommandRunner.runCommand() does not accept thi command because it is null");
         }
@@ -58,7 +59,7 @@ public class CommandRunner {
         outputPrinter.print("You can shorten 'capture' with 'capt' or 'cap'");
     }
 
-    private void runCommandTo(CommandTo commandTo) throws BoardException, PieceException, PieceColorException, SquareException, SquareContentException, CommandException {
+    private void runCommandTo(CommandTo commandTo) throws BoardException, PieceException, PieceColorException, SquareException, SquareContentException, CommandException, CoordinatesException {
         if(!commandTo.isValid(this.game.getBoard())) {
             return;
         }
@@ -81,7 +82,7 @@ public class CommandRunner {
         }
     }
 
-    private void runCommandCapture(CommandCapture commandCapture) throws BoardException, PieceException, PieceColorException, SquareException, SquareContentException, CommandException {
+    private void runCommandCapture(CommandCapture commandCapture) throws BoardException, PieceException, PieceColorException, SquareException, SquareContentException, CommandException, CoordinatesException {
         Board board = game.getBoard();
         if(!commandCapture.isValid(board)) {
             return;
