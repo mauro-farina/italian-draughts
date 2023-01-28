@@ -1,6 +1,11 @@
 package it.units.inginf.italiandraughts;
 
-import it.units.inginf.italiandraughts.game.*;
+
+import it.units.inginf.italiandraughts.game.Game;
+import it.units.inginf.italiandraughts.game.Player;
+import it.units.inginf.italiandraughts.game.PlayerColor;
+import it.units.inginf.italiandraughts.game.ObligatoryCapture;
+import it.units.inginf.italiandraughts.game.CommandCaptureList;
 import it.units.inginf.italiandraughts.board.Board;
 import it.units.inginf.italiandraughts.board.Man;
 import it.units.inginf.italiandraughts.board.King;
