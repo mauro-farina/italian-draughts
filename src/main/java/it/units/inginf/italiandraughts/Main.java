@@ -21,7 +21,7 @@ public class Main {
                     new Player(readName(PlayerColor.BLACK), PlayerColor.BLACK),
                     inputReader, outputPrinter).start();
         } catch(Exception e) {
-            System.out.println(e.getMessage());
+            outputPrinter.print(e.getMessage());
         }
     }
 
