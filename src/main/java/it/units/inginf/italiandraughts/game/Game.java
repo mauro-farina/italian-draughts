@@ -143,13 +143,7 @@ public class Game {
 
             if (command.getCommandType() == CommandType.CAPTURE) {
 
-                for (CommandCaptureList commandCaptureList : obligatoryCaptureList) {
-                    if (commandCaptureList.get(executedCommandsCounter).equals(command)) {
-                        chosenCapturesOptions.add(commandCaptureList);
-                    } else {
-                        chosenCapturesOptions.remove(commandCaptureList);
-                    }
-                }
+                updateChosenCapturesOptions(obligatoryCaptureList, chosenCapturesOptions, executedCommandsCounter, command);
                 if (chosenCapturesOptions.isEmpty()) {
                     outputPrinter.print("Invalid capture, read the obligatory capture list.");
                     continue;
@@ -170,6 +164,16 @@ public class Game {
                     outputPrinter.print("Invalid command: " + command);
                     outputPrinter.print("Expected command: " + chosenCapturesOptions);
                 }
+            }
+        }
+    }
+
+    private static void updateChosenCapturesOptions(List<CommandCaptureList> obligatoryCaptureList, List<CommandCaptureList> chosenCapturesOptions, short executedCommandsCounter, Command command) {
+        for (CommandCaptureList commandCaptureList : obligatoryCaptureList) {
+            if (commandCaptureList.get(executedCommandsCounter).equals(command)) {
+                chosenCapturesOptions.add(commandCaptureList);
+            } else {
+                chosenCapturesOptions.remove(commandCaptureList);
             }
         }
     }
