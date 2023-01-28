@@ -170,6 +170,24 @@ public class GameTest {
     }
 
     @Test
+    void checkGameStateAfterSurrender() {
+        try {
+            Game game = new Game(
+                    new Player("White", PlayerColor.WHITE),
+                    new Player("Black", PlayerColor.BLACK),
+                    () -> "surrender",
+                    outputMsg -> { }
+            );
+
+            game.start();
+
+            assertEquals(GameState.OVER, game.getGameState());
+        } catch (Exception e) {
+            fail();
+        }
+    }
+
+    @Test
     void checkPlayer1() {
         Game game;
         try {
