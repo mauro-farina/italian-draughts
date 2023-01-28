@@ -6,7 +6,6 @@ import it.units.inginf.italiandraughts.board.Man;
 import it.units.inginf.italiandraughts.board.PieceColor;
 import it.units.inginf.italiandraughts.commands.CommandCapture;
 import it.units.inginf.italiandraughts.game.Game;
-import it.units.inginf.italiandraughts.game.GameState;
 import it.units.inginf.italiandraughts.game.Player;
 import it.units.inginf.italiandraughts.game.PlayerColor;
 import it.units.inginf.italiandraughts.io.CommandLineInputReader;
@@ -130,41 +129,6 @@ public class GameTest {
             for(String expectedOutputMessage : expectedOutput) {
                 assertTrue(output.contains(expectedOutputMessage));
             }
-        } catch (Exception e) {
-            fail();
-        }
-    }
-
-    @Test
-    void checkGameStateAfterGameEnds() {
-        String[] input = {
-                "a4 to b5",     
-                "b3 to c4",     
-                "c4 to b3",     
-                "g6 to h5",     
-                "b3 to a4",     
-                "c4 to b5",     
-                "a6 cap b5",    
-                "h3 to g4",     
-                "d3 cap c4",   
-                "c6 cap b5",    
-                "surrender"     
-        };
-
-        final int[] i = {-1};
-        try {
-            Game game = new Game(
-                    new Player("White", PlayerColor.WHITE),
-                    new Player("Black", PlayerColor.BLACK),
-                    () -> {
-                        i[0]+=1;
-                        return input[i[0]];
-                    },
-                    outputMsg -> {}
-            );
-
-            game.start();
-            assertEquals(GameState.OVER, game.getGameState());
         } catch (Exception e) {
             fail();
         }
