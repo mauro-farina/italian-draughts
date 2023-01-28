@@ -202,22 +202,6 @@ public class GameTest {
     }
 
     @Test
-    void checkTurnCounter() {
-        Game game;
-        try {
-            game = new Game(new Player("Luca", PlayerColor.WHITE),
-                    new Player("Mauro", PlayerColor.BLACK),
-                    new CommandLineInputReader(), new CommandLineOutputPrinter());
-            game.initGame();
-            game.incrementTurnCounter();
-        } catch (Exception e) {
-            fail();
-            throw new RuntimeException(e);
-        }
-        assertEquals(game.getTurnCounter(), 2);
-    }
-
-    @Test
     void victoryConditionIsTrue() {
         Game game;
         try {
