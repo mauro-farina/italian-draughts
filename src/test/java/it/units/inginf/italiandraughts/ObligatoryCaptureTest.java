@@ -1,9 +1,6 @@
 package it.units.inginf.italiandraughts;
 
-import it.units.inginf.italiandraughts.game.ObligatoryCapture;
-import it.units.inginf.italiandraughts.game.Game;
-import it.units.inginf.italiandraughts.game.PlayerColor;
-import it.units.inginf.italiandraughts.game.Player;
+import it.units.inginf.italiandraughts.game.*;
 import it.units.inginf.italiandraughts.board.Board;
 import it.units.inginf.italiandraughts.board.Man;
 import it.units.inginf.italiandraughts.board.King;
@@ -11,7 +8,6 @@ import it.units.inginf.italiandraughts.board.SquareContent;
 import it.units.inginf.italiandraughts.board.Piece;
 import it.units.inginf.italiandraughts.board.PieceColor;
 import it.units.inginf.italiandraughts.board.SquareCoordinates;
-import it.units.inginf.italiandraughts.commands.CommandCapture;
 import it.units.inginf.italiandraughts.io.CommandLineInputReader;
 import it.units.inginf.italiandraughts.io.CommandLineOutputPrinter;
 
@@ -113,7 +109,7 @@ public class ObligatoryCaptureTest {
                     board.getSquare(new SquareCoordinates(1, 4))));
             board.getBlackPieces().add(new Man(PieceColor.BLACK,
                     board.getSquare(new SquareCoordinates(5, 4))));
-            List<List<CommandCapture>> obligatoryCaptureList = ObligatoryCapture.getObligatoryCaptureList(board, game.getCurrentTurn());
+            List<CommandCaptureList> obligatoryCaptureList = ObligatoryCapture.getObligatoryCaptureList(board, game.getCurrentTurn());
             Piece piece = BoardUtils.researchPiece(board,
                     board.getSquare(obligatoryCaptureList.get(0).get(0).getFromCoordinates()));
             if (piece != null) {
@@ -155,7 +151,7 @@ public class ObligatoryCaptureTest {
                     board.getSquare(new SquareCoordinates(1, 4))));
             board.getBlackPieces().add(new King(PieceColor.BLACK,
                     board.getSquare(new SquareCoordinates(5, 4))));
-            List<List<CommandCapture>> obligatoryCaptureList = ObligatoryCapture.getObligatoryCaptureList(board, game.getCurrentTurn());
+            List<CommandCaptureList> obligatoryCaptureList = ObligatoryCapture.getObligatoryCaptureList(board, game.getCurrentTurn());
             Piece piece = BoardUtils.researchPiece(board,
                     board.getSquare(obligatoryCaptureList.get(0).get(0).getPieceToCaptureCoordinates()));
             if (piece != null) {
@@ -202,7 +198,7 @@ public class ObligatoryCaptureTest {
                     board.getSquare(new SquareCoordinates(3, 6))));
             board.getBlackPieces().add(new Man(PieceColor.BLACK,
                     board.getSquare(new SquareCoordinates(4, 3))));
-            List<List<CommandCapture>> obligatoryCaptureList = ObligatoryCapture.getObligatoryCaptureList(board, game.getCurrentTurn());
+            List<CommandCaptureList> obligatoryCaptureList = ObligatoryCapture.getObligatoryCaptureList(board, game.getCurrentTurn());
             assertEquals(obligatoryCaptureList.get(0).get(0).getFromCoordinates().toString(), "(7,2)");
         } catch (Exception e) {
             fail();
