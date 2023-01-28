@@ -13,6 +13,7 @@ import it.units.inginf.italiandraughts.game.PlayerColor;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -155,7 +156,7 @@ public class GameTest {
                     },
                     outputMsg -> {
                         if(outputMsg.contains("CAPTURE") || outputMsg.contains("winner")) {
-                            output.add(outputMsg);
+                            output.addAll(Arrays.asList(outputMsg.split(System.lineSeparator())));
                         }
                     }
             );
