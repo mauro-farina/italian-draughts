@@ -26,4 +26,9 @@ public class CommandCaptureList extends ArrayList<CommandCapture> {
         return stringBuilder.toString();
     }
 
+    @Override
+    public CommandCaptureList subList(int fromIndex, int toIndex) {
+        return new CommandCaptureList(super.subList(fromIndex, toIndex));
+    }
+
 }
