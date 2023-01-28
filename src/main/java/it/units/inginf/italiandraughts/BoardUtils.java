@@ -16,6 +16,10 @@ import java.util.List;
 
 public class BoardUtils {
 
+    private BoardUtils() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static void removePiece(Board board, Piece piece) throws BoardException, PieceException, PieceColorException {
         if(board == null) {
             throw new BoardException("BoardUtils.removePiece() does not accept this Board, because it is null");
