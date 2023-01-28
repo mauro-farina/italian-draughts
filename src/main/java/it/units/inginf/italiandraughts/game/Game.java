@@ -60,7 +60,7 @@ public class Game {
 
     public void start() {
         initGame();
-        List<List<CommandCapture>> obligatoryCaptureList = new ArrayList<>();
+        List<CommandCaptureList> obligatoryCaptureList = new ArrayList<>();
         try {
             commandRunner.runCommand(new CommandHelp());
             outputPrinter.print(System.lineSeparator());
@@ -74,7 +74,7 @@ public class Game {
                 obligatoryCaptureList.addAll(ObligatoryCapture.getObligatoryCaptureList(this.board, this.currentTurn));
                 if(obligatoryCaptureList.size() > 0) {
                     outputPrinter.print("Mandatory captures found:");
-                    Iterator<List<CommandCapture>> captureIterator = obligatoryCaptureList.iterator();
+                    Iterator<CommandCaptureList> captureIterator = obligatoryCaptureList.iterator();
                     while(captureIterator.hasNext()) {
                         printObligatoryCaptureList(captureIterator.next());
                         if(captureIterator.hasNext()) {
@@ -119,10 +119,10 @@ public class Game {
         }
     }
 
-    private void handleObligatoryCaptures(List<List<CommandCapture>> obligatoryCaptureList)
+    private void handleObligatoryCaptures(List<CommandCaptureList> obligatoryCaptureList)
             throws SquareNameException, CoordinatesException, CommandException, PlayerException, SquareContentException,
             PieceColorException, SquareException, BoardException, PieceException, PlayerColorException {
-        List<List<CommandCapture>> chosenCapturesOptions = new ArrayList<>();
+        List<CommandCaptureList> chosenCapturesOptions = new ArrayList<>();
         for (short i = 0; i < obligatoryCaptureList.get(0).size(); i++) {
             String readCommand = inputReader.readInput();
             Command command = CommandParser.parseCommand(readCommand);
@@ -141,7 +141,7 @@ public class Game {
 
             if (command.getCommandType() == CommandType.CAPTURE) {
 
-                for (List<CommandCapture> commandCaptureList : obligatoryCaptureList) {
+                for (CommandCaptureList commandCaptureList : obligatoryCaptureList) {
                     if (commandCaptureList.get(i).equals(command)) {
                         chosenCapturesOptions.add(commandCaptureList);
                     } else {
@@ -154,14 +154,14 @@ public class Game {
                     continue;
                 }
 
-                for (List<CommandCapture> validOption : chosenCapturesOptions) {
+                for (CommandCaptureList validOption : chosenCapturesOptions) {
                     if (command.equals(validOption.get(i))) {
                         commandRunner.runCommand(command);
                         if (i < validOption.size() - 1) {
                             outputPrinter.print(board.toStringFor(this.currentTurn.getColor()));
                             outputPrinter.print("Next obligatory captures:");
                             StringBuilder nextCapturesOptions = new StringBuilder();
-                            for (List<CommandCapture> _validOption : chosenCapturesOptions) {
+                            for (CommandCaptureList _validOption : chosenCapturesOptions) {
                                 if (command.equals(validOption.get(i))) {
                                     nextCapturesOptions.append(capturesListToString(_validOption, i + 1));
                                     nextCapturesOptions.append("or...");
