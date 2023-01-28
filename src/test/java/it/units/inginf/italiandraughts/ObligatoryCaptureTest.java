@@ -205,4 +205,36 @@ public class ObligatoryCaptureTest {
             throw new RuntimeException(e);
         }
     }
+    
+     @Test
+    void checkManDoNotCaptureKing() {
+        try{
+            Game game = new Game(new Player("1", PlayerColor.WHITE),
+                    new Player("2", PlayerColor.BLACK),
+                    new CommandLineInputReader(), new CommandLineOutputPrinter());
+            game.initGame();
+            Board board = game.getBoard();
+            board.getWhitePieces().clear();
+            board.getBlackPieces().clear();
+            for (int i = 0; i < 8; i++) {
+                for (int j = 0; j < 8; j++) {
+                    board.getSquare(new SquareCoordinates(j, i)).setSquareContent(SquareContent.EMPTY);
+                }
+            }
+            board.getSquare(new SquareCoordinates(2, 5)).setSquareContent(SquareContent.BLACK_MAN);
+            board.getSquare(new SquareCoordinates(1, 4)).setSquareContent(SquareContent.WHITE_KING);
+            board.getBlackPieces().add(new Man(PieceColor.BLACK,
+                    board.getSquare(new SquareCoordinates(2, 5))));
+            board.getWhitePieces().add(new King(PieceColor.WHITE,
+                    board.getSquare(new SquareCoordinates(1, 4))));
+            game.changeTurn();
+            //now is the turn of player 2, a white king is near a black man, but a man can not capture a king
+            List<CommandCaptureList> obligatoryCaptureList = ObligatoryCapture.getObligatoryCaptureList(board, game.getCurrentTurn());
+            assertEquals(obligatoryCaptureList.size(), 0);
+        } catch (Exception e) {
+            fail();
+            throw new RuntimeException(e);
+        }
+    }
+    
 }
