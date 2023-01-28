@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class ObligatoryCapture {
 
-    public static List<List<CommandCapture>> getObligatoryCaptureList(Board board, Player currentTurn) throws BoardException, SquareContentException,
+    public static List<CommandCaptureList> getObligatoryCaptureList(Board board, Player currentTurn) throws BoardException, SquareContentException,
             PieceColorException, SquareException, PieceException, PlayerException, PlayerColorException {
         if (currentTurn == null) {
             throw new PlayerException("ObligatoryCapture.getObligatoryCaptureList() does not accept " +
@@ -54,6 +54,7 @@ public class ObligatoryCapture {
                         .stream()
                         .map(TemporaryCapture::getCommandCapture)
                         .toList())
+                .map(CommandCaptureList::new)
                 .toList();
     }
 
