@@ -13,6 +13,10 @@ import it.units.inginf.italiandraughts.exception.SquareNameException;
 
 public class CommandParser {
 
+    private CommandParser() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static Command parseCommand(String commandAsString) throws CommandException, CoordinatesException, SquareNameException {
         String[] commandTokens = commandAsString.trim().split(" ");
         if(commandTokens.length == 1) {
