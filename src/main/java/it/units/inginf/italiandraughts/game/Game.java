@@ -22,8 +22,6 @@ import it.units.inginf.italiandraughts.exception.SquareContentException;
 import it.units.inginf.italiandraughts.exception.CommandException;
 import it.units.inginf.italiandraughts.io.InputReader;
 import it.units.inginf.italiandraughts.io.OutputPrinter;
-import it.units.inginf.italiandraughts.io.InputReader;
-import it.units.inginf.italiandraughts.io.OutputPrinter;
 
 import java.util.ArrayList;
 import java.util.Iterator;
