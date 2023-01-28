@@ -162,7 +162,7 @@ public class Game {
                             outputPrinter.print("Next obligatory captures:");
                             StringBuilder nextCapturesOptions = new StringBuilder();
                             for (CommandCaptureList _validOption : chosenCapturesOptions) {
-                                if (command.equals(validOption.get(i))) {
+                                if (command.equals(_validOption.get(i))) {
                                     nextCapturesOptions.append(_validOption.subList(i+1, _validOption.size()));
                                     nextCapturesOptions.append(System.lineSeparator());
                                     nextCapturesOptions.append("or...");
