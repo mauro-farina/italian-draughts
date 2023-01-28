@@ -48,8 +48,17 @@ public class CommandCapture extends Command {
         if(this.fromCoordinates == null || this.pieceToCaptureCoordinates == null || this.toCoordinates == null) {
             return false;
         }
-        Square selectedPieceSquare = board.getSquare(this.fromCoordinates);
-        Square capturedPieceSquare = board.getSquare(this.pieceToCaptureCoordinates);
+
+        Square selectedPieceSquare;
+        Square capturedPieceSquare;
+        Square arrivalSquare;
+        try {
+            selectedPieceSquare = board.getSquare(this.fromCoordinates);
+            capturedPieceSquare = board.getSquare(this.pieceToCaptureCoordinates);
+            arrivalSquare = board.getSquare(toCoordinates);
+        } catch (CoordinatesException e) {
+            return false;
+        }
         Piece selectedPiece = BoardUtils.researchPiece(board, selectedPieceSquare);
         Piece capturedPiece = BoardUtils.researchPiece(board, capturedPieceSquare);
 
@@ -65,9 +74,9 @@ public class CommandCapture extends Command {
         if(selectedPiece.isMan() && capturedPiece.isKing()) {
             throw new CommandException("CommandCapture.isValid() does not accept this pieces because a man cannot capture a king");
         }
-        if(!board.getSquare(toCoordinates).isFree()) {
+        if(!arrivalSquare.isFree()) {
             throw new CommandException("CommandCapture.isValid(): cannot capture piece on " + capturedPieceSquare.getSquareName()
-                    + ": there is a piece on " + board.getSquare(this.toCoordinates).getSquareName());
+                    + ": there is a piece on " + arrivalSquare.getSquareName());
         }
         List<Square> reachableSquaresFromSelectedPiece = board.getReachableSquares(selectedPiece);
         for(Square reachableSquare : reachableSquaresFromSelectedPiece) {
