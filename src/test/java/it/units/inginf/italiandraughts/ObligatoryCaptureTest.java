@@ -198,9 +198,9 @@ public class ObligatoryCaptureTest {
                     board.getSquare(new SquareCoordinates(1, 4))));
             board.getBlackPieces().add(new King(PieceColor.BLACK,
                     board.getSquare(new SquareCoordinates(6, 3))));
-            board.getBlackPieces().add(new Man(PieceColor.BLACK,
-                    board.getSquare(new SquareCoordinates(3, 6))));
             board.getBlackPieces().add(new King(PieceColor.BLACK,
+                    board.getSquare(new SquareCoordinates(3, 6))));
+            board.getBlackPieces().add(new Man(PieceColor.BLACK,
                     board.getSquare(new SquareCoordinates(4, 3))));
             List<List<CommandCapture>> obligatoryCaptureList = ObligatoryCapture.getObligatoryCaptureList(board, game.getCurrentTurn());
             assertEquals(obligatoryCaptureList.get(0).get(0).getFromCoordinates().toString(), "(7,2)");
