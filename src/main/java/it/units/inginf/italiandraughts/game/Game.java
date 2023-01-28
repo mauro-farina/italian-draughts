@@ -73,14 +73,7 @@ public class Game {
                 outputPrinter.print("Turn of " + this.currentTurn.getNickname());
                 obligatoryCaptureList.addAll(ObligatoryCapture.getObligatoryCaptureList(this.board, this.currentTurn));
                 if(obligatoryCaptureList.size() > 0) {
-                    outputPrinter.print("Mandatory captures found:");
-                    Iterator<CommandCaptureList> captureIterator = obligatoryCaptureList.iterator();
-                    while(captureIterator.hasNext()) {
-                        outputPrinter.print(captureIterator.next().toString());
-                        if(captureIterator.hasNext()) {
-                            outputPrinter.print("or...");
-                        }
-                    }
+                    printObligatoryCaptureList(obligatoryCaptureList);
                     handleObligatoryCaptures(obligatoryCaptureList);
                     obligatoryCaptureList.clear();
                 } else {
@@ -115,6 +108,17 @@ public class Game {
                 outputPrinter.print("An error occurred, game cannot be resumed.", true);
                 this.gameState = GameState.OVER;
                 break;
+            }
+        }
+    }
+
+    private void printObligatoryCaptureList(List<CommandCaptureList> obligatoryCaptureList) {
+        outputPrinter.print("Mandatory captures found:");
+        Iterator<CommandCaptureList> captureIterator = obligatoryCaptureList.iterator();
+        while(captureIterator.hasNext()) {
+            outputPrinter.print(captureIterator.next().toString());
+            if(captureIterator.hasNext()) {
+                outputPrinter.print("or...");
             }
         }
     }
