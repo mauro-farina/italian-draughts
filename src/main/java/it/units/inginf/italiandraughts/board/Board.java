@@ -136,7 +136,6 @@ public class Board {
             }
             stringBuilder.append(System.lineSeparator());
         }
-        //stringBuilder.append(System.lineSeparator());
         stringBuilder.append("\t A \t B \t C \t D \t E \t F \t G \t H");
         return stringBuilder.toString();
     }
