@@ -34,7 +34,6 @@ public class Game {
     private final Player player2; //This is the black player
     private Player currentTurn;
     private Player winnerPlayer;
-    private int turnCounter;
     private final InputReader inputReader;
     private final OutputPrinter outputPrinter;
     private GameState gameState;
@@ -201,7 +200,6 @@ public class Game {
     public void initGame() {
         this.gameState = GameState.PLAYING;
         this.currentTurn = this.player1;
-        this.turnCounter = 1;
     }
 
     public Board getBoard() {
@@ -232,14 +230,6 @@ public class Game {
             this.gameState = GameState.OVER;
         }
     }
-
-    public int getTurnCounter() {
-        return this.turnCounter;
-    }
-
-    public void incrementTurnCounter() {
-        this.turnCounter++;
-    }
     
     public GameState getGameState() {
         return this.gameState;
@@ -253,7 +243,6 @@ public class Game {
         } else {
             throw new PlayerException("Player.changeTurn() currentTurn cannot be null");
         }
-        incrementTurnCounter();
     }
 
     public boolean checkVictoryCondition() {
