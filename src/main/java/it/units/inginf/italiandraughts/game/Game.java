@@ -184,9 +184,9 @@ public class Game {
 
     private static String getNextCapturesOptions(List<CommandCaptureList> chosenCapturesOptions, short currentCmdIndex, Command command) {
         StringBuilder nextCapturesOptions = new StringBuilder();
-        for (CommandCaptureList _validOption : chosenCapturesOptions) {
-            if (command.equals(_validOption.get(currentCmdIndex))) {
-                nextCapturesOptions.append(_validOption.subList(currentCmdIndex+1, _validOption.size()));
+        for (CommandCaptureList currentlyValidOption : chosenCapturesOptions) {
+            if (command.equals(currentlyValidOption.get(currentCmdIndex))) {
+                nextCapturesOptions.append(currentlyValidOption.subList(currentCmdIndex+1, currentlyValidOption.size()));
                 nextCapturesOptions.append(System.lineSeparator());
                 nextCapturesOptions.append("or...");
                 nextCapturesOptions.append(System.lineSeparator());
