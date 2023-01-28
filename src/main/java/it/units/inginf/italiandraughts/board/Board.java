@@ -96,10 +96,10 @@ public class Board {
         return lastRow;
     }
 
-    public Square getSquare(SquareCoordinates squareCoordinates){
+    public Square getSquare(SquareCoordinates squareCoordinates) throws CoordinatesException {
         if(squareCoordinates.getColumn() < 0 || squareCoordinates.getColumn() >= 8
                 || squareCoordinates.getRow()<0 || squareCoordinates.getRow()>=8){
-            throw new RuntimeException();
+            throw new CoordinatesException("Square.getSquare() does not accept the coordinates " + squareCoordinates);
         }
         return this.boardSquares[squareCoordinates.getColumn()][squareCoordinates.getRow()];
     }
