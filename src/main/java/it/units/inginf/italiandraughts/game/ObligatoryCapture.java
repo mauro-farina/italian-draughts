@@ -28,7 +28,7 @@ import java.util.Map;
 public class ObligatoryCapture {
 
     public static List<CommandCaptureList> getObligatoryCaptureList(Board board, Player currentTurn) throws BoardException, SquareContentException,
-            PieceColorException, SquareException, PieceException, PlayerException, PlayerColorException {
+            PieceColorException, SquareException, PieceException, PlayerException, PlayerColorException, CoordinatesException {
         if (currentTurn == null) {
             throw new PlayerException("ObligatoryCapture.getObligatoryCaptureList() does not accept " +
                     "this player");
@@ -74,12 +74,12 @@ public class ObligatoryCapture {
     }
 
     private static List<List<TemporaryCapture>> getCapturesListOptionsForPiece(Board board, Piece piece)
-            throws SquareContentException, PieceColorException, SquareException, BoardException, PieceException {
+            throws SquareContentException, PieceColorException, SquareException, BoardException, PieceException, CoordinatesException {
         if(piece == null) return null;
         return capturesListOptionsWorker(board, piece, new ArrayList<>(), new ArrayList<>());
     }
 
-    private static List<List<TemporaryCapture>> capturesListOptionsWorker(Board board, Piece piece, List<TemporaryCapture> capturesList, List<List<TemporaryCapture>> capturesListOptions) throws SquareException, BoardException, SquareContentException, PieceColorException, PieceException {
+    private static List<List<TemporaryCapture>> capturesListOptionsWorker(Board board, Piece piece, List<TemporaryCapture> capturesList, List<List<TemporaryCapture>> capturesListOptions) throws SquareException, BoardException, SquareContentException, PieceColorException, PieceException, CoordinatesException {
         for(Square square: board.getReachableSquares(piece)) {
             TemporaryCapture temporaryCapture;
             try {
@@ -110,7 +110,7 @@ public class ObligatoryCapture {
         return capturesListOptions;
     }
 
-    private static int getCapturesListScore(List<TemporaryCapture> capturesList) throws SquareException, BoardException {
+    private static int getCapturesListScore(List<TemporaryCapture> capturesList) throws SquareException, BoardException, CoordinatesException {
         if(capturesList.isEmpty()) {
             return 0;
         }
@@ -135,7 +135,7 @@ public class ObligatoryCapture {
     }
 
 
-    private static int getNumberOfCapturedKing(List<TemporaryCapture> singleCaptureList) throws BoardException, SquareException {
+    private static int getNumberOfCapturedKing(List<TemporaryCapture> singleCaptureList) throws BoardException, SquareException, CoordinatesException {
         int numberOfCapturedKing = 0;
         for(TemporaryCapture temporaryCapture : singleCaptureList) {
             if(temporaryCapture.isCapturedPieceKing()) {
@@ -177,7 +177,7 @@ class TemporaryCapture {
     }
 
     public void run() throws BoardException, SquareException, SquareContentException,
-            PieceColorException, PieceException {
+            PieceColorException, PieceException, CoordinatesException {
         Square selectedPieceSquare = board.getSquare(this.fromCoordinates);
         Square capturedPieceSquare = board.getSquare(this.pieceToCaptureCoordinates);
         Square destinationSquare = board.getSquare(this.toCoordinates);
@@ -194,7 +194,7 @@ class TemporaryCapture {
     }
 
     public void reset() throws BoardException, SquareException, SquareContentException,
-            PieceColorException, PieceException {
+            PieceColorException, PieceException, CoordinatesException {
         Square selectedPieceSquare = board.getSquare(fromCoordinates);
         Square capturedPieceSquare = board.getSquare(pieceToCaptureCoordinates);
         Square destinationSquare = board.getSquare(toCoordinates);
@@ -224,7 +224,7 @@ class TemporaryCapture {
         }
     }
 
-    public boolean isCapturingPieceKing() throws BoardException, SquareException {
+    public boolean isCapturingPieceKing() throws BoardException, SquareException, CoordinatesException {
         Piece piece = BoardUtils.researchPiece(this.board, this.board.getSquare(this.fromCoordinates));
         if(piece == null) {
             return false;
@@ -232,7 +232,7 @@ class TemporaryCapture {
         return piece.isKing();
     }
 
-    public boolean isCapturedPieceKing() throws BoardException, SquareException {
+    public boolean isCapturedPieceKing() throws BoardException, SquareException, CoordinatesException {
         Piece piece = BoardUtils.researchPiece(this.board, this.board.getSquare(this.pieceToCaptureCoordinates));
         if(piece == null) {
             return false;
