@@ -11,13 +11,7 @@ public class Man implements Piece{
         if((pieceColor != PieceColor.WHITE) && (pieceColor != PieceColor.BLACK)) {
             throw new PieceColorException((isMan() ? "Man" : "King") + "() does not accept this PieceColor");
         }
-        if(square == null) {
-            throw new SquareException((isMan() ? "Man" : "King") + "() does not accept this Square because it is null");
-        }
-        if(!square.getSquareColor().equals(SquareColor.BLACK)) {
-            throw new SquareException((isMan() ? "Man" : "King") + "() does not accept this Square," +
-                        " because pieces cannot be on white squares");
-        }
+        checkSquareIsValid();
         this.pieceColor = pieceColor;
         this.square = square;
     }
@@ -34,14 +28,19 @@ public class Man implements Piece{
 
     @Override
     public void setSquare(Square newSquare) throws SquareException {
+        checkSquareIsValid();
+        this.square = newSquare;
+    }
+
+    private void checkSquareIsValid() throws SquareException {
         if(square == null)
             throw new SquareException((isMan() ? "Man" : "King") + ".setSquare() does not accept this Square because it is null");
         if(!square.getSquareColor().equals(SquareColor.BLACK)) {
             throw new SquareException((isMan() ? "Man" : "King") + ".setSquare() does not accept this Square," +
                     " because pieces cannot be on white squares");
         }
-        this.square = newSquare;
     }
+
     @Override
     public boolean isMan() {
         return true;
