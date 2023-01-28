@@ -9,8 +9,6 @@ import it.units.inginf.italiandraughts.game.Game;
 import it.units.inginf.italiandraughts.game.GameState;
 import it.units.inginf.italiandraughts.game.Player;
 import it.units.inginf.italiandraughts.game.PlayerColor;
-import it.units.inginf.italiandraughts.io.CommandLineInputReader;
-import it.units.inginf.italiandraughts.io.CommandLineOutputPrinter;
 
 import org.junit.jupiter.api.Test;
 
@@ -191,9 +189,12 @@ public class GameTest {
     void checkPlayer1() {
         Game game;
         try {
-            game = new Game(new Player("Luca", PlayerColor.WHITE),
+            game = new Game(
+                    new Player("Luca", PlayerColor.WHITE),
                     new Player("Mauro", PlayerColor.BLACK),
-            new CommandLineInputReader(), new CommandLineOutputPrinter());
+                    () -> "",
+                    output -> { }
+            );
             game.initGame();
         } catch (Exception e) {
             fail();
@@ -206,9 +207,12 @@ public class GameTest {
     void checkPlayer2() {
         Game game;
         try {
-            game = new Game(new Player("Luca", PlayerColor.WHITE),
+            game = new Game(
+                    new Player("Luca", PlayerColor.WHITE),
                     new Player("Mauro", PlayerColor.BLACK),
-                    new CommandLineInputReader(), new CommandLineOutputPrinter());
+                    () -> "",
+                    output -> { }
+            );
             game.initGame();
             game.changeTurn();
         } catch (Exception e) {
@@ -222,9 +226,12 @@ public class GameTest {
     void victoryConditionIsTrue() {
         Game game;
         try {
-            game = new Game(new Player("Luca", PlayerColor.WHITE),
+            game = new Game(
+                    new Player("Luca", PlayerColor.WHITE),
                     new Player("Mauro", PlayerColor.BLACK),
-                    new CommandLineInputReader(), new CommandLineOutputPrinter());
+                    () -> "",
+                    output -> { }
+            );
             game.initGame();
             for(int i = 11; i >= 0; i--) {
                 BoardUtils.removePiece(game.getBoard(), game.getBoard().getWhitePieces().get(i));
@@ -240,9 +247,12 @@ public class GameTest {
     void victoryConditionIsFalse() {
         Game game;
         try {
-            game = new Game(new Player("Luca", PlayerColor.WHITE),
+            game = new Game(
+                    new Player("Luca", PlayerColor.WHITE),
                     new Player("Mauro", PlayerColor.BLACK),
-                    new CommandLineInputReader(), new CommandLineOutputPrinter());
+                    () -> "",
+                    output -> { }
+            );
             game.initGame();
         } catch (Exception e) {
             fail();
@@ -255,9 +265,12 @@ public class GameTest {
     void checkWinnerPlayer() {
         Game game;
         try {
-            game = new Game(new Player("Luca", PlayerColor.WHITE),
+            game = new Game(
+                    new Player("Luca", PlayerColor.WHITE),
                     new Player("Mauro", PlayerColor.BLACK),
-                    new CommandLineInputReader(), new CommandLineOutputPrinter());
+                    () -> "",
+                    output -> { }
+            );
             game.initGame();
             game.setWinnerPlayer(game.getPlayer1());
         } catch (Exception e) {
@@ -271,9 +284,12 @@ public class GameTest {
     void checkDrawConditionIsTrue() {
         Game game;
         try {
-            game = new Game(new Player("Luca", PlayerColor.WHITE),
+            game = new Game(
+                    new Player("Luca", PlayerColor.WHITE),
                     new Player("Mauro", PlayerColor.BLACK),
-                    new CommandLineInputReader(), new CommandLineOutputPrinter());
+                    () -> "",
+                    output -> { }
+            );
             game.initGame();
             game.getBoard().getWhitePieces().clear();
             game.getBoard().getBlackPieces().clear();
