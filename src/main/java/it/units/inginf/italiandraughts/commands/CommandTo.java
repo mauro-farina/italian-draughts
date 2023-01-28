@@ -7,6 +7,7 @@ import it.units.inginf.italiandraughts.board.Square;
 import it.units.inginf.italiandraughts.board.SquareCoordinates;
 import it.units.inginf.italiandraughts.exception.BoardException;
 import it.units.inginf.italiandraughts.exception.CommandException;
+import it.units.inginf.italiandraughts.exception.CoordinatesException;
 import it.units.inginf.italiandraughts.exception.SquareException;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public class CommandTo extends Command {
         return toCoordinates;
     }
 
-    public boolean isValid(Board board) throws SquareException, BoardException, CommandException {
+    public boolean isValid(Board board) throws SquareException, BoardException, CommandException, CoordinatesException {
         if (board == null) {
             throw new BoardException("CommandTo.isValid() does not accept this board because it is null");
         }
