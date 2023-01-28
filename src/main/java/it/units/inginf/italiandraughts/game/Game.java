@@ -76,7 +76,7 @@ public class Game {
                     outputPrinter.print("Mandatory captures found:");
                     Iterator<CommandCaptureList> captureIterator = obligatoryCaptureList.iterator();
                     while(captureIterator.hasNext()) {
-                        printObligatoryCaptureList(captureIterator.next());
+                        outputPrinter.print(captureIterator.next().toString());
                         if(captureIterator.hasNext()) {
                             outputPrinter.print("or...");
                         }
@@ -163,7 +163,8 @@ public class Game {
                             StringBuilder nextCapturesOptions = new StringBuilder();
                             for (CommandCaptureList _validOption : chosenCapturesOptions) {
                                 if (command.equals(validOption.get(i))) {
-                                    nextCapturesOptions.append(capturesListToString(_validOption, i + 1));
+                                    nextCapturesOptions.append(_validOption.subList(i+1, _validOption.size()));
+                                    nextCapturesOptions.append(System.lineSeparator());
                                     nextCapturesOptions.append("or...");
                                     nextCapturesOptions.append(System.lineSeparator());
                                 }
@@ -180,21 +181,6 @@ public class Game {
                 }
             }
         }
-    }
-
-    private void printObligatoryCaptureList(List<CommandCapture> obligatoryCaptureList) {
-        for (CommandCapture commandCapture : obligatoryCaptureList) {
-            outputPrinter.print(commandCapture.toString());
-        }
-    }
-
-    private static String capturesListToString(List<CommandCapture> obligatoryCaptureList, int excludeCapturesBeforeIndex) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for(int i=excludeCapturesBeforeIndex; i<obligatoryCaptureList.size(); i++) {
-            stringBuilder.append(obligatoryCaptureList.get(i).toString());
-            stringBuilder.append(System.lineSeparator());
-        }
-        return stringBuilder.toString();
     }
 
     public void initGame() {
