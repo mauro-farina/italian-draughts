@@ -160,17 +160,7 @@ public class Game {
                         if (i < validOption.size() - 1) {
                             outputPrinter.print(board.toStringFor(this.currentTurn.getColor()));
                             outputPrinter.print("Next obligatory captures:");
-                            StringBuilder nextCapturesOptions = new StringBuilder();
-                            for (CommandCaptureList _validOption : chosenCapturesOptions) {
-                                if (command.equals(_validOption.get(i))) {
-                                    nextCapturesOptions.append(_validOption.subList(i+1, _validOption.size()));
-                                    nextCapturesOptions.append(System.lineSeparator());
-                                    nextCapturesOptions.append("or...");
-                                    nextCapturesOptions.append(System.lineSeparator());
-                                }
-                            }
-                            nextCapturesOptions.delete(nextCapturesOptions.length() - 8, nextCapturesOptions.length());
-                            outputPrinter.print(nextCapturesOptions.toString());
+                            outputPrinter.print(getNextCapturesOptions(chosenCapturesOptions, i, command));
                         }
                         break;
                     }
@@ -181,6 +171,20 @@ public class Game {
                 }
             }
         }
+    }
+
+    private static String getNextCapturesOptions(List<CommandCaptureList> chosenCapturesOptions, short i, Command command) {
+        StringBuilder nextCapturesOptions = new StringBuilder();
+        for (CommandCaptureList _validOption : chosenCapturesOptions) {
+            if (command.equals(_validOption.get(i))) {
+                nextCapturesOptions.append(_validOption.subList(i +1, _validOption.size()));
+                nextCapturesOptions.append(System.lineSeparator());
+                nextCapturesOptions.append("or...");
+                nextCapturesOptions.append(System.lineSeparator());
+            }
+        }
+        nextCapturesOptions.delete(nextCapturesOptions.length() - 8, nextCapturesOptions.length());
+        return nextCapturesOptions.toString();
     }
 
     public void initGame() {
