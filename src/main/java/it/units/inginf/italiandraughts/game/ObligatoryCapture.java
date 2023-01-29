@@ -156,7 +156,7 @@ class TemporaryCapture {
     private final CommandCapture commandCapture;
     private boolean capturedPieceIsKing;
 
-    public TemporaryCapture(Board board, CommandCapture commandCapture) throws CoordinatesException {
+    public TemporaryCapture(Board board, CommandCapture commandCapture) {
         this.board = board;
         this.commandCapture = commandCapture;
         this.fromCoordinates = commandCapture.getFromCoordinates();
