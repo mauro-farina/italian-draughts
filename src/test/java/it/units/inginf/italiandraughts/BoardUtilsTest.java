@@ -42,12 +42,12 @@ class BoardUtilsTest {
     }
 
     @Test
-    void checkResearchPiece() {
+    void checkFindPiece() {
         Piece piece;
         try {
             Board board = new Board();
             Square square = board.getSquare(new SquareCoordinates(0, 1));
-            piece = BoardUtils.researchPiece(board, square);
+            piece = BoardUtils.findPiece(board, square);
             if(piece == null) {
                 throw new Exception();
             }
