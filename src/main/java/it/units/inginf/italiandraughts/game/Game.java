@@ -71,7 +71,7 @@ public class Game {
                 outputPrinter.print(board.toStringFor(this.currentTurn.getColor()));
                 outputPrinter.print("Turn of " + this.currentTurn.getNickname());
                 List<CommandCaptureList> obligatoryCaptureListOptions = ObligatoryCapture.getObligatoryCaptureListOptions(this.board, this.currentTurn);
-                if(obligatoryCaptureListOptions.size() > 0) {
+                if(!obligatoryCaptureListOptions.isEmpty()) {
                     printObligatoryCaptureListOptions(obligatoryCaptureListOptions); // "mandatory captures found..."
                     handleObligatoryCaptures(obligatoryCaptureListOptions); // handle execution of all mandatory captures
                 } else {
@@ -250,7 +250,7 @@ public class Game {
     }
 
     public boolean checkVictoryCondition() {
-        return board.getWhitePieces().size() == 0 || board.getBlackPieces().size() == 0;
+        return board.getWhitePieces().isEmpty() || board.getBlackPieces().isEmpty();
     }
 
     public boolean checkDrawCondition() throws BoardException, SquareException, PlayerException, PieceColorException {
