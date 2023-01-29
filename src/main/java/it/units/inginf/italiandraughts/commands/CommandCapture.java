@@ -111,7 +111,7 @@ public class CommandCapture extends Command {
         try {
             return new SquareName(this.getFromCoordinates()) + " CAPTURE " + new SquareName(this.getPieceToCaptureCoordinates());
         } catch (CoordinatesException e) {
-            throw new RuntimeException(e);
+            return "Invalid Command";
         }
     }
 }
