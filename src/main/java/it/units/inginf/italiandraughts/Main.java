@@ -11,8 +11,8 @@ import it.units.inginf.italiandraughts.io.OutputPrinter;
 
 
 public class Main {
-    private final static InputReader inputReader = new CommandLineInputReader();
-    private final static OutputPrinter outputPrinter = new CommandLineOutputPrinter();
+    private static final InputReader inputReader = new CommandLineInputReader();
+    private static final OutputPrinter outputPrinter = new CommandLineOutputPrinter();
 
     public static void main(String[] args) {
         try{
