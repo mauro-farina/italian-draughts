@@ -90,6 +90,7 @@ public class Game {
             } catch (PlayerException | BoardException | PieceException | PieceColorException
                      | SquareContentException | PlayerColorException exception) {
                 outputPrinter.print("An error occurred, game cannot be resumed.", true);
+                outputPrinter.print(exception.toString(), true);
                 this.gameState = GameState.OVER;
                 break;
             }
@@ -104,8 +105,9 @@ public class Game {
                             this.currentTurn.getNickname() + "'s pieces can move");
                 }
                 changeTurn();
-            } catch (PlayerException | BoardException | SquareException e) {
+            } catch (PlayerException | BoardException | SquareException | PieceColorException exception) {
                 outputPrinter.print("An error occurred, game cannot be resumed.", true);
+                outputPrinter.print(exception.toString(), true);
                 this.gameState = GameState.OVER;
                 break;
             }
@@ -248,7 +250,7 @@ public class Game {
         return board.getWhitePieces().size() == 0 || board.getBlackPieces().size() == 0;
     }
 
-    public boolean checkDrawCondition() throws BoardException, SquareException, PlayerException {
+    public boolean checkDrawCondition() throws BoardException, SquareException, PlayerException, PieceColorException {
         PieceColor pieceColor;
         if (this.currentTurn == this.player1) {
             pieceColor = PieceColor.BLACK;
