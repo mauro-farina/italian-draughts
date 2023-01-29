@@ -130,7 +130,8 @@ public class Board {
                     SquareCoordinates squareCoordinates = new SquareCoordinates(j, i);
                     stringBuilder.append(getSquare(squareCoordinates).getSquareContent().toString());
                     stringBuilder.append("\t");
-                } catch (Exception e) {
+                } catch (CoordinatesException e) {
+                    //i and j are withing range -> CoordinatesException should never be thrown here
                     throw new RuntimeException(e);
                 }
             }
@@ -150,7 +151,8 @@ public class Board {
                     SquareCoordinates squareCoordinates = new SquareCoordinates(j,i);
                     stringBuilder.append(getSquare(squareCoordinates).getSquareContent().toString());
                     stringBuilder.append("\t");
-                } catch (Exception e) {
+                } catch (CoordinatesException e) {
+                    //i and j are withing range -> CoordinatesException should never be thrown here
                     throw new RuntimeException(e);
                 }
             }
