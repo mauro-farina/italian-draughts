@@ -37,7 +37,7 @@ public class CommandTo extends Command {
         }
         Square startingSquare = board.getSquare(fromCoordinates);
         Square arrivalSquare = board.getSquare(toCoordinates);
-        Piece selectedPiece = BoardUtils.researchPiece(board, startingSquare);
+        Piece selectedPiece = BoardUtils.findPiece(board, startingSquare);
         if (selectedPiece == null) {
             throw new CommandException("CommandTo.isValid(): there is no piece located on " + startingSquare.getSquareName().toString());
         }
