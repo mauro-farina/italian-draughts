@@ -60,8 +60,8 @@ public class CommandCapture extends Command {
         } catch (CoordinatesException e) {
             return false;
         }
-        Piece selectedPiece = BoardUtils.researchPiece(board, selectedPieceSquare);
-        Piece capturedPiece = BoardUtils.researchPiece(board, capturedPieceSquare);
+        Piece selectedPiece = BoardUtils.findPiece(board, selectedPieceSquare);
+        Piece capturedPiece = BoardUtils.findPiece(board, capturedPieceSquare);
 
         if(selectedPiece == null) {
             throw new CommandException("CommandCapture.isValid(): there are no pieces on " + selectedPieceSquare.getSquareName());
