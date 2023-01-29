@@ -27,6 +27,10 @@ import java.util.Map;
 
 public class ObligatoryCapture {
 
+    private ObligatoryCapture() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static List<CommandCaptureList> getObligatoryCaptureList(Board board, Player currentTurn) throws BoardException, SquareContentException,
             PieceColorException, SquareException, PieceException, PlayerException, PlayerColorException, CoordinatesException {
         if (currentTurn == null) {
