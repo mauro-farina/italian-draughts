@@ -48,7 +48,7 @@ public class ObligatoryCapture {
         Map<List<TemporaryCapture>, Integer> capturesListScore = new HashMap<>();
 
         for (Piece piece : piecesList) {
-            if(piece == null) continue;
+            if(piece == null) throw new PieceException("Found null piece in " + piecesColor + "Pieces List");
             for(List<TemporaryCapture> capturesList : getCapturesListOptionsForPiece(board, piece)) {
                 if (capturesList.isEmpty())
                     continue;
