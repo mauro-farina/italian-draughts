@@ -119,7 +119,7 @@ class ObligatoryCaptureTest {
             board.getBlackPieces().add(new Man(PieceColor.BLACK,
                     board.getSquare(new SquareCoordinates(5, 4))));
             List<CommandCaptureList> obligatoryCaptureList = ObligatoryCapture.getObligatoryCaptureListOptions(board, game.getCurrentTurn());
-            Piece piece = BoardUtils.researchPiece(board,
+            Piece piece = BoardUtils.findPiece(board,
                     board.getSquare(obligatoryCaptureList.get(0).get(0).getFromCoordinates()));
             if (piece != null) {
                 assertTrue(piece.isKing());
@@ -163,7 +163,7 @@ class ObligatoryCaptureTest {
             board.getBlackPieces().add(new King(PieceColor.BLACK,
                     board.getSquare(new SquareCoordinates(5, 4))));
             List<CommandCaptureList> obligatoryCaptureList = ObligatoryCapture.getObligatoryCaptureListOptions(board, game.getCurrentTurn());
-            Piece piece = BoardUtils.researchPiece(board,
+            Piece piece = BoardUtils.findPiece(board,
                     board.getSquare(obligatoryCaptureList.get(0).get(0).getPieceToCaptureCoordinates()));
             if (piece != null) {
                 assertTrue(piece.isKing());
