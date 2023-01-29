@@ -63,9 +63,10 @@ public class CommandRunner {
         if(!commandTo.isValid(this.game.getBoard())) {
             return;
         }
-        Square startingSquare = game.getBoard().getSquare(commandTo.getFromCoordinates());
-        Square arrivalSquare = game.getBoard().getSquare(commandTo.getToCoordinates());
-        Piece selectedPiece = BoardUtils.researchPiece(this.game.getBoard(), startingSquare);
+        Board board = game.getBoard();
+        Square startingSquare = board.getSquare(commandTo.getFromCoordinates());
+        Square arrivalSquare = board.getSquare(commandTo.getToCoordinates());
+        Piece selectedPiece = BoardUtils.researchPiece(board, startingSquare);
 
         assert selectedPiece != null; // if command is valid => selectedPiece cannot be null
         if(!selectedPiece.getColor().toString().equalsIgnoreCase(game.getCurrentTurn().getColor().toString())) {
@@ -75,11 +76,7 @@ public class CommandRunner {
         startingSquare.setSquareContent(SquareContent.EMPTY);
         arrivalSquare.setSquareContent(selectedPiece);
         selectedPiece.setSquare(arrivalSquare);
-        if(selectedPiece.isMan()) {
-            if (game.getBoard().getLastRow(selectedPiece.getColor())[0].getSquareCoordinates().getRow() == arrivalSquare.getSquareCoordinates().getRow()) {
-                BoardUtils.crownPiece(this.game.getBoard(), selectedPiece);
-            }
-        }
+        crownPieceIfMan(board, selectedPiece, arrivalSquare);
     }
 
     private void runCommandCapture(CommandCapture commandCapture) throws BoardException, PieceException, PieceColorException, SquareException, SquareContentException, CommandException, CoordinatesException {
@@ -101,9 +98,13 @@ public class CommandRunner {
         destinationSquare.setSquareContent(selectedPiece);
         BoardUtils.removePiece(board, capturedPiece);
         selectedPiece.setSquare(destinationSquare);
-        if(selectedPiece.isMan()) {
-            if (board.getLastRow(selectedPiece.getColor())[0].getSquareCoordinates().getRow() == destinationSquare.getSquareCoordinates().getRow()) {
-                BoardUtils.crownPiece(board, selectedPiece);
+        crownPieceIfMan(board, selectedPiece, destinationSquare);
+    }
+
+    private static void crownPieceIfMan(Board board, Piece pieceToCrown, Square destinationSquare) throws PieceColorException, SquareException, BoardException, PieceException {
+        if(pieceToCrown.isMan()) {
+            if (board.getLastRow(pieceToCrown.getColor())[0].getSquareCoordinates().getRow() == destinationSquare.getSquareCoordinates().getRow()) {
+                BoardUtils.crownPiece(board, pieceToCrown);
             }
         }
     }
