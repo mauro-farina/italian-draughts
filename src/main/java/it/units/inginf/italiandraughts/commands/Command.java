@@ -4,7 +4,7 @@ public abstract class Command {
 
     private final CommandType commandType;
 
-    public Command(CommandType commandType){
+    protected Command(CommandType commandType){
         this.commandType = commandType;
     }
 
