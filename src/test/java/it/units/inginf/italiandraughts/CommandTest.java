@@ -31,7 +31,7 @@ public class CommandTest {
             fail();
             throw new RuntimeException(e);
         }
-        assertEquals(command.getCommandType(), CommandType.HELP);
+        assertEquals(CommandType.HELP, command.getCommandType());
     }
 
     @Test
@@ -43,7 +43,7 @@ public class CommandTest {
             fail();
             throw new RuntimeException(e);
         }
-        assertEquals(command.getCommandType(), CommandType.SURRENDER);
+        assertEquals(CommandType.SURRENDER, command.getCommandType());
     }
 
     @Test
