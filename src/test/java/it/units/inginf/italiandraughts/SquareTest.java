@@ -22,7 +22,7 @@ public class SquareTest {
             throw new RuntimeException(e);
         }
         SquareColor squareColor = square.getSquareColor();
-        assertEquals(squareColor, SquareColor.WHITE);
+        assertEquals(SquareColor.WHITE, squareColor);
     }
 
     @Test
@@ -36,7 +36,7 @@ public class SquareTest {
             throw new RuntimeException(e);
         }
         // Assert
-        assertEquals(square.getSquareName().getColumn(), 'A');
+        assertEquals('A', square.getSquareName().getColumn());
     }
 
     @Test
@@ -50,7 +50,7 @@ public class SquareTest {
             throw new RuntimeException(e);
         }
         // Assert
-        assertEquals(square.getSquareName().getRow(), '6');
+        assertEquals('6', square.getSquareName().getRow());
     }
 
     @Test
