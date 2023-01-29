@@ -102,10 +102,10 @@ public class CommandRunner {
     }
 
     private static void crownPieceIfMan(Board board, Piece pieceToCrown, Square destinationSquare) throws PieceColorException, SquareException, BoardException, PieceException {
-        if(pieceToCrown.isMan()) {
-            if (board.getLastRow(pieceToCrown.getColor())[0].getSquareCoordinates().getRow() == destinationSquare.getSquareCoordinates().getRow()) {
-                BoardUtils.crownPiece(board, pieceToCrown);
-            }
+        int lastRowForPiece = board.getLastRow(pieceToCrown.getColor())[0].getSquareCoordinates().getRow();
+        int rowAfterMove = destinationSquare.getSquareCoordinates().getRow();
+        if(pieceToCrown.isMan() && lastRowForPiece == rowAfterMove) {
+            BoardUtils.crownPiece(board, pieceToCrown);
         }
     }
     
