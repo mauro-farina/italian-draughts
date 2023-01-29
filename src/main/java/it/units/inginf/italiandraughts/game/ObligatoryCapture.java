@@ -48,6 +48,7 @@ public class ObligatoryCapture {
         Map<List<TemporaryCapture>, Integer> capturesListScore = new HashMap<>();
 
         for (Piece piece : piecesList) {
+            if(piece == null) continue;
             for(List<TemporaryCapture> capturesList : getCapturesListOptionsForPiece(board, piece)) {
                 if (capturesList.isEmpty())
                     continue;
@@ -79,7 +80,6 @@ public class ObligatoryCapture {
 
     private static List<List<TemporaryCapture>> getCapturesListOptionsForPiece(Board board, Piece piece)
             throws SquareContentException, PieceColorException, SquareException, BoardException, PieceException, CoordinatesException {
-        if(piece == null) return null;
         return capturesListOptionsWorker(board, piece, new ArrayList<>(), new ArrayList<>());
     }
 
