@@ -185,8 +185,8 @@ class TemporaryCapture {
         Square selectedPieceSquare = board.getSquare(this.fromCoordinates);
         Square capturedPieceSquare = board.getSquare(this.pieceToCaptureCoordinates);
         Square destinationSquare = board.getSquare(this.toCoordinates);
-        Piece selectedPiece = BoardUtils.researchPiece(this.board, selectedPieceSquare);
-        Piece capturedPiece = BoardUtils.researchPiece(this.board, capturedPieceSquare);
+        Piece selectedPiece = BoardUtils.findPiece(this.board, selectedPieceSquare);
+        Piece capturedPiece = BoardUtils.findPiece(this.board, capturedPieceSquare);
         if(selectedPiece != null && capturedPiece != null) {
             this.capturedPieceIsKing = capturedPiece.isKing();
             selectedPieceSquare.setSquareContent(SquareContent.EMPTY);
@@ -202,7 +202,7 @@ class TemporaryCapture {
         Square selectedPieceSquare = board.getSquare(fromCoordinates);
         Square capturedPieceSquare = board.getSquare(pieceToCaptureCoordinates);
         Square destinationSquare = board.getSquare(toCoordinates);
-        Piece selectedPiece = BoardUtils.researchPiece(this.board, destinationSquare);
+        Piece selectedPiece = BoardUtils.findPiece(this.board, destinationSquare);
         if(selectedPiece == null) {
             return;
         }
@@ -229,7 +229,7 @@ class TemporaryCapture {
     }
 
     public boolean isCapturingPieceKing() throws BoardException, SquareException, CoordinatesException {
-        Piece piece = BoardUtils.researchPiece(this.board, this.board.getSquare(this.fromCoordinates));
+        Piece piece = BoardUtils.findPiece(this.board, this.board.getSquare(this.fromCoordinates));
         if(piece == null) {
             return false;
         }
@@ -237,7 +237,7 @@ class TemporaryCapture {
     }
 
     public boolean isCapturedPieceKing() throws BoardException, SquareException, CoordinatesException {
-        Piece piece = BoardUtils.researchPiece(this.board, this.board.getSquare(this.pieceToCaptureCoordinates));
+        Piece piece = BoardUtils.findPiece(this.board, this.board.getSquare(this.pieceToCaptureCoordinates));
         if(piece == null) {
             return false;
         }
