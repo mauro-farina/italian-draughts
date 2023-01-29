@@ -157,9 +157,7 @@ public class Game {
                     continue;
                 }
                 commandRunner.runCommand(command);
-                if (executedCommandsCounter < chosenCapturesOptions.get(0).size()-1) {
-                    printNextCaptureOptionsIfAny(chosenCapturesOptions, executedCommandsCounter, command);
-                }
+                printNextCaptureOptionsIfAny(chosenCapturesOptions, executedCommandsCounter, command);
                 executedCommandsCounter++;
             }
         }
