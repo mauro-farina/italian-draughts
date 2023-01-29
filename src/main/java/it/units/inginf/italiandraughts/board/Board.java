@@ -61,13 +61,13 @@ public class Board {
         return this.boardSquares;
     }
 
-    public List<Piece> getPieces(PieceColor pieceColor) {
+    public List<Piece> getPieces(PieceColor pieceColor) throws PieceColorException {
         if(pieceColor == PieceColor.WHITE) {
             return getWhitePieces();
         } else if(pieceColor == PieceColor.BLACK) {
             return getBlackPieces();
         } else {
-            throw new IllegalArgumentException("PieceColor is not valid");
+            throw new PieceColorException("PieceColor is not valid");
         }
     }
 
