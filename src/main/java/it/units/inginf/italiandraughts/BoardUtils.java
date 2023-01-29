@@ -84,5 +84,21 @@ public class BoardUtils {
         }
         return null;
     }
+    
+    public static Piece findPiece(Board board, Square square) throws BoardException, SquareException {
+        if(board == null) {
+            throw new BoardException("BoardUtils.researchPiece() does not accept this Board, because it is null");
+        }
+        if(square == null) {
+            throw new SquareException("BoardUtils.researchPiece() does not accept this Square, because it is null");
+        }
+        if ((square.getSquareColor() == SquareColor.BLACK) || (!square.isFree())) {
+            List<Piece> pieces = new ArrayList<>();
+            pieces.addAll(board.getWhitePieces());
+            pieces.addAll(board.getBlackPieces());
+            return pieces.stream().filter(piece -> piece.getSquare().equals(square)).findAny().orElse(null);
+        }
+        return null;
+    }
 
 }
