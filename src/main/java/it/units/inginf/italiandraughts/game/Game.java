@@ -154,24 +154,29 @@ public class Game {
                     outputPrinter.print("Invalid capture, read the obligatory capture list.");
                     continue;
                 }
-
-                for (CommandCaptureList validOption : chosenCapturesOptions) {
-                    if (command.equals(validOption.get(executedCommandsCounter))) {
-                        commandRunner.runCommand(command);
-                        if (executedCommandsCounter < validOption.size()-1) {
-                            outputPrinter.print(board.toStringFor(this.currentTurn.getColor()));
-                            outputPrinter.print("Next obligatory captures:");
-                            outputPrinter.print(getNextCapturesOptions(chosenCapturesOptions, executedCommandsCounter, command));
-                        }
-                        executedCommandsCounter++;
-                        break;
-                    }
-
+                if(!isCommandValid((CommandCapture) command, chosenCapturesOptions, executedCommandsCounter)) {
                     outputPrinter.print("Invalid command: " + command);
                     outputPrinter.print("Expected command: " + chosenCapturesOptions);
+                    continue;
                 }
+                commandRunner.runCommand(command);
+                if (executedCommandsCounter < chosenCapturesOptions.get(0).size()-1) {
+                    outputPrinter.print(board.toStringFor(this.currentTurn.getColor()));
+                    outputPrinter.print("Next obligatory captures:");
+                    outputPrinter.print(getNextCapturesOptions(chosenCapturesOptions, executedCommandsCounter, command));
+                }
+                executedCommandsCounter++;
             }
         }
+    }
+
+    private static boolean isCommandValid( CommandCapture command, List<CommandCaptureList> chosenCapturesOptions, short executedCommandsCounter) {
+        for (CommandCaptureList validOption : chosenCapturesOptions) {
+            if (command.equals(validOption.get(executedCommandsCounter))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private static void updateChosenCapturesOptions(List<CommandCaptureList> obligatoryCaptureList, List<CommandCaptureList> chosenCapturesOptions, short executedCommandsCounter, Command command) {
