@@ -170,20 +170,32 @@ public class Board {
         // loop through the 4 corner-adjacent squares
         for(short i=-1; i<=1; i+=2){ // i to move on a row
             for(short j=-1; j<=1; j+=2){ // j to move on a column
-                if(pieceSquareY+i < 0 || pieceSquareY+i >= 8) // rows -1 and 8 do not exist => continue
+                if(!areCoordinatesValid(pieceSquareX+j, pieceSquareY+i))
                     continue;
-                if(pieceSquareX+j < 0 || pieceSquareX+j >= 8) // columns (A-1) and (H+1) do not exist => continue
+                if(!isSquareReachableForPiece(i, piece))
                     continue;
-                if(piece.isMan()) {
-                    if( (piece.getColor().equals(PieceColor.WHITE)) && (i < 0) )
-                        continue;
-                    if( (piece.getColor().equals(PieceColor.BLACK)) && (i > 0) )
-                        continue;
-                }
                 squaresList.add(this.boardSquares[pieceSquareX+j][pieceSquareY+i]);
             }
         }
         return squaresList;
+    }
+
+    private static boolean areCoordinatesValid(int row, int column) {
+        if(row < 0 || row >= 8) // rows -1 and 8 do not exist => continue
+            return false;
+        if(column < 0 || column >= 8) // columns (A-1) and (H+1) do not exist => continue
+            return false;
+        return true;
+    }
+
+    private static boolean isSquareReachableForPiece(int stepInColumn, Piece piece) {
+        if(piece.isKing())
+            return true;
+        if((piece.getColor().equals(PieceColor.WHITE)) && (stepInColumn < 0))
+            return false;
+        if((piece.getColor().equals(PieceColor.BLACK)) && (stepInColumn > 0))
+            return false;
+        return true;
     }
 
 }
