@@ -73,7 +73,7 @@ public class Game {
                 outputPrinter.print("Turn of " + this.currentTurn.getNickname());
                 obligatoryCaptureList.addAll(ObligatoryCapture.getObligatoryCaptureList(this.board, this.currentTurn));
                 if(obligatoryCaptureList.size() > 0) {
-                    printObligatoryCaptureList(obligatoryCaptureList);
+                    printObligatoryCaptureList(obligatoryCaptureList); // "mandatory captures found..."
                     handleObligatoryCaptures(obligatoryCaptureList);
                     obligatoryCaptureList.clear();
                 } else {
@@ -156,12 +156,12 @@ public class Game {
                 for (CommandCaptureList validOption : chosenCapturesOptions) {
                     if (command.equals(validOption.get(executedCommandsCounter))) {
                         commandRunner.runCommand(command);
-                        executedCommandsCounter++;
-                        if (executedCommandsCounter < validOption.size() - 1) {
+                        if (executedCommandsCounter < validOption.size()-1) {
                             outputPrinter.print(board.toStringFor(this.currentTurn.getColor()));
                             outputPrinter.print("Next obligatory captures:");
                             outputPrinter.print(getNextCapturesOptions(chosenCapturesOptions, executedCommandsCounter, command));
                         }
+                        executedCommandsCounter++;
                         break;
                     }
 
