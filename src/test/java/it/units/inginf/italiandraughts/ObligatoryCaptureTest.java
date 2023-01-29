@@ -45,7 +45,7 @@ public class ObligatoryCaptureTest {
                     board.getSquare(new SquareCoordinates(0, 5))));
             board.getBlackPieces().add(new Man(PieceColor.BLACK,
                     board.getSquare(new SquareCoordinates(1, 4))));
-            assertEquals(ObligatoryCapture.getObligatoryCaptureList(board, game.getCurrentTurn()).get(0).size(), 1);
+            assertEquals(1, ObligatoryCapture.getObligatoryCaptureList(board, game.getCurrentTurn()).get(0).size());
         } catch (Exception e) {
             fail();
             throw new RuntimeException(e);
