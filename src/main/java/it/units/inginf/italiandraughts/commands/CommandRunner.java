@@ -66,7 +66,7 @@ public class CommandRunner {
         Board board = game.getBoard();
         Square startingSquare = board.getSquare(commandTo.getFromCoordinates());
         Square arrivalSquare = board.getSquare(commandTo.getToCoordinates());
-        Piece selectedPiece = BoardUtils.researchPiece(board, startingSquare);
+        Piece selectedPiece = BoardUtils.findPiece(board, startingSquare);
 
         assert selectedPiece != null; // if command is valid => selectedPiece cannot be null
         if(!selectedPiece.getColor().toString().equalsIgnoreCase(game.getCurrentTurn().getColor().toString())) {
@@ -87,8 +87,8 @@ public class CommandRunner {
         Square selectedPieceSquare = board.getSquare(commandCapture.getFromCoordinates());
         Square capturedPieceSquare = board.getSquare(commandCapture.getPieceToCaptureCoordinates());
         Square destinationSquare = board.getSquare(commandCapture.getToCoordinates());
-        Piece selectedPiece = BoardUtils.researchPiece(board, selectedPieceSquare);
-        Piece capturedPiece = BoardUtils.researchPiece(board, capturedPieceSquare);
+        Piece selectedPiece = BoardUtils.findPiece(board, selectedPieceSquare);
+        Piece capturedPiece = BoardUtils.findPiece(board, capturedPieceSquare);
         assert selectedPiece != null; // command is valid -> pieces are not null
         if(!selectedPiece.getColor().toString().equals(game.getCurrentTurn().getColor().toString())) {
             throw new CommandException("CommandCapture.runCommandTo() does not accept this command because you cannot move opponent pieces");
