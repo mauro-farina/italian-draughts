@@ -31,7 +31,7 @@ public class ObligatoryCapture {
         throw new IllegalStateException("Utility class");
     }
 
-    public static List<CommandCaptureList> getObligatoryCaptureList(Board board, Player currentTurn) throws BoardException, SquareContentException,
+    public static List<CommandCaptureList> getObligatoryCaptureListOptions(Board board, Player currentTurn) throws BoardException, SquareContentException,
             PieceColorException, SquareException, PieceException, PlayerException, PlayerColorException, CoordinatesException {
         if (currentTurn == null) {
             throw new PlayerException("ObligatoryCapture.getObligatoryCaptureList() does not accept " +

@@ -45,7 +45,7 @@ public class ObligatoryCaptureTest {
                     board.getSquare(new SquareCoordinates(0, 5))));
             board.getBlackPieces().add(new Man(PieceColor.BLACK,
                     board.getSquare(new SquareCoordinates(1, 4))));
-            assertEquals(1, ObligatoryCapture.getObligatoryCaptureList(board, game.getCurrentTurn()).get(0).size());
+            assertEquals(1, ObligatoryCapture.getObligatoryCaptureListOptions(board, game.getCurrentTurn()).get(0).size());
         } catch (Exception e) {
             fail();
             throw new RuntimeException(e);
@@ -80,7 +80,7 @@ public class ObligatoryCaptureTest {
                     board.getSquare(new SquareCoordinates(1, 2))));
             board.getBlackPieces().add(new Man(PieceColor.BLACK,
                     board.getSquare(new SquareCoordinates(2, 7))));
-            assertEquals(3, ObligatoryCapture.getObligatoryCaptureList(board, game.getCurrentTurn()).get(0).size());
+            assertEquals(3, ObligatoryCapture.getObligatoryCaptureListOptions(board, game.getCurrentTurn()).get(0).size());
         } catch (Exception e) {
             fail();
             throw new RuntimeException(e);
@@ -114,7 +114,7 @@ public class ObligatoryCaptureTest {
                     board.getSquare(new SquareCoordinates(1, 4))));
             board.getBlackPieces().add(new Man(PieceColor.BLACK,
                     board.getSquare(new SquareCoordinates(5, 4))));
-            List<CommandCaptureList> obligatoryCaptureList = ObligatoryCapture.getObligatoryCaptureList(board, game.getCurrentTurn());
+            List<CommandCaptureList> obligatoryCaptureList = ObligatoryCapture.getObligatoryCaptureListOptions(board, game.getCurrentTurn());
             Piece piece = BoardUtils.researchPiece(board,
                     board.getSquare(obligatoryCaptureList.get(0).get(0).getFromCoordinates()));
             if (piece != null) {
@@ -156,7 +156,7 @@ public class ObligatoryCaptureTest {
                     board.getSquare(new SquareCoordinates(1, 4))));
             board.getBlackPieces().add(new King(PieceColor.BLACK,
                     board.getSquare(new SquareCoordinates(5, 4))));
-            List<CommandCaptureList> obligatoryCaptureList = ObligatoryCapture.getObligatoryCaptureList(board, game.getCurrentTurn());
+            List<CommandCaptureList> obligatoryCaptureList = ObligatoryCapture.getObligatoryCaptureListOptions(board, game.getCurrentTurn());
             Piece piece = BoardUtils.researchPiece(board,
                     board.getSquare(obligatoryCaptureList.get(0).get(0).getPieceToCaptureCoordinates()));
             if (piece != null) {
@@ -203,7 +203,7 @@ public class ObligatoryCaptureTest {
                     board.getSquare(new SquareCoordinates(3, 6))));
             board.getBlackPieces().add(new Man(PieceColor.BLACK,
                     board.getSquare(new SquareCoordinates(4, 3))));
-            List<CommandCaptureList> obligatoryCaptureList = ObligatoryCapture.getObligatoryCaptureList(board, game.getCurrentTurn());
+            List<CommandCaptureList> obligatoryCaptureList = ObligatoryCapture.getObligatoryCaptureListOptions(board, game.getCurrentTurn());
             assertEquals("(7,2)", obligatoryCaptureList.get(0).get(0).getFromCoordinates().toString());
         } catch (Exception e) {
             fail();
@@ -234,7 +234,7 @@ public class ObligatoryCaptureTest {
                     board.getSquare(new SquareCoordinates(1, 4))));
             game.changeTurn();
             //now is the turn of player 2, a white king is near a black man, but a man can not capture a king
-            List<CommandCaptureList> obligatoryCaptureList = ObligatoryCapture.getObligatoryCaptureList(board, game.getCurrentTurn());
+            List<CommandCaptureList> obligatoryCaptureList = ObligatoryCapture.getObligatoryCaptureListOptions(board, game.getCurrentTurn());
             assertEquals(0, obligatoryCaptureList.size());
         } catch (Exception e) {
             fail();

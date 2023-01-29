@@ -71,7 +71,7 @@ public class Game {
             try{
                 outputPrinter.print(board.toStringFor(this.currentTurn.getColor()));
                 outputPrinter.print("Turn of " + this.currentTurn.getNickname());
-                obligatoryCaptureList.addAll(ObligatoryCapture.getObligatoryCaptureList(this.board, this.currentTurn));
+                obligatoryCaptureList.addAll(ObligatoryCapture.getObligatoryCaptureListOptions(this.board, this.currentTurn));
                 if(obligatoryCaptureList.size() > 0) {
                     printObligatoryCaptureList(obligatoryCaptureList); // "mandatory captures found..."
                     handleObligatoryCaptures(obligatoryCaptureList);
@@ -171,8 +171,8 @@ public class Game {
     }
 
     private static boolean isCommandValid( CommandCapture command, List<CommandCaptureList> chosenCapturesOptions, short executedCommandsCounter) {
-        for (CommandCaptureList validOption : chosenCapturesOptions) {
-            if (command.equals(validOption.get(executedCommandsCounter))) {
+        for (CommandCaptureList captureList : chosenCapturesOptions) {
+            if (command.equals(captureList.get(executedCommandsCounter))) {
                 return true;
             }
         }
