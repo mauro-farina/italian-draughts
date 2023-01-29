@@ -24,7 +24,7 @@ public class BoardUtilsTest {
             fail();
             throw new RuntimeException(e);
         }
-        assertEquals(board.getWhitePieces().size(), 11);
+        assertEquals(11, board.getWhitePieces().size());
     }
 
     @Test
@@ -55,7 +55,7 @@ public class BoardUtilsTest {
             fail();
             throw new RuntimeException(e);
         }
-        assertEquals(piece.getSquare().getSquareName().toString(), "A2");
+        assertEquals("A2", piece.getSquare().getSquareName().toString());
     }
 
 }
