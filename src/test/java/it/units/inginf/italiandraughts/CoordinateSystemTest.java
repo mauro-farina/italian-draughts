@@ -79,6 +79,6 @@ public class CoordinateSystemTest {
             fail();
             throw new RuntimeException(e);
         }
-        assertEquals(squareCoordinates.toString(), square.getSquareCoordinates().toString());
+        assertEquals("B3", square.getSquareName().toString());
     }
 }
