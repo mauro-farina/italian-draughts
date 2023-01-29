@@ -23,7 +23,8 @@ public class CommandCapture extends Command {
         super(CommandType.CAPTURE);
         this.fromCoordinates = fromCoordinates;
         this.pieceToCaptureCoordinates = pieceToCaptureCoordinates;
-        int toCoordinateY, toCoordinateX;
+        int toCoordinateY;
+        int toCoordinateX;
         if(fromCoordinates.getRow() > pieceToCaptureCoordinates.getRow()){ // *6 capture *5 (ex: C6 capture B5)
             toCoordinateY = pieceToCaptureCoordinates.getRow() - 1; // moves to *4
         } else { // *3 capture *4 (ex: B3 capture C4)
