@@ -7,12 +7,10 @@ import it.units.inginf.italiandraughts.board.Piece;
 import it.units.inginf.italiandraughts.board.Man;
 import it.units.inginf.italiandraughts.board.King;
 import it.units.inginf.italiandraughts.board.PieceColor;
-import it.units.inginf.italiandraughts.game.PlayerColor;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.List;
@@ -30,7 +28,7 @@ public class BoardTest {
             fail();
             throw new RuntimeException(e);
         }
-        assertEquals(numberOfWhitePieces, 11);
+        assertEquals(11, numberOfWhitePieces);
     }
 
     @Test
@@ -44,14 +42,13 @@ public class BoardTest {
             fail();
             throw new RuntimeException(e);
         }
-        assertEquals(numberOfBlackPieces, 11);
+        assertEquals(11, numberOfBlackPieces);
     }
     
     @Test
     void checkGetLastRow() {
         Square[] lastRow;
         Square[] expectedLastRow;
-        boolean check = true;
         try {
             Board board = new Board();
             Square[][] boardSquares = board.getBoardSquares();
@@ -60,15 +57,13 @@ public class BoardTest {
             for(int i = 0; i < 8; i++) {
                 expectedLastRow[i] = boardSquares[i][7];
                 if (expectedLastRow[i] != lastRow[i]) {
-                    check = false;
-                    break;
+                    fail();
                 }
             }
         } catch (Exception e) {
             fail();
             throw new RuntimeException(e);
         }
-        assertTrue(check);
     }
 
     @Test
@@ -120,7 +115,7 @@ public class BoardTest {
                     "2\t[w]\t[ ]\t[w]\t[ ]\t[w]\t[ ]\t[w]\t[ ]\t" + System.lineSeparator() +
                     "1\t[ ]\t[w]\t[ ]\t[w]\t[ ]\t[w]\t[ ]\t[w]\t" + System.lineSeparator() +
                     "\t A \t B \t C \t D \t E \t F \t G \t H";
-            assertEquals(expectedBoard, board.toStringFor(PlayerColor.WHITE));
+            assertEquals(expectedBoard, board.toString());
         } catch (Exception e) {
             fail();
         }
