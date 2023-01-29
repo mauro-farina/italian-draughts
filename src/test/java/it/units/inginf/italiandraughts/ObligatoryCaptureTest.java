@@ -13,8 +13,6 @@ import it.units.inginf.italiandraughts.board.SquareContent;
 import it.units.inginf.italiandraughts.board.Piece;
 import it.units.inginf.italiandraughts.board.PieceColor;
 import it.units.inginf.italiandraughts.board.SquareCoordinates;
-import it.units.inginf.italiandraughts.io.CommandLineInputReader;
-import it.units.inginf.italiandraughts.io.CommandLineOutputPrinter;
 
 import org.junit.jupiter.api.Test;
 import java.util.List;
@@ -27,9 +25,11 @@ class ObligatoryCaptureTest {
     @Test
     void checkKingCaptureMan() {
         try {
-            Game game = new Game(new Player("1", PlayerColor.WHITE),
+            Game game = new Game(
+                    new Player("1", PlayerColor.WHITE),
                     new Player("2", PlayerColor.BLACK),
-                    new CommandLineInputReader(), new CommandLineOutputPrinter());
+                    () -> "",
+                    out -> {});
             game.initGame();
             Board board = game.getBoard();
             board.getWhitePieces().clear();
@@ -55,9 +55,11 @@ class ObligatoryCaptureTest {
     @Test
     void checkTripleCapture() {
         try {
-            Game game = new Game(new Player("1", PlayerColor.WHITE),
+            Game game = new Game(
+                    new Player("1", PlayerColor.WHITE),
                     new Player("2", PlayerColor.BLACK),
-                    new CommandLineInputReader(), new CommandLineOutputPrinter());
+                    () -> "",
+                    out -> {});
             game.initGame();
             game.changeTurn();
             Board board = game.getBoard();
@@ -90,9 +92,11 @@ class ObligatoryCaptureTest {
     @Test
     void checkCaptureWithKing() {
         try {
-            Game game = new Game(new Player("1", PlayerColor.WHITE),
+            Game game = new Game(
+                    new Player("1", PlayerColor.WHITE),
                     new Player("2", PlayerColor.BLACK),
-                    new CommandLineInputReader(), new CommandLineOutputPrinter());
+                    () -> "",
+                    out -> {});
             game.initGame();
             Board board = game.getBoard();
             board.getWhitePieces().clear();
@@ -132,9 +136,11 @@ class ObligatoryCaptureTest {
     @Test
     void checkCaptureOfMostKing() {
         try {
-            Game game = new Game(new Player("1", PlayerColor.WHITE),
+            Game game = new Game(
+                    new Player("1", PlayerColor.WHITE),
                     new Player("2", PlayerColor.BLACK),
-                    new CommandLineInputReader(), new CommandLineOutputPrinter());
+                    () -> "",
+                    out -> {});
             game.initGame();
             Board board = game.getBoard();
             board.getWhitePieces().clear();
@@ -173,9 +179,11 @@ class ObligatoryCaptureTest {
     @Test
     void checkCaptureWithCloserKing() {
         try {
-            Game game = new Game(new Player("1", PlayerColor.WHITE),
+            Game game = new Game(
+                    new Player("1", PlayerColor.WHITE),
                     new Player("2", PlayerColor.BLACK),
-                    new CommandLineInputReader(), new CommandLineOutputPrinter());
+                    () -> "",
+                    out -> {});
             game.initGame();
             Board board = game.getBoard();
             board.getWhitePieces().clear();
@@ -214,9 +222,11 @@ class ObligatoryCaptureTest {
      @Test
     void checkManDoNotCaptureKing() {
         try{
-            Game game = new Game(new Player("1", PlayerColor.WHITE),
+            Game game = new Game(
+                    new Player("1", PlayerColor.WHITE),
                     new Player("2", PlayerColor.BLACK),
-                    new CommandLineInputReader(), new CommandLineOutputPrinter());
+                    () -> "",
+                    out -> {});
             game.initGame();
             Board board = game.getBoard();
             board.getWhitePieces().clear();
