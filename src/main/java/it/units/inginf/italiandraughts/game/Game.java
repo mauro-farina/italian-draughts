@@ -69,12 +69,7 @@ public class Game {
                     printObligatoryCaptureListOptions(obligatoryCaptureListOptions); // "mandatory captures found..."
                     handleObligatoryCaptures(obligatoryCaptureListOptions); // handle execution of all mandatory captures
                 } else {
-                    Command command;
-                    do {
-                        String readCommand = inputReader.readInput();
-                        command = CommandParser.parseCommand(readCommand);
-                        commandRunner.runCommand(command);
-                    } while (command.getCommandType() == CommandType.HELP);
+                    handleNonObligatoryCommand();
                 }
             } catch (CommandException | CoordinatesException | SquareNameException | SquareException exception) {
                 outputPrinter.print(exception.getMessage());
@@ -104,6 +99,15 @@ public class Game {
                 break;
             }
         }
+    }
+
+    private void handleNonObligatoryCommand() throws CommandException, CoordinatesException, SquareNameException, PlayerException, BoardException, PieceException, PieceColorException, SquareException, SquareContentException {
+        Command command;
+        do {
+            String readCommand = inputReader.readInput();
+            command = CommandParser.parseCommand(readCommand);
+            commandRunner.runCommand(command);
+        } while (command.getCommandType() == CommandType.HELP);
     }
 
     private void printObligatoryCaptureListOptions(List<CommandCaptureList> obligatoryCaptureListOptions) {
