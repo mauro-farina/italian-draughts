@@ -121,7 +121,8 @@ public class Board {
 
     private String toStringForWhitePlayer() {
         StringBuilder stringBuilder = new StringBuilder();
-
+        stringBuilder.append("\t A \t B \t C \t D \t E \t F \t G \t H");
+        stringBuilder.append(System.lineSeparator());
         for(byte i=7; i>=0; i--) {
             stringBuilder.append(i+1);
             stringBuilder.append("\t");
@@ -135,6 +136,8 @@ public class Board {
                     throw new RuntimeException(e);
                 }
             }
+            stringBuilder.append("  ");
+            stringBuilder.append(i+1);
             stringBuilder.append(System.lineSeparator());
         }
         stringBuilder.append("\t A \t B \t C \t D \t E \t F \t G \t H");
@@ -143,6 +146,8 @@ public class Board {
 
     private String toStringForBlackPlayer() {
         StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("\t H \t G \t F \t E \t D \t C \t B \t A");
+        stringBuilder.append(System.lineSeparator());
         for(byte i=0; i<8; i++) {
             stringBuilder.append(i+1);
             stringBuilder.append("\t");
@@ -156,6 +161,8 @@ public class Board {
                     throw new RuntimeException(e);
                 }
             }
+            stringBuilder.append("  ");
+            stringBuilder.append(i+1);
             stringBuilder.append(System.lineSeparator());
         }
         stringBuilder.append("\t H \t G \t F \t E \t D \t C \t B \t A");
