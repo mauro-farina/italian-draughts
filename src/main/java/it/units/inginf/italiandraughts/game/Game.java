@@ -195,7 +195,7 @@ public class Game {
                 nextCapturesOptions.append(System.lineSeparator());
             }
         }
-        nextCapturesOptions.delete(nextCapturesOptions.length() - 8, nextCapturesOptions.length());
+        nextCapturesOptions.delete(nextCapturesOptions.length() - 7, nextCapturesOptions.length());
         outputPrinter.print(board.toStringFor(this.currentTurn.getColor()));
         outputPrinter.print("Next obligatory captures:");
         outputPrinter.print(nextCapturesOptions.toString());
