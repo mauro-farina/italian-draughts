@@ -127,14 +127,7 @@ public class Board {
             stringBuilder.append(i+1);
             stringBuilder.append("\t");
             for(byte j=0; j<8; j++) {
-                try {
-                    SquareCoordinates squareCoordinates = new SquareCoordinates(j, i);
-                    stringBuilder.append(getSquare(squareCoordinates).getSquareContent().toString());
-                    stringBuilder.append("\t");
-                } catch (CoordinatesException e) {
-                    //i and j are withing range -> CoordinatesException should never be thrown here
-                    throw new RuntimeException(e);
-                }
+                addSquareContentToStringBuilder(stringBuilder, i, j);
             }
             stringBuilder.append("  ");
             stringBuilder.append(i+1);
@@ -152,14 +145,7 @@ public class Board {
             stringBuilder.append(i+1);
             stringBuilder.append("\t");
             for(byte j=7; j>=0; j--) {
-                try {
-                    SquareCoordinates squareCoordinates = new SquareCoordinates(j,i);
-                    stringBuilder.append(getSquare(squareCoordinates).getSquareContent().toString());
-                    stringBuilder.append("\t");
-                } catch (CoordinatesException e) {
-                    //i and j are withing range -> CoordinatesException should never be thrown here
-                    throw new RuntimeException(e);
-                }
+                addSquareContentToStringBuilder(stringBuilder, i, j);
             }
             stringBuilder.append("  ");
             stringBuilder.append(i+1);
@@ -167,6 +153,17 @@ public class Board {
         }
         stringBuilder.append("\t H \t G \t F \t E \t D \t C \t B \t A");
         return stringBuilder.toString();
+    }
+
+    private void addSquareContentToStringBuilder(StringBuilder stringBuilder, byte i, byte j) {
+        try {
+            SquareCoordinates squareCoordinates = new SquareCoordinates(j, i);
+            stringBuilder.append(getSquare(squareCoordinates).getSquareContent().toString());
+            stringBuilder.append("\t");
+        } catch (CoordinatesException e) {
+            //i and j are withing range -> CoordinatesException should never be thrown here
+            throw new RuntimeException(e);
+        }
     }
 
     public List<Square> getReachableSquares(Piece piece) { //reachable or adjacent
