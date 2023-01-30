@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'application'
 }
 
 group 'org.example'
@@ -7,6 +8,14 @@ version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+}
+
+run {
+    standardInput = System.in
+}
+
+application {
+    mainClassName = "it.units.inginf.italiandraughts.Main"
 }
 
 dependencies {
