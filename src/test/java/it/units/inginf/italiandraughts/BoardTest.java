@@ -106,14 +106,15 @@ class BoardTest {
     void testToStringRepresentation() {
         try {
             Board board = new Board();
-            String expectedBoard = "8\t[b]\t[ ]\t[b]\t[ ]\t[b]\t[ ]\t[b]\t[ ]\t" + System.lineSeparator() +
-                    "7\t[ ]\t[b]\t[ ]\t[b]\t[ ]\t[b]\t[ ]\t[b]\t" + System.lineSeparator() +
-                    "6\t[b]\t[ ]\t[b]\t[ ]\t[b]\t[ ]\t[b]\t[ ]\t" + System.lineSeparator() +
-                    "5\t[ ]\t[ ]\t[ ]\t[ ]\t[ ]\t[ ]\t[ ]\t[ ]\t" + System.lineSeparator() +
-                    "4\t[ ]\t[ ]\t[ ]\t[ ]\t[ ]\t[ ]\t[ ]\t[ ]\t" + System.lineSeparator() +
-                    "3\t[ ]\t[w]\t[ ]\t[w]\t[ ]\t[w]\t[ ]\t[w]\t" + System.lineSeparator() +
-                    "2\t[w]\t[ ]\t[w]\t[ ]\t[w]\t[ ]\t[w]\t[ ]\t" + System.lineSeparator() +
-                    "1\t[ ]\t[w]\t[ ]\t[w]\t[ ]\t[w]\t[ ]\t[w]\t" + System.lineSeparator() +
+            String expectedBoard = "\t A \t B \t C \t D \t E \t F \t G \t H" + System.lineSeparator() +
+                    "8\t[b]\t[ ]\t[b]\t[ ]\t[b]\t[ ]\t[b]\t[ ]\t  8" + System.lineSeparator() +
+                    "7\t[ ]\t[b]\t[ ]\t[b]\t[ ]\t[b]\t[ ]\t[b]\t  7" + System.lineSeparator() +
+                    "6\t[b]\t[ ]\t[b]\t[ ]\t[b]\t[ ]\t[b]\t[ ]\t  6" + System.lineSeparator() +
+                    "5\t[ ]\t[ ]\t[ ]\t[ ]\t[ ]\t[ ]\t[ ]\t[ ]\t  5" + System.lineSeparator() +
+                    "4\t[ ]\t[ ]\t[ ]\t[ ]\t[ ]\t[ ]\t[ ]\t[ ]\t  4" + System.lineSeparator() +
+                    "3\t[ ]\t[w]\t[ ]\t[w]\t[ ]\t[w]\t[ ]\t[w]\t  3" + System.lineSeparator() +
+                    "2\t[w]\t[ ]\t[w]\t[ ]\t[w]\t[ ]\t[w]\t[ ]\t  2" + System.lineSeparator() +
+                    "1\t[ ]\t[w]\t[ ]\t[w]\t[ ]\t[w]\t[ ]\t[w]\t  1" + System.lineSeparator() +
                     "\t A \t B \t C \t D \t E \t F \t G \t H";
             assertEquals(expectedBoard, board.toString());
         } catch (Exception e) {
