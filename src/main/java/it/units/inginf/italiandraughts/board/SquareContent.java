@@ -2,8 +2,8 @@ package it.units.inginf.italiandraughts.board;
 
 public enum SquareContent {
 
-    WHITE_MAN("[w]"), WHITE_KING("[W]"),
-    BLACK_MAN("[b]"), BLACK_KING("[B]"),
+    WHITE_MAN("[w]"), WHITE_KING("|W|"),
+    BLACK_MAN("[b]"), BLACK_KING("|B|"),
     EMPTY("[ ]");
 
     private final String symbol;
