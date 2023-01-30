@@ -60,12 +60,6 @@ public class Game {
 
     public void start() {
         initGame();
-        try {
-            commandRunner.runCommand(new CommandHelp());
-            outputPrinter.print(System.lineSeparator());
-        } catch (Exception exception) {
-            outputPrinter.print(exception.getMessage());
-        }
         while(this.gameState == GameState.PLAYING) {
             try{
                 outputPrinter.print(board.toStringFor(this.currentTurn.getColor()));
@@ -204,6 +198,12 @@ public class Game {
     public void initGame() {
         this.gameState = GameState.PLAYING;
         this.currentTurn = this.player1;
+        try {
+            commandRunner.runCommand(new CommandHelp());
+            outputPrinter.print(System.lineSeparator());
+        } catch (Exception exception) {
+            outputPrinter.print(exception.getMessage());
+        }
     }
 
     public Board getBoard() {
